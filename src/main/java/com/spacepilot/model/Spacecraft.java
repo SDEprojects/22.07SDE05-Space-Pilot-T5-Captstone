@@ -5,6 +5,7 @@ import java.util.Collection;
 
 public class Spacecraft {
 
+  // variables, setters, getters
   private String name;
   private int health;
   private Planet currentPlanet;
@@ -45,10 +46,12 @@ public class Spacecraft {
     return numOfEngineersOnBoard;
   }
 
+  // Add passengers into spaceship
   public void addPassengers(Collection<Person> newPassengers) {
     getPassengers().addAll(newPassengers);
   }
 
+  // Handles types of passengers and the total amount on board.
   public void typeAndNumOfPassengersOnBoard() {
     for (Person passenger : passengers) {
       totalPassengers++;

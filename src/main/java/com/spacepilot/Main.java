@@ -14,6 +14,7 @@ import javax.sound.midi.MidiUnavailableException;
 
 public class Main {
 
+  // Pre-setup to start the game.
   public static void main(String[] args) {
     try (Reader input =
         new InputStreamReader(System.in);
@@ -30,6 +31,7 @@ public class Main {
       throw new RuntimeException(e);
     }
   }
+  // This runs a new game when launched
 
   public static Game createNewGame() {
     // create a reader
@@ -42,6 +44,7 @@ public class Main {
     }
   }
 
+  // if the user dies then asks the user if they would like to play again.
   public static boolean continuePlaying(BufferedReader reader) throws IOException {
     // print the prompt message
     View.printUserInputPrompt(

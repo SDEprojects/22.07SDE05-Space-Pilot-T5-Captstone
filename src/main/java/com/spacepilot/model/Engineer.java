@@ -6,6 +6,7 @@ public class Engineer extends Person {
     super();
   }
 
+  // Tracks the Engineers information
   public Engineer(String name, Planet currentPlanet) {
     super(name, currentPlanet.getName());
   }
