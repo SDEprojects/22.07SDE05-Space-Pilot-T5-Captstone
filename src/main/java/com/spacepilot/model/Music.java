@@ -13,6 +13,7 @@ public final class Music implements JMC {
 
   private static Sequencer sequencer;
 
+  // Handles playing music
   public static void playMusic()
       throws MidiUnavailableException, InvalidMidiDataException, IOException {
 
@@ -27,6 +28,7 @@ public final class Music implements JMC {
     }
   }
 
+  // Handles stopping music
   public static void stopMusic() {
     sequencer.close();
   }

@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Game {
 
+
+  // Variables, setters, and getters.
   private boolean isOver;
   private int remainingDays;
   private Spacecraft spacecraft;
@@ -50,6 +52,7 @@ public class Game {
     this.planets = planets;
   }
 
+  // Calculates the total number of astronauts needed
   public int calculateRemainingAstronautsViaTotalNumOfAstronauts() {
     int totalNumberOfAstronauts = getTotalNumberOfAstronauts();
     int numberOfAstronautsOnSc = spacecraft.getPassengers().size();
