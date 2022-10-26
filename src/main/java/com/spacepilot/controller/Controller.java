@@ -177,6 +177,9 @@ public class Controller {
     } else if (command[0].equals("unload")) {
       unloadPassengersOnEarth();
 
+    } else if (command[0].equals("planets")) {
+      View.printPlanets(game.getPlanets());
+
     } else { // invalid command message
       View.printInvalidCommandAlert();
     }
@@ -319,13 +322,13 @@ public class Controller {
   public static List<Planet> createPlanets() throws URISyntaxException, IOException {
     List<Planet> planets = new ArrayList<>();
     List<String> planetNames = new ArrayList<>();
+    planetNames.add("/planets/mercury.json");
+    planetNames.add("/planets/venus.json");
     planetNames.add("/planets/earth.json");
     planetNames.add("/planets/moon.json");
     planetNames.add("/planets/mars.json");
-    planetNames.add("/planets/mercury.json");
     planetNames.add("/planets/jupiter.json");
     planetNames.add("/planets/saturn.json");
-    planetNames.add("/planets/venus.json");
     planetNames.add("/planets/neptune.json");
 
 
