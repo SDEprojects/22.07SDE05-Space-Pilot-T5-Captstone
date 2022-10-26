@@ -1,0 +1,14 @@
+{
+  "name": "Venus",
+  "event": "Lightning Storm",
+  "gravity": 8,
+  "radius": 3700,
+  "mass": 40,
+  "names": [
+    "Bob",
+    "Michelle",
+    "Chad",
+    "Aria"
+  ],
+  "arrayOfAstronautsOnPlanet": []
+}

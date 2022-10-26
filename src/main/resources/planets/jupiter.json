@@ -1,0 +1,14 @@
+{
+  "name": "Jupiter",
+  "event": "Great Red Spot Cyclone",
+  "gravity": 12,
+  "radius": 3600,
+  "mass": 20,
+  "names": [
+    "Bob",
+    "Michelle",
+    "Chad",
+    "Aria"
+  ],
+  "arrayOfAstronautsOnPlanet": []
+}
