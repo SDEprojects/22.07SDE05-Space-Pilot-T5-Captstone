@@ -166,7 +166,7 @@ public class Controller {
         View.printRepair();
 
         repairCounter++;
-      } else if (repairCounter >= 2) {
+      } else if (repairCounter >= 3) {
         View.printRepairLimit();
       }
 
