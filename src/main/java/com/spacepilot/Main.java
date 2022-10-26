@@ -49,12 +49,12 @@ public class Main {
     // print the prompt message
     View.printUserInputPrompt(
         "\nTurn & Burn! Would you like to play again?\n"
-            + "Enter n to quit\n"
+            + "Enter q to quit\n"
             + "Enter anything else to play another game\n");
     // sanitize user response (turn it into lower-case and trim whitespaces) and save it to userInput
     String userInput = reader.readLine().trim().toLowerCase();
     // check if the user input was "n" and return an appropriate boolean
-    if (userInput.equals("n")) {
+    if (userInput.equals("q")) {
       return false;
     } else {
       return true;
