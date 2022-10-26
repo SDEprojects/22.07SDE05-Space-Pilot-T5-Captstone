@@ -2,10 +2,14 @@ package com.spacepilot.view;
 
 import com.google.gson.Gson;
 import com.spacepilot.Main;
+import com.spacepilot.controller.Controller;
+import com.spacepilot.model.Game;
 import com.spacepilot.model.GameText;
+import com.spacepilot.model.Planet;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 import java.util.Random;
 
 public class View {
@@ -199,6 +203,14 @@ public class View {
   public static void printRepairLimit() {
     System.out.println(ANSI_RED + "Sorry, you cannot use the repair command\n"
         + "more than twice per round of the game." + ANSI_RESET);
+  }
+
+  public static void printPlanets(List<Planet> planets){
+
+    for (Planet planet : planets){
+      System.out.println(planet.getName());
+    }
+
   }
 
 }
