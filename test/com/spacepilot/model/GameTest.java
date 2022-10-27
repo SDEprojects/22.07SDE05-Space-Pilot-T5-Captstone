@@ -13,15 +13,17 @@ class GameTest {
     Spacecraft spacecraft = new Spacecraft();
     Person person1 = new Person("Blake", "moon");
     Person person2 = new Person("Deepak", "mars");
+    Person person3 = new Person("Julian", "saturn");
     Collection<Person> astronauts = null;
 
     astronauts.add(person1);
     astronauts.add(person2);
+    astronauts.add(person3);
 
     game.setTotalNumberOfAstronauts(18);
     spacecraft.setPassengers(astronauts);
 
-    assertEquals(2,game.calculateRemainingAstronautsViaTotalNumOfAstronauts());
+    assertEquals(15,game.calculateRemainingAstronautsViaTotalNumOfAstronauts());
 
   }
 }
