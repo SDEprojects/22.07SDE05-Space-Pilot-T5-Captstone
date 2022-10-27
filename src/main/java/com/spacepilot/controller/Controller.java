@@ -37,6 +37,7 @@ public class Controller {
     this.userInput = "";
   }
 
+  // This runs the game for initial startup
   public void play()
       throws IOException, URISyntaxException, MidiUnavailableException, InvalidMidiDataException {
     // create and set up game environment
@@ -60,6 +61,7 @@ public class Controller {
     Music.stopMusic(); // Close sequencer so that the program can terminate
   }
 
+  // Creates the initial game setup of planets and astronauts randomly
   public void setUpGame() throws URISyntaxException, IOException {
     // create planets based on planets' json files and set them as the current game's planets
     game.setPlanets(createPlanets());
@@ -77,6 +79,7 @@ public class Controller {
     game.getSpacecraft().setCurrentPlanet(returnPlanet("earth"));
   }
 
+  // Prompts the user to continue after the intro.
   public void gameIntro() throws IOException {
     View.getGameTextJson();
     // display title
@@ -97,6 +100,7 @@ public class Controller {
     View.printInstructions();
   }
 
+  // Handles what happens if the user types in commands.
   public void nextMove(String[] command) throws IOException {
     if (command[0].equals("quit")) {
       game.setOver(true);
@@ -139,6 +143,7 @@ public class Controller {
         }
       }
 
+      // allows the user to talk to npc
     } else if (command[0].equals("chat")) {
       userInput = "";
       while (userInput.length() < 1) {
@@ -148,6 +153,7 @@ public class Controller {
       }
       View.printNPCDialogue();
 
+      // Allows the user to repair the ship
     } else if (command[0].equals("repair")) {
       game.getSpacecraft().typeAndNumOfPassengersOnBoard();
       int engineerCount = game.getSpacecraft().getNumOfEngineersOnBoard();
@@ -155,29 +161,41 @@ public class Controller {
         View.printNoEngineerAlert();
         return;
       }
-      if (repairCounter < 2) {
+      if (repairCounter < 3) {
         Engineer.repairSpacecraft(game.getSpacecraft());
         View.printRepair();
 
         repairCounter++;
-      } else if (repairCounter >= 2) {
+      } else {
         View.printRepairLimit();
       }
 
+      // loading of passengers
     } else if (command[0].equals("load")) {
-      loadNewPassengers();
-
+      if (game.getSpacecraft().getPassengers().size() >= 4){
+        View.spacecraftFull();
+      } else if (game.getSpacecraft().getCurrentPlanet().getArrayOfAstronautsOnPlanet().size() + game.getSpacecraft().getPassengers().size() > 4) {
+        View.willPutCraftOverCapacity();
+      } else {
+        loadNewPassengers();
+      }
+      // unloading of passengers
     } else if (command[0].equals("unload")) {
       unloadPassengersOnEarth();
+
+    } else if (command[0].equals("planets")) {
+      View.printPlanets(game.getPlanets());
 
     } else { // invalid command message
       View.printInvalidCommandAlert();
     }
   }
 
+  // loading of passengers
   public void loadNewPassengers() {
     Collection<Person> arrayOfAstronautsOnCurrentPlanet = game.getSpacecraft().getCurrentPlanet()
         .getArrayOfAstronautsOnPlanet();
+    // If there are no astronauts on the planet then... print none
     if (arrayOfAstronautsOnCurrentPlanet.size() <= 0) {
       View.printNoAstronautsToLoad();
     }
@@ -193,6 +211,7 @@ public class Controller {
     }
   }
 
+  // checks for engineers
   public void determineIfEngineerIsOnBoard() {
     if (game.getSpacecraft().getNumOfEngineersOnBoard() > 0) {
       View.printYouveGotAnEngineer();
@@ -201,6 +220,7 @@ public class Controller {
     }
   }
 
+  // handles unloading passengers onto earth or other.
   public void unloadPassengersOnEarth() {
     Planet currentPlanet = game.getSpacecraft().getCurrentPlanet();
     Spacecraft spacecraft = game.getSpacecraft();
@@ -208,12 +228,12 @@ public class Controller {
     if (currentPlanet.getName().equals("Earth")) {
       currentPlanet.getArrayOfAstronautsOnPlanet().addAll(game.getSpacecraft().getPassengers());
       spacecraft.getPassengers().clear();
-      game.setOver(true);
     } else {
       View.printYouCantUnloadPassengersIfCurrentPlanetNotEarth();
     }
   }
 
+  // Checks if the user has won the game yet.
   public void checkGameResult() {
     int numRescuedPassengers = returnPlanet("earth").getNumOfAstronautsOnPlanet();
     int totalNumberOfPersonsCreatedInSolarSystem = game.getTotalNumberOfAstronauts();
@@ -223,6 +243,7 @@ public class Controller {
     game.setOver(true);
   }
 
+  // Prints where the user is currently located
   public void displayGameState() {
     View.printGameState(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(),
         game.getRemainingDays(), game.getSpacecraft().getHealth(),
@@ -230,6 +251,7 @@ public class Controller {
         game.getSpacecraft().getPassengers().size());
   }
 
+  // Allows the user to load the game
   public void loadSavedGame() {
     try (Reader reader = Files.newBufferedReader(Paths.get("./saved-game.json"))) {
       Game savedGame = new Gson().fromJson(reader, Game.class);
@@ -244,6 +266,7 @@ public class Controller {
     }
   }
 
+  // allows the user to save games
   public void saveGame(Game game) throws IOException {
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
@@ -300,13 +323,19 @@ public class Controller {
     }
   }
 
+  // Creates all possible planets
   public static List<Planet> createPlanets() throws URISyntaxException, IOException {
     List<Planet> planets = new ArrayList<>();
     List<String> planetNames = new ArrayList<>();
+    planetNames.add("/planets/mercury.json");
+    planetNames.add("/planets/venus.json");
     planetNames.add("/planets/earth.json");
     planetNames.add("/planets/moon.json");
     planetNames.add("/planets/mars.json");
-    planetNames.add("/planets/mercury.json");
+    planetNames.add("/planets/jupiter.json");
+    planetNames.add("/planets/saturn.json");
+    planetNames.add("/planets/neptune.json");
+
 
     for (String planetPath : planetNames) {
       try (Reader reader = new InputStreamReader(

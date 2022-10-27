@@ -2,6 +2,10 @@ package com.spacepilot.model;
 
 public class GameText {
 
+  /*
+  Getters for game text.
+   */
+
   private String[] title;
   private String[] introduction;
   private String[] instructions;

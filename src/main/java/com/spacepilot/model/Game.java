@@ -1,14 +1,27 @@
 package com.spacepilot.model;
 
+import java.util.Collection;
 import java.util.List;
 
 public class Game {
 
+
+  // Variables, setters, and getters.
   private boolean isOver;
   private int remainingDays;
   private Spacecraft spacecraft;
   private int totalNumberOfAstronauts;
   private List<Planet> planets;
+
+  public Collection<Person> getSavedAstros;
+
+  public Collection<Person> getGetSavedAstros() {
+    return getSavedAstros;
+  }
+
+  public void setGetSavedAstros(Collection<Person> getSavedAstros) {
+    this.getSavedAstros = getSavedAstros;
+  }
 
   public boolean isOver() { // Getter for isOver
     return isOver;
@@ -50,6 +63,7 @@ public class Game {
     this.planets = planets;
   }
 
+  // Calculates the total number of astronauts needed
   public int calculateRemainingAstronautsViaTotalNumOfAstronauts() {
     int totalNumberOfAstronauts = getTotalNumberOfAstronauts();
     int numberOfAstronautsOnSc = spacecraft.getPassengers().size();

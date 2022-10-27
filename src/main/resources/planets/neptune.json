@@ -1,0 +1,14 @@
+{
+  "name": "Neptune",
+  "event": " Anticyclonic Storm(Great Dark Spot)",
+  "gravity": 18,
+  "radius": 5000,
+  "mass": 16,
+  "names": [
+    "Bob",
+    "Michelle",
+    "Chad",
+    "Aria"
+  ],
+  "arrayOfAstronautsOnPlanet": []
+}

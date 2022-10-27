@@ -8,7 +8,8 @@ public class Person {
   Person() {
   }
 
-  Person(String name, String planetName) {
+  // Tracks the current player
+ Person(String name, String planetName) {
     this.name = name;
     this.currentLocation = planetName;
   }

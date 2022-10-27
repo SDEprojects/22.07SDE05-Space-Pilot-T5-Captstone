@@ -3,6 +3,7 @@ package com.spacepilot;
 import com.google.gson.Gson;
 import com.spacepilot.controller.Controller;
 import com.spacepilot.model.Game;
+import com.spacepilot.view.Gui;
 import com.spacepilot.view.View;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.sound.midi.MidiUnavailableException;
 
 public class Main {
 
+  // Pre-setup to start the game.
   public static void main(String[] args) {
     try (Reader input =
         new InputStreamReader(System.in);
@@ -30,6 +32,7 @@ public class Main {
       throw new RuntimeException(e);
     }
   }
+  // This runs a new game when launched
 
   public static Game createNewGame() {
     // create a reader
@@ -42,16 +45,17 @@ public class Main {
     }
   }
 
+  // if the user dies then asks the user if they would like to play again.
   public static boolean continuePlaying(BufferedReader reader) throws IOException {
     // print the prompt message
     View.printUserInputPrompt(
         "\nTurn & Burn! Would you like to play again?\n"
-            + "Enter n to quit\n"
+            + "Enter q to quit\n"
             + "Enter anything else to play another game\n");
     // sanitize user response (turn it into lower-case and trim whitespaces) and save it to userInput
     String userInput = reader.readLine().trim().toLowerCase();
     // check if the user input was "n" and return an appropriate boolean
-    if (userInput.equals("n")) {
+    if (userInput.equals("q")) {
       return false;
     } else {
       return true;

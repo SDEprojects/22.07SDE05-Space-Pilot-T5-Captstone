@@ -17,9 +17,13 @@ public class Planet {
   Planet(String name, String event, int gravity, int radius, int mass) {
     this.name = name;
     this.event = event;
+
+    // Unsure what these do
     this.gravity = gravity;
     this.radius = radius;
     this.mass = mass;
+
+    // Creates the total amount of astronauts that needs saved
     int totalNumOfAstronautsOnPlanet = new Random().nextInt(4);
 
     for (int i = 0; i <= totalNumOfAstronautsOnPlanet; i++) {
@@ -59,6 +63,7 @@ public class Planet {
     return arrayOfAstronautsOnPlanet;
   }
 
+  // Creates random events
   public String randomEncounter() {
     Random rnd = new Random();
     int randomInt = rnd.nextInt(10);
