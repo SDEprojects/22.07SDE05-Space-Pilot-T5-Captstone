@@ -161,18 +161,24 @@ public class Controller {
         View.printNoEngineerAlert();
         return;
       }
-      if (repairCounter < 2) {
+      if (repairCounter < 3) {
         Engineer.repairSpacecraft(game.getSpacecraft());
         View.printRepair();
 
         repairCounter++;
-      } else if (repairCounter >= 3) {
+      } else {
         View.printRepairLimit();
       }
 
       // loading of passengers
     } else if (command[0].equals("load")) {
-      loadNewPassengers();
+      if (game.getSpacecraft().getPassengers().size() >= 4){
+        View.spacecraftFull();
+      } else if (game.getSpacecraft().getCurrentPlanet().getArrayOfAstronautsOnPlanet().size() + game.getSpacecraft().getPassengers().size() > 4) {
+        View.willPutCraftOverCapacity();
+      } else {
+        loadNewPassengers();
+      }
       // unloading of passengers
     } else if (command[0].equals("unload")) {
       unloadPassengersOnEarth();
@@ -222,7 +228,6 @@ public class Controller {
     if (currentPlanet.getName().equals("Earth")) {
       currentPlanet.getArrayOfAstronautsOnPlanet().addAll(game.getSpacecraft().getPassengers());
       spacecraft.getPassengers().clear();
-      game.setOver(true);
     } else {
       View.printYouCantUnloadPassengersIfCurrentPlanetNotEarth();
     }

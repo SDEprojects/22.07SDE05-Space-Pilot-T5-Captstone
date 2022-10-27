@@ -1,5 +1,6 @@
 package com.spacepilot.model;
 
+import java.util.Collection;
 import java.util.List;
 
 public class Game {
@@ -11,6 +12,16 @@ public class Game {
   private Spacecraft spacecraft;
   private int totalNumberOfAstronauts;
   private List<Planet> planets;
+
+  public Collection<Person> getSavedAstros;
+
+  public Collection<Person> getGetSavedAstros() {
+    return getSavedAstros;
+  }
+
+  public void setGetSavedAstros(Collection<Person> getSavedAstros) {
+    this.getSavedAstros = getSavedAstros;
+  }
 
   public boolean isOver() { // Getter for isOver
     return isOver;
