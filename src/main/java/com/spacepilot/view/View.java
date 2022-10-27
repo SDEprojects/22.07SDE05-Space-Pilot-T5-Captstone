@@ -205,12 +205,25 @@ public class View {
         + "more than twice per round of the game." + ANSI_RESET);
   }
 
+  // print all planets that can be traveled to
   public static void printPlanets(List<Planet> planets){
 
     for (Planet planet : planets){
       System.out.println(planet.getName());
     }
 
+  }
+
+  public static void spacecraftFull(){
+    System.out.println();
+    System.out.println("The spacecraft is full, unload on earth to continue rescuing more astronauts");
+    System.out.println();
+  }
+
+  public static void willPutCraftOverCapacity(){
+    System.out.println();
+    System.out.println("Loading will put your ship over capacity, unload on earth and return");
+    System.out.println();
   }
 
 }
