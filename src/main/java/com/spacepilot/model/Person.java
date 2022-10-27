@@ -9,7 +9,7 @@ public class Person {
   }
 
   // Tracks the current player
-  public Person(String name, String planetName) {
+ Person(String name, String planetName) {
     this.name = name;
     this.currentLocation = planetName;
   }
