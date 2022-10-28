@@ -202,7 +202,7 @@ public class View {
   // You can repair only twice in each round.
   public static void printRepairLimit() {
     System.out.println(ANSI_RED + "Sorry, you cannot use the repair command\n"
-        + "more than twice per round of the game." + ANSI_RESET);
+        + "more than three times per round of the game." + ANSI_RESET);
   }
 
   // print all planets that can be traveled to
@@ -223,6 +223,17 @@ public class View {
   public static void willPutCraftOverCapacity(){
     System.out.println();
     System.out.println(ANSI_RED + "Loading will put your ship over capacity, unload on earth and return" + ANSI_RESET);
+    System.out.println();
+  }
+
+  public static void shipDestroyed(){
+    System.out.println();
+    System.out.println(ANSI_RED + "Your ship has been destroyed!" + ANSI_RESET);
+  }
+
+  public static void ranOutOfTime(){
+    System.out.println();
+    System.out.println(ANSI_RED + "You did not rescue the necessary amount of astronauts in the given time!");
     System.out.println();
   }
 }
