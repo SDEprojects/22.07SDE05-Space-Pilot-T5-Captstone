@@ -2,8 +2,10 @@ package com.spacepilot.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
@@ -21,10 +23,9 @@ import javax.swing.text.StyledDocument;
 
 public class Gui {
 
-  JFrame frame;
+  public static JFrame frame;
   JPanel titlePanel, imagePanel, playGamePanel, introPanel, spacePanel;
   JTextPane intro;
-  JTextArea introText;
   JLabel title;
   JButton playGameButton;
 
@@ -116,6 +117,16 @@ public class Gui {
     contentPanel.add(imagePanel);
 
     frame.add(contentPanel);
+
+    playGameButton.addActionListener(e -> {
+      frame.remove(contentPanel);
+      try {
+        new GamePlay();
+      } catch (IOException | FontFormatException ex) {
+        throw new RuntimeException(ex);
+      }
+    });
+
     frame.setVisible(true);
 
   }
