@@ -64,10 +64,11 @@ public class Game {
   }
 
   // Calculates the total number of astronauts needed
-  public int calculateRemainingAstronautsViaTotalNumOfAstronauts() {
+  public int calculateRemainingAstronautsViaTotalNumOfAstronauts(Planet earth) {
+    int astronautsOnEarth = earth.getNumOfAstronautsOnPlanet();
     int totalNumberOfAstronauts = getTotalNumberOfAstronauts();
     int numberOfAstronautsOnSc = spacecraft.getPassengers().size();
-    int remainingNumberOfAstronautsToPickUp = totalNumberOfAstronauts - numberOfAstronautsOnSc;
+    int remainingNumberOfAstronautsToPickUp = totalNumberOfAstronauts - numberOfAstronautsOnSc - astronautsOnEarth;
     return remainingNumberOfAstronautsToPickUp;
   }
 

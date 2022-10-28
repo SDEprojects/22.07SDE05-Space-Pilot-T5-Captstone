@@ -30,6 +30,7 @@ public class Controller {
   private final BufferedReader reader; // buffered reader used to read in what user enters
   private String userInput; // variable used to save user input
   private int repairCounter = 0;
+  private int remainingAstronauts;
 
   public Controller(Game game, BufferedReader reader) {
     this.game = game;
@@ -227,6 +228,7 @@ public class Controller {
 
     if (currentPlanet.getName().equals("Earth")) {
       currentPlanet.getArrayOfAstronautsOnPlanet().addAll(game.getSpacecraft().getPassengers());
+      game.getSpacecraft().setNumOfEngineersOnBoard(0);
       spacecraft.getPassengers().clear();
     } else {
       View.printYouCantUnloadPassengersIfCurrentPlanetNotEarth();
@@ -245,7 +247,7 @@ public class Controller {
 
   // Prints where the user is currently located
   public void displayGameState() {
-    View.printGameState(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(),
+    View.printGameState(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(returnPlanet("earth")),
         game.getRemainingDays(), game.getSpacecraft().getHealth(),
         game.getSpacecraft().getCurrentPlanet().getName(),
         game.getSpacecraft().getPassengers().size());

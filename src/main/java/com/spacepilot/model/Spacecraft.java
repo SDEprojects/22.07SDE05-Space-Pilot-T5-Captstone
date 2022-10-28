@@ -46,6 +46,10 @@ public class Spacecraft {
     return numOfEngineersOnBoard;
   }
 
+  public void setNumOfEngineersOnBoard(int numOfEngineersOnBoard) {
+    this.numOfEngineersOnBoard = numOfEngineersOnBoard;
+  }
+
   // Add passengers into spaceship
   public void addPassengers(Collection<Person> newPassengers) {
     getPassengers().addAll(newPassengers);
