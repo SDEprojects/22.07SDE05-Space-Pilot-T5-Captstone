@@ -137,8 +137,13 @@ public class Controller {
           game.setRemainingDays(game.getRemainingDays() - 1);
           // check if the number of remaining days is less than 1
           // or if the spacecraft's health is less than 1
-          if (game.getRemainingDays() < 1 || spacecraft.getHealth() < 1) {
+          if (game.getRemainingDays() < 1) {
             // if so, set the game as over
+            View.ranOutOfTime();
+            game.setOver(true);
+          }
+          if(spacecraft.getHealth() < 1){
+            View.shipDestroyed();
             game.setOver(true);
           }
         }
@@ -158,18 +163,7 @@ public class Controller {
     } else if (command[0].equals("repair")) {
       game.getSpacecraft().typeAndNumOfPassengersOnBoard();
       int engineerCount = game.getSpacecraft().getNumOfEngineersOnBoard();
-      if (engineerCount == 0) {
-        View.printNoEngineerAlert();
-        return;
-      }
-      if (repairCounter < 3) {
-        Engineer.repairSpacecraft(game.getSpacecraft());
-        View.printRepair();
-
-        repairCounter++;
-      } else {
-        View.printRepairLimit();
-      }
+      repairShipConditions(engineerCount);
 
       // loading of passengers
     } else if (command[0].equals("load")) {
@@ -189,6 +183,21 @@ public class Controller {
 
     } else { // invalid command message
       View.printInvalidCommandAlert();
+    }
+  }
+
+  private void repairShipConditions(int engineerCount) {
+    if (engineerCount == 0) {
+      View.printNoEngineerAlert();
+      return;
+    }
+    if (repairCounter < 3) {
+      Engineer.repairSpacecraft(game.getSpacecraft());
+      View.printRepair();
+
+      repairCounter++;
+    } else {
+      View.printRepairLimit();
     }
   }
 
