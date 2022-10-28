@@ -222,8 +222,7 @@ public class View {
 
   public static void willPutCraftOverCapacity(){
     System.out.println();
-    System.out.println("Loading will put your ship over capacity, unload on earth and return");
+    System.out.println(ANSI_RED + "Loading will put your ship over capacity, unload on earth and return" + ANSI_RESET);
     System.out.println();
   }
-
 }
