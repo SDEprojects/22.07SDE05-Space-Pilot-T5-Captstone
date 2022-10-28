@@ -21,6 +21,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
@@ -30,7 +32,7 @@ public class Controller {
   private final BufferedReader reader; // buffered reader used to read in what user enters
   private String userInput; // variable used to save user input
   private int repairCounter = 0;
-  private int remainingAstronauts;
+  private double planetRandomizer;
 
   public Controller(Game game, BufferedReader reader) {
     this.game = game;
@@ -66,6 +68,8 @@ public class Controller {
   public void setUpGame() throws URISyntaxException, IOException {
     // create planets based on planets' json files and set them as the current game's planets
     game.setPlanets(createPlanets());
+
+    placeFuelRandomly(game);
     // for each planet in the current game
     for (Planet planet : game.getPlanets()) {
       // place random number of astronauts on each planet
@@ -181,6 +185,8 @@ public class Controller {
     } else if (command[0].equals("planets")) {
       View.printPlanets(game.getPlanets());
 
+    } else if (command[0].equals("use-fuel")) {
+      useFuel();
     } else { // invalid command message
       View.printInvalidCommandAlert();
     }
@@ -248,9 +254,9 @@ public class Controller {
   public void checkGameResult() {
     int numRescuedPassengers = returnPlanet("earth").getNumOfAstronautsOnPlanet();
     int totalNumberOfPersonsCreatedInSolarSystem = game.getTotalNumberOfAstronauts();
-    boolean userWon = (double) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem
-        >= (double) 4 / 5;
-    View.printGameOverMessage(userWon);
+    boolean userWon = (double) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (double) 3 / 4;
+    if (returnPlanet("earth").getName().equals("Earth") && userWon && game.getRemainingDays() > 1 )
+    View.printGameOverMessage(true);
     game.setOver(true);
   }
 
@@ -260,6 +266,7 @@ public class Controller {
         game.getRemainingDays(), game.getSpacecraft().getHealth(),
         game.getSpacecraft().getCurrentPlanet().getName(),
         game.getSpacecraft().getPassengers().size());
+        printFuelIfOnPlanet();
   }
 
   // Allows the user to load the game
@@ -357,6 +364,32 @@ public class Controller {
       }
     }
     return planets;
+  }
+
+  public void placeFuelRandomly(Game game){
+    Random rng = new Random();
+
+    int planetRandomizer = rng.nextInt(game.getPlanets().size() - 1);
+
+    Planet randomPlanet = game.getPlanets().get(planetRandomizer);
+
+    randomPlanet.setItem("fuel");
+  }
+
+  public void useFuel(){
+    if (game.getSpacecraft().getCurrentPlanet().getItem().equals("fuel")){
+      game.setRemainingDays(game.getRemainingDays() + 2);
+      game.getSpacecraft().getCurrentPlanet().setItem("");
+      System.out.println("Way to fuel up!");
+    } else{
+      View.noFuelToUse();
+    }
+  }
+
+  public void printFuelIfOnPlanet(){
+    if (game.getSpacecraft().getCurrentPlanet().getItem().equals("fuel")){
+      View.fuelOnPlanet();
+    }
   }
 
 }

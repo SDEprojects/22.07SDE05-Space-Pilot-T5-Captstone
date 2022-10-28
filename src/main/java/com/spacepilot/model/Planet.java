@@ -11,6 +11,8 @@ public class Planet {
   private int gravity;
   private int radius;
   private int mass;
+
+  private String item;
   private String[] names;
   private final Collection<Person> arrayOfAstronautsOnPlanet = new ArrayList<>();
 
@@ -53,6 +55,14 @@ public class Planet {
 
   public int getMass() {
     return mass;
+  }
+
+  public String getItem() {
+    return item;
+  }
+
+  public void setItem(String item) {
+    this.item = item;
   }
 
   public int getNumOfAstronautsOnPlanet() {
