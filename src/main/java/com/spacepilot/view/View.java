@@ -236,4 +236,16 @@ public class View {
     System.out.println(ANSI_RED + "You did not rescue the necessary amount of astronauts in the given time!");
     System.out.println();
   }
+
+  public static void noFuelToUse(){
+    System.out.println();
+    System.out.println("There is now fuel to use!");
+    System.out.println();
+  }
+
+  public static void fuelOnPlanet(){
+    System.out.println();
+    System.out.println(ANSI_BLUE + "Look There is fuel, type in \"use-fuel\" to fuel up and extend your mission time by 2 days!" + ANSI_RESET);
+    System.out.println();
+  }
 }
