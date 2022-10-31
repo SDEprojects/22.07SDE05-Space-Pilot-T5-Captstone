@@ -19,7 +19,7 @@ import javax.swing.border.Border;
 
 public class GamePlay {
 
-  // Adds images onto the gameplay play panal
+  // Adds images onto the gameplay play panel
   URL titleImage = ClassLoader.getSystemClassLoader().getResource("./GUI/TitleScreen.png");
   URL earthImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Earth.png");
   URL rocketImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Rocket.png");

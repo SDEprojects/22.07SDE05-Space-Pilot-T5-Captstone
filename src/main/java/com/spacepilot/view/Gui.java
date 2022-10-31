@@ -37,6 +37,7 @@ public class Gui {
   Font gameStartFont = new Font("Times New Roman", Font.BOLD, 25);
   Font introFont = new Font(Font.MONOSPACED, Font.BOLD, 20);
 
+  // This PSVM is for testing purposes only, will be removed later
   public static void main(String[] args) {
 
     new Gui();
