@@ -19,6 +19,7 @@ import javax.swing.border.Border;
 
 public class GamePlay {
 
+  // Adds images onto the gameplay play panal
   URL titleImage = ClassLoader.getSystemClassLoader().getResource("./GUI/TitleScreen.png");
   URL earthImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Earth.png");
   URL rocketImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Rocket.png");
@@ -30,6 +31,10 @@ public class GamePlay {
   JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, totalEngineers;
   JButton loadButton, unloadButton, repairButton, mapButton, settingsButton, quitButton;
 
+  /*
+   Sets up the left panel on game play to display the information for the current planet, ship
+   condition, remaining days, remaining astronauts, passengers onboard, and total engineers
+   */
   public GamePlay() throws IOException, FontFormatException {
     JFrame frame = Gui.frame;
 
@@ -86,10 +91,12 @@ public class GamePlay {
     rocketPanel.setBounds(225, 150, 575, 300);
     rocketPanel.setOpaque(false);
 
+    // Adds a rocket to the background, for fun.
     ImageIcon rocketImg = new ImageIcon(rocketImage);
     rocketImg.setImage(rocketImg.getImage().getScaledInstance(100, 250, Image.SCALE_DEFAULT));
     rocketPanel.add(new JLabel(rocketImg));
 
+    // Creates the game play panel to give the user a visual representation as to what is going on.
     midPanel = new JPanel();
     midPanel.setBounds(225, 180, 575, 650);
     midPanel.setBackground(Color.black);
@@ -99,18 +106,22 @@ public class GamePlay {
     planetImg.setImage(planetImg.getImage().getScaledInstance(650, 650, Image.SCALE_DEFAULT));
     midPanel.add(new JLabel(planetImg));
 
+    /*
+   Below here is the controls for the right panel to include the load, unload, repair, map,
+   settings, and quit buttons.
+     */
     rightPanel = new JPanel();
     rightPanel.setBounds(800, 200, 200, 600);
     rightPanel.setBackground(Color.black);
     rightPanel.setOpaque(false);
     rightPanel.setLayout(new GridLayout(6, 1));
 
-    loadButton = new JButton("Load");
+    loadButton = new JButton("Load Astronauts");
     loadButton.setForeground(Color.blue);
     loadButton.setOpaque(false);
     loadButton.setFont(planetInfoFont);
 
-    unloadButton = new JButton("Unload");
+    unloadButton = new JButton("Unload Astronauts");
     unloadButton.setForeground(Color.blue);
     unloadButton.setOpaque(false);
     unloadButton.setFont(planetInfoFont);
@@ -154,6 +165,7 @@ public class GamePlay {
     contentPanel.setLayout(null);
     contentPanel.setOpaque(true);
 
+    // Add everything into the gameplay panel
     contentPanel.add(leftPanel);
     contentPanel.add(rightPanel);
     contentPanel.add(rocketPanel);
