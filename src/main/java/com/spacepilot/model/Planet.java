@@ -77,7 +77,7 @@ public class Planet {
   public String randomEncounter() {
     Random rnd = new Random();
     int randomInt = rnd.nextInt(10);
-    if (randomInt > 5) {
+    if (randomInt > 6) {
       return event;
     }
     return null;

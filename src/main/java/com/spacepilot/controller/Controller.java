@@ -49,6 +49,7 @@ public class Controller {
     gameIntro();
     // play music
     Music.playMusic();
+
     // while game is not over, allow the user to continue to play
     while (!game.isOver()) {
       // print current game info
@@ -59,8 +60,8 @@ public class Controller {
       String[] userCommand = textParser(userInput);
       // execute their command and/or display information (e.g., list of commands, invalid command, etc.)
       nextMove(userCommand);
+      checkGameResult();
     }
-    checkGameResult();
     Music.stopMusic(); // Close sequencer so that the program can terminate
   }
 
@@ -171,9 +172,9 @@ public class Controller {
 
       // loading of passengers
     } else if (command[0].equals("load")) {
-      if (game.getSpacecraft().getPassengers().size() >= 4){
+      if (game.getSpacecraft().getPassengers().size() >= 5){
         View.spacecraftFull();
-      } else if (game.getSpacecraft().getCurrentPlanet().getArrayOfAstronautsOnPlanet().size() + game.getSpacecraft().getPassengers().size() > 4) {
+      } else if (game.getSpacecraft().getCurrentPlanet().getArrayOfAstronautsOnPlanet().size() + game.getSpacecraft().getPassengers().size() > 5) {
         View.willPutCraftOverCapacity();
       } else {
         loadNewPassengers();
@@ -254,10 +255,13 @@ public class Controller {
   public void checkGameResult() {
     int numRescuedPassengers = returnPlanet("earth").getNumOfAstronautsOnPlanet();
     int totalNumberOfPersonsCreatedInSolarSystem = game.getTotalNumberOfAstronauts();
-    boolean userWon = (double) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (double) 3 / 4;
-    if (returnPlanet("earth").getName().equals("Earth") && userWon && game.getRemainingDays() > 1 )
+
+    boolean userWon = (float) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (float) 4 / 4;
+    if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && userWon ){
     View.printGameOverMessage(true);
-    game.setOver(true);
+    game.setOver(true);} else {
+      game.setOver(false);
+    }
   }
 
   // Prints where the user is currently located
