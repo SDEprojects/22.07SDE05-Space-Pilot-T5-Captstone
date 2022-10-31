@@ -334,7 +334,7 @@ public class Controller {
     return null;
   }
 
-  public static Spacecraft createSpacecraft() {
+  public Spacecraft createSpacecraft() {
     // create a reader
     try (Reader reader = new InputStreamReader(
         Main.class.getResourceAsStream("/spacecraft.json"))) {

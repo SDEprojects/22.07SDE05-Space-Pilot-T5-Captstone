@@ -1,5 +1,6 @@
 package com.spacepilot.view;
 
+import com.spacepilot.model.Game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -19,15 +20,18 @@ import javax.swing.border.Border;
 
 public class GamePlay {
 
+  private Game game;
+
   // Adds images onto the gameplay play panel
   URL titleImage = ClassLoader.getSystemClassLoader().getResource("./GUI/TitleScreen.png");
   URL earthImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Earth.png");
   URL rocketImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Rocket.png");
-  InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("GUI/Dashhorizon-eZ5wg.otf");
+  InputStream stream = ClassLoader.getSystemClassLoader()
+      .getResourceAsStream("GUI/Dashhorizon-eZ5wg.otf");
   Font planetInfoFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(20f);
   Border black = BorderFactory.createLineBorder(Color.black);
 
-  JPanel leftPanel, midPanel, rocketPanel, rightPanel, imagePanel;
+  JPanel leftPanel, midPanel, rocketPanel, rightPanel, imagePanel, textPanel;
   JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, totalEngineers;
   JButton loadButton, unloadButton, repairButton, mapButton, settingsButton, quitButton;
 
@@ -39,11 +43,11 @@ public class GamePlay {
     JFrame frame = Gui.frame;
 
     leftPanel = new JPanel();
-    leftPanel.setBounds(25, 200, 200, 600);
+    leftPanel.setBounds(0, 200, 200, 600);
     leftPanel.setBackground(Color.white);
 //    leftPanel.setOpaque(false);
 
-    currentPlanet = new JLabel("Current Planet", SwingConstants.CENTER);
+    currentPlanet = new JLabel("Current Planet:", SwingConstants.CENTER);
     currentPlanet.setForeground(Color.red);
     currentPlanet.setBorder(black);
     currentPlanet.setFont(planetInfoFont);
@@ -88,7 +92,7 @@ public class GamePlay {
 
     rocketPanel = new JPanel();
     rocketPanel.setBackground(Color.black);
-    rocketPanel.setBounds(225, 150, 575, 300);
+    rocketPanel.setBounds(225, 75, 575, 300);
     rocketPanel.setOpaque(false);
 
     // Adds a rocket to the background, for fun.
@@ -98,13 +102,19 @@ public class GamePlay {
 
     // Creates the game play panel to give the user a visual representation as to what is going on.
     midPanel = new JPanel();
-    midPanel.setBounds(225, 180, 575, 650);
+    midPanel.setBounds(213, 30, 575, 650);
     midPanel.setBackground(Color.black);
     midPanel.setOpaque(false);
 
     ImageIcon planetImg = new ImageIcon(earthImage);
     planetImg.setImage(planetImg.getImage().getScaledInstance(650, 650, Image.SCALE_DEFAULT));
     midPanel.add(new JLabel(planetImg));
+
+    // Creates the text panel for main game play
+    textPanel = new JPanel();
+    textPanel.setBounds(200, 650, 600, 310);
+    textPanel.setBackground(Color.black);
+
 
     /*
    Below here is the controls for the right panel to include the load, unload, repair, map,
@@ -157,7 +167,8 @@ public class GamePlay {
     imagePanel.setBackground(Color.black);
     imagePanel.setBounds(0, 0, 1000, 1000);
     ImageIcon backgroundImg = new ImageIcon(titleImage);
-    backgroundImg.setImage(backgroundImg.getImage().getScaledInstance(1000, 1000, Image.SCALE_DEFAULT));
+    backgroundImg.setImage(
+        backgroundImg.getImage().getScaledInstance(1000, 1000, Image.SCALE_DEFAULT));
 
     imagePanel.add(new JLabel(backgroundImg));
 
@@ -169,6 +180,7 @@ public class GamePlay {
     contentPanel.add(leftPanel);
     contentPanel.add(rightPanel);
     contentPanel.add(rocketPanel);
+    contentPanel.add(textPanel);
     contentPanel.add(midPanel);
     contentPanel.add(imagePanel);
 
