@@ -228,6 +228,15 @@ public class GamePlay {
     return planetPanel;
   }
 
+//  public void update() {
+//    currentPlanet.setText("Current Planet ");
+//    remainingDays.setText("Ship Condition ");
+//    remainingDays.setText("Remaining Days ");
+//    remainingDays.setText("Remaining Astronauts ");
+//    remainingDays.setText("Passengers Onboard ");
+//    remainingDays.setText("Total Engineers ");
+//  }
+
   public void update() {
     // populate all of the widgets with the correct values (such as remaining days)
     currentPlanet.setText("Current Planet " + game.getSpacecraft().getCurrentPlanet().getName());
@@ -238,9 +247,6 @@ public class GamePlay {
     remainingDays.setText("Total Engineers " + game.getSpacecraft().getNumOfEngineersOnBoard());
   }
 
-  public void startGame()
-      throws MidiUnavailableException, InvalidMidiDataException, IOException, URISyntaxException {
-    controller.play();
   }
 
-}
+
