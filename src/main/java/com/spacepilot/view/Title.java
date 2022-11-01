@@ -1,6 +1,7 @@
 package com.spacepilot.view;
 
 import com.spacepilot.controller.Controller;
+import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
 import java.awt.Color;
 import java.awt.Font;
@@ -28,8 +29,12 @@ import javax.swing.text.StyledDocument;
 public class Title {
 
   private Game game;
-  private Controller controller;
+//  private Controller controller;
+
+  private GUIController controller;
   public static JFrame frame;
+
+  private GamePlay gamePlay;
   JPanel titlePanel, imagePanel, playGamePanel, introPanel, spacePanel;
   JTextPane intro;
   JLabel title;
@@ -136,11 +141,15 @@ public class Title {
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
       game = new Game();
+      controller = new GUIController(game);
       frame.remove(contentPanel);
       try {
-        GamePlay gamePlay = new GamePlay(controller, game);
-        gamePlay.update();
-      } catch (IOException | FontFormatException ex) {
+        gamePlay = new GamePlay(controller);
+
+        updateGamePlayScreen();
+      } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException ex) {
+        throw new RuntimeException(ex);
+      } catch (InvalidMidiDataException ex) {
         throw new RuntimeException(ex);
       }
     });
@@ -149,6 +158,14 @@ public class Title {
 
   }
 
+  public void updateGamePlayScreen(){
+    String remainingDays = String.valueOf(game.getRemainingDays());
+    String condition = String.valueOf(game.getSpacecraft().getHealth());
+    String planet = game.getSpacecraft().getCurrentPlanet().getName();
+    String remainingAstronauts = String.valueOf(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
+        controller.returnPlanet("Earth")));
+    String passengersOnboard = String.valueOf(game.getSpacecraft().getPassengers().size());
+    String engineersOnboard = String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard());
+    gamePlay.update(remainingDays, condition, planet, remainingAstronauts, passengersOnboard, engineersOnboard);
+  }
 }
-
-

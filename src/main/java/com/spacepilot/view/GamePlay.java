@@ -1,6 +1,7 @@
 package com.spacepilot.view;
 
 import com.spacepilot.controller.Controller;
+import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
 import java.awt.Color;
 import java.awt.Font;
@@ -25,7 +26,7 @@ import javax.swing.border.Border;
 public class GamePlay {
 
   private Game game;
-  private Controller controller;
+  private GUIController controller;
 
   // Adds images onto the gameplay play panel
   URL titleImage = ClassLoader.getSystemClassLoader().getResource("./GUI/TitleScreen.png");
@@ -36,14 +37,18 @@ public class GamePlay {
   Font planetInfoFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(20f);
   Border black = BorderFactory.createLineBorder(Color.black);
 
+  JPanel currentPlanetPanel, shipConditionPanel, remainingDaysPanel, remainingAstronautsPanel, passengersOnboardPanel, engineersOnboardPanel;
   JPanel leftPanel, midPanel, rocketPanel, rightPanel, planetPanel, textPanel;
-  JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, totalEngineers;
+  JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, engineersOnboard;
+  JLabel planetLabel, shipConditionLabel, remainingDaysLabel, remainingAstronautsLabel, passengersOnboardLabel, engineersOnboardLabel;
   JButton loadButton, unloadButton, repairButton, mapButton, settingsButton, quitButton;
 
-  public GamePlay(Controller controller, Game game) throws IOException, FontFormatException {
+  public GamePlay(GUIController controller)
+      throws IOException, FontFormatException, MidiUnavailableException, InvalidMidiDataException, URISyntaxException {
     ClassLoader loader = getClass().getClassLoader(); // This class loader can be used to load all resources for this class
     this.game = game;
     this.controller = controller;
+    controller.play();
     JFrame frame = Title.frame;
 
     // Calls upon the creation of each panel for the main gameplay.
@@ -78,49 +83,130 @@ public class GamePlay {
   private JPanel createLeftPanel() {
     leftPanel = new JPanel();
     leftPanel.setBounds(0, 200, 200, 600);
-    leftPanel.setBackground(Color.white);
+    leftPanel.setBackground(Color.black);
 
-    currentPlanet = new JLabel("Current Planet:", SwingConstants.CENTER);
+    currentPlanetPanel = new JPanel();
+    currentPlanetPanel.setBounds(0, 200, 200, 100);
+    currentPlanetPanel.setBackground(Color.white);
+    currentPlanetPanel.setBorder(black);
+
+    currentPlanet = new JLabel("Current Planet", SwingConstants.CENTER);
     currentPlanet.setForeground(Color.red);
-    currentPlanet.setBorder(black);
     currentPlanet.setFont(planetInfoFont);
     currentPlanet.setVerticalAlignment(JLabel.TOP);
-    leftPanel.add(currentPlanet);
+
+    planetLabel = new JLabel("", SwingConstants.CENTER);
+    planetLabel.setForeground(Color.orange);
+    planetLabel.setFont(planetInfoFont);
+    planetLabel.setVerticalAlignment(JLabel.TOP);
+    currentPlanetPanel.add(currentPlanet);
+    currentPlanetPanel.add(planetLabel);
+    currentPlanetPanel.setLayout(new GridLayout(2, 1));
+
+    shipConditionPanel = new JPanel();
+    shipConditionPanel.setBounds(0, 300, 200, 100);
+    shipConditionPanel.setBackground(Color.white);
+    shipConditionPanel.setBorder(black);
 
     shipCondition = new JLabel("Ship Condition", SwingConstants.CENTER);
     shipCondition.setForeground(Color.red);
-    shipCondition.setBorder(black);
     shipCondition.setFont(planetInfoFont);
     shipCondition.setVerticalAlignment(JLabel.TOP);
-    leftPanel.add(shipCondition);
+
+    shipConditionLabel = new JLabel("", SwingConstants.CENTER);
+    shipConditionLabel.setText("");
+    shipConditionLabel.setForeground(Color.orange);
+    shipConditionLabel.setFont(planetInfoFont);
+    shipConditionLabel.setVerticalAlignment(JLabel.TOP);
+
+    shipConditionPanel.add(shipCondition);
+    shipConditionPanel.add(shipConditionLabel);
+    shipConditionPanel.setLayout(new GridLayout(2, 1));
+
+    remainingDaysPanel = new JPanel();
+    remainingDaysPanel.setBounds(0, 400, 200, 100);
+    remainingDaysPanel.setBackground(Color.white);
+    remainingDaysPanel.setBorder(black);
 
     remainingDays = new JLabel("Remaining Days", SwingConstants.CENTER);
     remainingDays.setForeground(Color.red);
-    remainingDays.setBorder(black);
     remainingDays.setFont(planetInfoFont);
     remainingDays.setVerticalAlignment(JLabel.TOP);
-    leftPanel.add(remainingDays);
 
+    remainingDaysLabel = new JLabel("", SwingConstants.CENTER);
+    remainingDaysLabel.setText("");
+    remainingDaysLabel.setForeground(Color.orange);
+    remainingDaysLabel.setFont(planetInfoFont);
+    remainingDaysLabel.setVerticalAlignment(JLabel.TOP);
+
+    remainingDaysPanel.add(remainingDays);
+    remainingDaysPanel.add(remainingDaysLabel);
+    remainingDaysPanel.setLayout(new GridLayout(2, 1));
+
+    remainingAstronautsPanel = new JPanel();
+    remainingAstronautsPanel.setBounds(0, 500, 200, 100);
+    remainingAstronautsPanel.setBackground(Color.white);
+    remainingAstronautsPanel.setBorder(black);
     remainingAstronauts = new JLabel("Remaining Astronauts", SwingConstants.CENTER);
     remainingAstronauts.setForeground(Color.red);
-    remainingAstronauts.setBorder(black);
     remainingAstronauts.setFont(planetInfoFont);
     remainingAstronauts.setVerticalAlignment(JLabel.TOP);
-    leftPanel.add(remainingAstronauts);
 
+    remainingAstronautsLabel = new JLabel("", SwingConstants.CENTER);
+    remainingAstronautsLabel.setText("");
+    remainingAstronautsLabel.setForeground(Color.orange);
+    remainingAstronautsLabel.setFont(planetInfoFont);
+    remainingAstronautsLabel.setVerticalAlignment(JLabel.TOP);
+
+    remainingAstronautsPanel.add(remainingAstronauts);
+    remainingAstronautsPanel.add(remainingAstronautsLabel);
+    remainingAstronautsPanel.setLayout(new GridLayout(2, 1));
+
+    passengersOnboardPanel = new JPanel();
+    passengersOnboardPanel.setBounds(0, 600, 200, 100);
+    passengersOnboardPanel.setBackground(Color.white);
+    passengersOnboardPanel.setBorder(black);
     passengersOnboard = new JLabel("Passengers Onboard", SwingConstants.CENTER);
     passengersOnboard.setForeground(Color.red);
-    passengersOnboard.setBorder(black);
     passengersOnboard.setFont(planetInfoFont);
     passengersOnboard.setVerticalAlignment(JLabel.TOP);
-    leftPanel.add(passengersOnboard);
 
-    totalEngineers = new JLabel("Total Engineers", SwingConstants.CENTER);
-    totalEngineers.setForeground(Color.red);
-    totalEngineers.setBorder(black);
-    totalEngineers.setFont(planetInfoFont);
-    totalEngineers.setVerticalAlignment(JLabel.TOP);
-    leftPanel.add(totalEngineers);
+    passengersOnboardLabel = new JLabel("", SwingConstants.CENTER);
+    passengersOnboardLabel.setText("");
+    passengersOnboardLabel.setForeground(Color.orange);
+    passengersOnboardLabel.setFont(planetInfoFont);
+    passengersOnboardLabel.setVerticalAlignment(JLabel.TOP);
+
+    passengersOnboardPanel.add(passengersOnboard);
+    passengersOnboardPanel.add(passengersOnboardLabel);
+    passengersOnboardPanel.setLayout(new GridLayout(2, 1));
+
+    engineersOnboardPanel = new JPanel();
+    engineersOnboardPanel.setBounds(0, 700, 200, 100);
+    engineersOnboardPanel.setBackground(Color.white);
+    engineersOnboardPanel.setBorder(black);
+    engineersOnboard = new JLabel("Engineers Onboard", SwingConstants.CENTER);
+    engineersOnboard.setForeground(Color.red);
+    engineersOnboard.setFont(planetInfoFont);
+    engineersOnboard.setVerticalAlignment(JLabel.TOP);
+
+    engineersOnboardLabel = new JLabel("", SwingConstants.CENTER);
+    engineersOnboardLabel.setText("");
+    engineersOnboardLabel.setForeground(Color.orange);
+    engineersOnboardLabel.setFont(planetInfoFont);
+    engineersOnboardLabel.setVerticalAlignment(JLabel.TOP);
+
+    engineersOnboardPanel.add(engineersOnboard);
+    engineersOnboardPanel.add(engineersOnboardLabel);
+    engineersOnboardPanel.setLayout(new GridLayout(2, 1));
+
+    leftPanel.add(currentPlanetPanel);
+    leftPanel.add(shipConditionPanel);
+    leftPanel.add(remainingDaysPanel);
+    leftPanel.add(remainingAstronautsPanel);
+    leftPanel.add(passengersOnboardPanel);
+    leftPanel.add(engineersOnboardPanel);
+
     leftPanel.setLayout(new GridLayout(6, 1));
 
     return leftPanel;
@@ -228,23 +314,14 @@ public class GamePlay {
     return planetPanel;
   }
 
-//  public void update() {
-//    currentPlanet.setText("Current Planet ");
-//    remainingDays.setText("Ship Condition ");
-//    remainingDays.setText("Remaining Days ");
-//    remainingDays.setText("Remaining Astronauts ");
-//    remainingDays.setText("Passengers Onboard ");
-//    remainingDays.setText("Total Engineers ");
-//  }
+  public void update(String days, String condition, String planet, String remainingAstronauts, String passengersOnboard, String engineersOnboard) {
+  remainingDaysLabel.setText(""+ days);
+    shipConditionLabel.setText(""+ condition);
+    planetLabel.setText("" +  planet);
+    remainingAstronautsLabel.setText("" + remainingAstronauts);
+    passengersOnboardLabel.setText("" + passengersOnboard);
+    engineersOnboardLabel.setText("" + engineersOnboard);
 
-  public void update() {
-    // populate all of the widgets with the correct values (such as remaining days)
-    currentPlanet.setText("Current Planet " + game.getSpacecraft().getCurrentPlanet().getName());
-    remainingDays.setText("Ship Condition " + game.getSpacecraft().getHealth());
-    remainingDays.setText("Remaining Days " + game.getRemainingDays());
-    remainingDays.setText("Remaining Astronauts ");
-    remainingDays.setText("Passengers Onboard " + game.getSpacecraft().getPassengers());
-    remainingDays.setText("Total Engineers " + game.getSpacecraft().getNumOfEngineersOnBoard());
   }
 
   }
