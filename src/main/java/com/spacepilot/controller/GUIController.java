@@ -166,9 +166,7 @@ public class GUIController {
     boolean userWon = (float) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (float) 4 / 4;
     if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && userWon ){
       View.printGameOverMessage(true);
-      game.setOver(true);} else {
-      game.setOver(false);
-    }
+      game.setOver(true);}
   }
 }
 
