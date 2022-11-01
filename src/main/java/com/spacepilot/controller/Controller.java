@@ -260,9 +260,7 @@ public class Controller {
     boolean userWon = (float) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (float) 4 / 4;
     if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && userWon ){
     View.printGameOverMessage(true);
-    game.setOver(true);} else {
-      game.setOver(false);
-    }
+    game.setOver(true);}
   }
 
   // Prints where the user is currently located
