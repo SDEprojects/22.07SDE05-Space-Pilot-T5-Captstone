@@ -3,7 +3,6 @@ package com.spacepilot;
 import com.google.gson.Gson;
 import com.spacepilot.controller.Controller;
 import com.spacepilot.model.Game;
-import com.spacepilot.view.Gui;
 import com.spacepilot.view.View;
 import java.io.BufferedReader;
 import java.io.IOException;
