@@ -136,14 +136,11 @@ public class Title {
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
       game = new Game();
-      controller = new Controller(game);
       frame.remove(contentPanel);
       try {
         GamePlay gamePlay = new GamePlay(controller, game);
-        gamePlay.startGame();
         gamePlay.update();
-      } catch (IOException | FontFormatException | MidiUnavailableException |
-               InvalidMidiDataException | URISyntaxException ex) {
+      } catch (IOException | FontFormatException ex) {
         throw new RuntimeException(ex);
       }
     });
