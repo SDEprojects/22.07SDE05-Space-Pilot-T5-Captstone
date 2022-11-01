@@ -29,10 +29,14 @@ import javax.sound.midi.MidiUnavailableException;
 public class Controller {
 
   private Game game; // model, where the current state of the game is stored
-  private final BufferedReader reader; // buffered reader used to read in what user enters
+  private BufferedReader reader; // buffered reader used to read in what user enters
   private String userInput; // variable used to save user input
   private int repairCounter = 0;
   private double planetRandomizer;
+
+  public Controller(Game game) {
+    this.game = game;
+  }
 
   public Controller(Game game, BufferedReader reader) {
     this.game = game;

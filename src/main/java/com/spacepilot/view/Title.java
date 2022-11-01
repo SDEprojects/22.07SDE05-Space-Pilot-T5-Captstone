@@ -1,28 +1,34 @@
 package com.spacepilot.view;
 
+import com.spacepilot.controller.Controller;
+import com.spacepilot.model.Game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+public class Title {
 
-public class Gui {
-
+  private Game game;
+  private Controller controller;
   public static JFrame frame;
   JPanel titlePanel, imagePanel, playGamePanel, introPanel, spacePanel;
   JTextPane intro;
@@ -40,10 +46,10 @@ public class Gui {
   // This PSVM is for testing purposes only, will be removed later
   public static void main(String[] args) {
 
-    new Gui();
+    new Title();
   }
 
-  public Gui() {
+  public Title() {
 
     // Creates the initial frame for everything
     frame = new JFrame("Space Pilot: Homebound");
@@ -129,10 +135,15 @@ public class Gui {
 
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
+      game = new Game();
+      controller = new Controller(game);
       frame.remove(contentPanel);
       try {
-        new GamePlay();
-      } catch (IOException | FontFormatException ex) {
+        GamePlay gamePlay = new GamePlay(controller, game);
+        gamePlay.startGame();
+        gamePlay.update();
+      } catch (IOException | FontFormatException | MidiUnavailableException |
+               InvalidMidiDataException | URISyntaxException ex) {
         throw new RuntimeException(ex);
       }
     });
