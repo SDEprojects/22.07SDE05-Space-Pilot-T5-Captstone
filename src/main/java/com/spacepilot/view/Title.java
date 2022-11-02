@@ -111,6 +111,8 @@ public class Title {
     imagePanel = new JPanel();
     imagePanel.setBackground(Color.black);
     imagePanel.setBounds(0, 0, 1000, 1000);
+
+//    URL titleImage = getClass().getClassLoader().getResource("./GUI/TitleScreen.png");
     ImageIcon img = new ImageIcon(titleImage);
     img.setImage(img.getImage().getScaledInstance(1000, 1000, Image.SCALE_DEFAULT));
 

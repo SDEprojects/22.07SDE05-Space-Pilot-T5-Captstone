@@ -55,7 +55,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.spacepilot.Main</mainClass>
+                                    <mainClass>com/spacepilot/view/Title.java</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

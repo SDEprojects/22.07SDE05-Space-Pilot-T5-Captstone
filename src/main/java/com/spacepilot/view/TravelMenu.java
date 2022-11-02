@@ -1,5 +1,9 @@
 package com.spacepilot.view;
 
+import com.spacepilot.controller.Controller;
+import com.spacepilot.controller.GUIController;
+import com.spacepilot.model.Game;
+import com.spacepilot.model.Planet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -9,6 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 public class TravelMenu {
+
+  private GUIController controller;
+  private Game game;
+  private Planet planet;
+  private GamePlay gamePlay;
 
   Font planetFont = new Font("Roboto", Font.BOLD, 20);
 
@@ -40,6 +49,9 @@ public class TravelMenu {
     mercuryButton.setContentAreaFilled(false);
     mercuryButton.setFont(planetFont);
     travelPanel.add(mercuryButton);
+    mercuryButton.addActionListener(e -> {
+    controller.moveToMercury();
+    });
 
     venusButton.setForeground(Color.yellow);
     venusButton.setOpaque(false);
@@ -48,6 +60,9 @@ public class TravelMenu {
     venusButton.setContentAreaFilled(false);
     venusButton.setFont(planetFont);
     travelPanel.add(venusButton);
+    venusButton.addActionListener(e -> {
+
+    });
 
     earthButton.setForeground(Color.green);
     earthButton.setOpaque(false);
@@ -56,6 +71,9 @@ public class TravelMenu {
     earthButton.setContentAreaFilled(false);
     earthButton.setFont(planetFont);
     travelPanel.add(earthButton);
+    earthButton.addActionListener(e -> {
+
+    });
 
     moonButton.setForeground(Color.lightGray);
     moonButton.setOpaque(false);
@@ -64,6 +82,9 @@ public class TravelMenu {
     moonButton.setContentAreaFilled(false);
     moonButton.setFont(planetFont);
     travelPanel.add(moonButton);
+    moonButton.addActionListener(e -> {
+
+    });
 
     marsButton.setForeground(Color.red);
     marsButton.setOpaque(false);
@@ -72,6 +93,9 @@ public class TravelMenu {
     marsButton.setContentAreaFilled(false);
     marsButton.setFont(planetFont);
     travelPanel.add(marsButton);
+    marsButton.addActionListener(e -> {
+
+    });
 
     jupiterButton.setForeground(Color.orange);
     jupiterButton.setOpaque(false);
@@ -80,6 +104,9 @@ public class TravelMenu {
     jupiterButton.setContentAreaFilled(false);
     jupiterButton.setFont(planetFont);
     travelPanel.add(jupiterButton);
+    jupiterButton.addActionListener(e -> {
+
+    });
 
     saturnButton.setForeground(Color.magenta);
     saturnButton.setOpaque(false);
@@ -88,6 +115,9 @@ public class TravelMenu {
     saturnButton.setContentAreaFilled(false);
     saturnButton.setFont(planetFont);
     travelPanel.add(saturnButton);
+    saturnButton.addActionListener(e -> {
+
+    });
 
     neptuneButton.setForeground(Color.blue);
     neptuneButton.setOpaque(false);
@@ -96,6 +126,9 @@ public class TravelMenu {
     neptuneButton.setContentAreaFilled(false);
     neptuneButton.setFont(planetFont);
     travelPanel.add(neptuneButton);
+    neptuneButton.addActionListener(e -> {
+
+    });
 
     travelPanel.setLayout(new GridLayout(4, 2));
     travelFrame.add(travelPanel);
