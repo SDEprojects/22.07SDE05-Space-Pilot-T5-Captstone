@@ -41,8 +41,8 @@ public class Title {
   JButton playGameButton;
 
   // Provide the images to the introduction screen.
-  URL titleImage = ClassLoader.getSystemClassLoader().getResource("./GUI/TitleScreen.png");
-  URL spaceShip = ClassLoader.getSystemClassLoader().getResource("./GUI/Rocket.png");
+  URL titleImage = getClass().getClassLoader().getResource("./GUI/TitleScreen.png");
+  URL spaceShip = getClass().getClassLoader().getResource("./GUI/Rocket.png");
   private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   Font titleFont = new Font("Roboto", Font.BOLD, 50);
   Font gameStartFont = new Font("Times New Roman", Font.BOLD, 25);
@@ -61,6 +61,7 @@ public class Title {
     frame.setBackground(Color.black);
     frame.setSize(1000, 1000);
     frame.setResizable(false);
+    frame.setLocationRelativeTo(null);
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     // Controls just the title itself

@@ -1,8 +1,8 @@
 package com.spacepilot.view;
 
-import com.spacepilot.controller.Controller;
 import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
+import com.spacepilot.model.Spacecraft;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -29,10 +29,10 @@ public class GamePlay {
   private GUIController controller;
 
   // Adds images onto the gameplay play panel
-  URL titleImage = ClassLoader.getSystemClassLoader().getResource("./GUI/TitleScreen.png");
-  URL earthImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Earth.png");
-  URL rocketImage = ClassLoader.getSystemClassLoader().getResource("./GUI/Rocket.png");
-  InputStream stream = ClassLoader.getSystemClassLoader()
+  URL titleImage = getClass().getClassLoader().getResource("./GUI/TitleScreen.png");
+  URL earthImage = getClass().getClassLoader().getResource("./GUI/Earth.png");
+  URL rocketImage = getClass().getClassLoader().getResource("./GUI/Rocket.png");
+  InputStream stream = getClass().getClassLoader()
       .getResourceAsStream("GUI/Dashhorizon-eZ5wg.otf");
   Font planetInfoFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(20f);
   Border black = BorderFactory.createLineBorder(Color.black);
@@ -41,7 +41,7 @@ public class GamePlay {
   JPanel leftPanel, midPanel, rocketPanel, rightPanel, planetPanel, textPanel;
   JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, engineersOnboard;
   JLabel planetLabel, shipConditionLabel, remainingDaysLabel, remainingAstronautsLabel, passengersOnboardLabel, engineersOnboardLabel;
-  JButton loadButton, unloadButton, repairButton, mapButton, settingsButton, quitButton;
+  JButton loadButton, unloadButton, repairButton, travelButton, settingsButton, quitButton;
 
   public GamePlay(GUIController controller)
       throws IOException, FontFormatException, MidiUnavailableException, InvalidMidiDataException, URISyntaxException {
@@ -227,21 +227,27 @@ public class GamePlay {
     loadButton.setForeground(Color.blue);
     loadButton.setOpaque(false);
     loadButton.setFont(planetInfoFont);
+    loadFunctionality();
 
     unloadButton = new JButton("Unload Astronauts");
     unloadButton.setForeground(Color.blue);
     unloadButton.setOpaque(false);
     unloadButton.setFont(planetInfoFont);
+    unloadFunctionality();
 
     repairButton = new JButton("Repair");
     repairButton.setForeground(Color.blue);
     repairButton.setOpaque(false);
     repairButton.setFont(planetInfoFont);
+//    repairFunctionality(game.getSpacecraft());
 
-    mapButton = new JButton("Map");
-    mapButton.setForeground(Color.blue);
-    mapButton.setOpaque(false);
-    mapButton.setFont(planetInfoFont);
+    travelButton = new JButton("Travel");
+    travelButton.setForeground(Color.blue);
+    travelButton.setOpaque(false);
+    travelButton.setFont(planetInfoFont);
+    travelButton.addActionListener(e -> {
+      new TravelMenu();
+    });
 
     settingsButton = new JButton("Settings");
     settingsButton.setForeground(Color.blue);
@@ -252,15 +258,41 @@ public class GamePlay {
     quitButton.setForeground(Color.blue);
     quitButton.setOpaque(false);
     quitButton.setFont(planetInfoFont);
+    quitGame();
 
     rightPanel.add(loadButton);
     rightPanel.add(unloadButton);
     rightPanel.add(repairButton);
-    rightPanel.add(mapButton);
+    rightPanel.add(travelButton);
     rightPanel.add(settingsButton);
     rightPanel.add(quitButton);
 
     return rightPanel;
+  }
+
+  private void loadFunctionality() {
+    loadButton.addActionListener(e -> {
+      controller.loadNewPassengers();
+    });
+  }
+
+  private void unloadFunctionality() {
+    unloadButton.addActionListener(e -> {
+      controller.unloadPassengersOnEarth();
+    });
+  }
+
+//  private void repairFunctionality(Spacecraft spacecraft) {
+//    repairButton.addActionListener(e -> {
+//        int currentScHealth = spacecraft.getHealth();
+//        spacecraft.setHealth(currentScHealth + 1);
+//    });
+//  }
+
+  private void quitGame() {
+    quitButton.addActionListener(e -> {
+      System.exit(0);
+    });
   }
 
   private JPanel createRocketPanel() {
