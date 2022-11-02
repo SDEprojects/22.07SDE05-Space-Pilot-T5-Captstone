@@ -4,9 +4,9 @@ package com.spacepilot.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.spacepilot.Main;
-import com.spacepilot.model.Engineer;
+
 import com.spacepilot.model.Game;
-import com.spacepilot.model.Music;
+
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
@@ -30,6 +30,7 @@ public class GUIController {
   private Game game;
   private int repairCounter = 0;
   private double planetRandomizer;
+
 
   public GUIController(Game game){
     this.game = game;
@@ -158,7 +159,7 @@ public class GUIController {
       return;
     }
     if (repairCounter < 3) {
-      Engineer.repairSpacecraft(game.getSpacecraft());
+      //  Engineer.repairSpacecraft(game.getSpacecraft());
       View.printRepair();
 
       repairCounter++;
@@ -230,8 +231,10 @@ public class GUIController {
       game.setOver(true);}
   }
 
-  public void moveToMercury() {
-    game.getSpacecraft().setCurrentPlanet(returnPlanet("mercury"));
+  public Game getGame(){
+    return game;
   }
+
+
 }
 
