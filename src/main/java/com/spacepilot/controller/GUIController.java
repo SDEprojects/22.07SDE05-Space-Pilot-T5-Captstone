@@ -152,7 +152,7 @@ public class GUIController {
     return null;
   }
 
-  private void repairShipConditions(int engineerCount) {
+  public void repairShipConditions(int engineerCount) {
     if (engineerCount == 0) {
       View.printNoEngineerAlert();
       return;
