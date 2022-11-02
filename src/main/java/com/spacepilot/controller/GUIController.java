@@ -229,5 +229,9 @@ public class GUIController {
       View.printGameOverMessage(true);
       game.setOver(true);}
   }
+
+  public void moveToMercury() {
+    game.getSpacecraft().setCurrentPlanet(returnPlanet("mercury"));
+  }
 }
 
