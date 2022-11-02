@@ -3,6 +3,7 @@ package com.spacepilot.view;
 import com.spacepilot.controller.Controller;
 import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
+import com.spacepilot.model.Planet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -13,6 +14,7 @@ import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.ImageIcon;
@@ -148,9 +150,19 @@ public class Title {
       frame.remove(contentPanel);
       try {
         gamePlay = new GamePlay(controller);
-
+        gamePlay.setMoveListener(new Consumer<String>() {
+                                   @Override
+                                   public void accept(String location) {
+                                     System.out.println("moving to "+ location);
+                                     Planet newPlanet =  controller.returnPlanet(location.toUpperCase());
+                                     controller.getGame().getSpacecraft().setCurrentPlanet(newPlanet);
+                                     updateGamePlayScreen();
+                                   }
+                                 }
+        );
         updateGamePlayScreen();
-      } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException ex) {
+      } catch (IOException | FontFormatException | MidiUnavailableException |
+               URISyntaxException ex) {
         throw new RuntimeException(ex);
       } catch (InvalidMidiDataException ex) {
         throw new RuntimeException(ex);
@@ -161,14 +173,16 @@ public class Title {
 
   }
 
-  public void updateGamePlayScreen(){
+  public void updateGamePlayScreen() {
     String remainingDays = String.valueOf(game.getRemainingDays());
     String condition = String.valueOf(game.getSpacecraft().getHealth());
     String planet = game.getSpacecraft().getCurrentPlanet().getName();
-    String remainingAstronauts = String.valueOf(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
-        controller.returnPlanet("Earth")));
+    String remainingAstronauts = String.valueOf(
+        game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
+            controller.returnPlanet("Earth")));
     String passengersOnboard = String.valueOf(game.getSpacecraft().getPassengers().size());
     String engineersOnboard = String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard());
-    gamePlay.update(remainingDays, condition, planet, remainingAstronauts, passengersOnboard, engineersOnboard);
+    gamePlay.update(remainingDays, condition, planet, remainingAstronauts, passengersOnboard,
+        engineersOnboard);
   }
 }

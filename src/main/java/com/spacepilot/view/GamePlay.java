@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.function.Consumer;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.BorderFactory;
@@ -29,6 +30,8 @@ public class GamePlay {
   private Game game;
   private GUIController controller;
 
+  private Consumer<String> moveListener;
+
   // Adds images onto the gameplay play panel
   URL titleImage = getClass().getClassLoader().getResource("./GUI/TitleScreen.png");
   URL earthImage = getClass().getClassLoader().getResource("./GUI/Earth.png");
@@ -43,6 +46,7 @@ public class GamePlay {
   JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, engineersOnboard;
   JLabel planetLabel, shipConditionLabel, remainingDaysLabel, remainingAstronautsLabel, passengersOnboardLabel, engineersOnboardLabel;
   JButton loadButton, unloadButton, repairButton, travelButton, settingsButton, quitButton;
+  private TravelMenu travelMenu;
 
   public GamePlay(GUIController controller)
       throws IOException, FontFormatException, MidiUnavailableException, InvalidMidiDataException, URISyntaxException {
@@ -247,7 +251,7 @@ public class GamePlay {
     travelButton.setOpaque(false);
     travelButton.setFont(planetInfoFont);
     travelButton.addActionListener(e -> {
-      new TravelMenu();
+      travelMenu = new TravelMenu(moveListener);
     });
 
     settingsButton = new JButton("Settings");
@@ -288,7 +292,7 @@ public class GamePlay {
 
   private void repairFunctionality() {
     repairButton.addActionListener(e -> {
-        controller.repairShipConditions(Integer.parseInt(engineersOnboardLabel.getText()));
+      controller.repairShipConditions(Integer.parseInt(engineersOnboardLabel.getText()));
     });
   }
 
@@ -350,7 +354,7 @@ public class GamePlay {
   }
 
   public void update(String days, String condition, String planet, String remainingAstronauts, String passengersOnboard, String engineersOnboard) {
-  remainingDaysLabel.setText(""+ days);
+    remainingDaysLabel.setText(""+ days);
     shipConditionLabel.setText(""+ condition);
     planetLabel.setText("" +  planet);
     remainingAstronautsLabel.setText("" + remainingAstronauts);
@@ -359,6 +363,9 @@ public class GamePlay {
 
   }
 
+  public void setMoveListener(Consumer<String> moveListener) {
+    this.moveListener = moveListener;
   }
+}
 
 

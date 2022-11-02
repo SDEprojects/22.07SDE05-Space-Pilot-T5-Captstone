@@ -7,6 +7,7 @@ import com.spacepilot.model.Planet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.function.Consumer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,7 +31,11 @@ public class TravelMenu {
   JButton saturnButton = new JButton("Saturn");
   JButton venusButton = new JButton("Venus");
 
-  public TravelMenu() {
+  private Consumer<String> moveListener;
+
+  public TravelMenu(Consumer<String> moveListener) {
+    setMoveListener(moveListener);
+
     JFrame travelFrame = new JFrame();
     travelFrame.setSize(400, 400);
     travelFrame.setVisible(true);
@@ -50,7 +55,9 @@ public class TravelMenu {
     mercuryButton.setFont(planetFont);
     travelPanel.add(mercuryButton);
     mercuryButton.addActionListener(e -> {
-    controller.moveToMercury();
+      moveListener.accept("mercury");
+      travelFrame.setVisible(false);
+
     });
 
     venusButton.setForeground(Color.yellow);
@@ -61,7 +68,8 @@ public class TravelMenu {
     venusButton.setFont(planetFont);
     travelPanel.add(venusButton);
     venusButton.addActionListener(e -> {
-
+      moveListener.accept("venus");
+      travelFrame.setVisible(false);
     });
 
     earthButton.setForeground(Color.green);
@@ -72,7 +80,8 @@ public class TravelMenu {
     earthButton.setFont(planetFont);
     travelPanel.add(earthButton);
     earthButton.addActionListener(e -> {
-
+      moveListener.accept("earth");
+      travelFrame.setVisible(false);
     });
 
     moonButton.setForeground(Color.lightGray);
@@ -83,7 +92,8 @@ public class TravelMenu {
     moonButton.setFont(planetFont);
     travelPanel.add(moonButton);
     moonButton.addActionListener(e -> {
-
+      moveListener.accept("moon");
+      travelFrame.setVisible(false);
     });
 
     marsButton.setForeground(Color.red);
@@ -94,7 +104,8 @@ public class TravelMenu {
     marsButton.setFont(planetFont);
     travelPanel.add(marsButton);
     marsButton.addActionListener(e -> {
-
+      moveListener.accept("mars");
+      travelFrame.setVisible(false);
     });
 
     jupiterButton.setForeground(Color.orange);
@@ -105,7 +116,8 @@ public class TravelMenu {
     jupiterButton.setFont(planetFont);
     travelPanel.add(jupiterButton);
     jupiterButton.addActionListener(e -> {
-
+      moveListener.accept("jupiter");
+      travelFrame.setVisible(false);
     });
 
     saturnButton.setForeground(Color.magenta);
@@ -116,7 +128,8 @@ public class TravelMenu {
     saturnButton.setFont(planetFont);
     travelPanel.add(saturnButton);
     saturnButton.addActionListener(e -> {
-
+      moveListener.accept("saturn");
+      travelFrame.setVisible(false);
     });
 
     neptuneButton.setForeground(Color.blue);
@@ -127,7 +140,8 @@ public class TravelMenu {
     neptuneButton.setFont(planetFont);
     travelPanel.add(neptuneButton);
     neptuneButton.addActionListener(e -> {
-
+      moveListener.accept("neptune");
+      travelFrame.setVisible(false);
     });
 
     travelPanel.setLayout(new GridLayout(4, 2));
@@ -136,4 +150,7 @@ public class TravelMenu {
     travelFrame.setVisible(true);
   }
 
+  public void setMoveListener(Consumer<String> listener) {
+    this.moveListener = listener;
+  }
 }
