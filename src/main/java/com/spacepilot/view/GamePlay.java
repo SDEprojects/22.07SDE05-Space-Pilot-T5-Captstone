@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.text.html.parser.Parser;
 
 public class GamePlay {
 
@@ -239,7 +240,7 @@ public class GamePlay {
     repairButton.setForeground(Color.blue);
     repairButton.setOpaque(false);
     repairButton.setFont(planetInfoFont);
-//    repairFunctionality(game.getSpacecraft());
+    repairFunctionality();
 
     travelButton = new JButton("Travel");
     travelButton.setForeground(Color.blue);
@@ -285,12 +286,11 @@ public class GamePlay {
     });
   }
 
-//  private void repairFunctionality(Spacecraft spacecraft) {
-//    repairButton.addActionListener(e -> {
-//        int currentScHealth = spacecraft.getHealth();
-//        spacecraft.setHealth(currentScHealth + 1);
-//    });
-//  }
+  private void repairFunctionality() {
+    repairButton.addActionListener(e -> {
+        controller.repairShipConditions(Integer.parseInt(engineersOnboardLabel.getText()));
+    });
+  }
 
   private void quitGame() {
     quitButton.addActionListener(e -> {

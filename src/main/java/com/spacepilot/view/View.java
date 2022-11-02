@@ -111,7 +111,7 @@ public class View {
   // Prints if no engineer are available
   public static void printNoEngineerAlert() {
     System.out.println();
-    System.out.println(ANSI_RED + gameText.getNoEngineerOnBoardAlert() + ANSI_RESET);
+    System.out.println(ANSI_RED +"There are no engineers on board! You need some Engineers!" + ANSI_RESET);
     System.out.println();
   }
 
