@@ -4,8 +4,10 @@ package com.spacepilot.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.spacepilot.Main;
+import com.spacepilot.model.Engineer;
 import com.spacepilot.model.Game;
 import com.spacepilot.model.Music;
+import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
 import com.spacepilot.view.View;
@@ -17,6 +19,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import javax.sound.midi.InvalidMidiDataException;
@@ -148,6 +151,64 @@ public class GUIController {
     }
     return null;
   }
+
+  private void repairShipConditions(int engineerCount) {
+    if (engineerCount == 0) {
+      View.printNoEngineerAlert();
+      return;
+    }
+    if (repairCounter < 3) {
+      Engineer.repairSpacecraft(game.getSpacecraft());
+      View.printRepair();
+
+      repairCounter++;
+    } else {
+      View.printRepairLimit();
+    }
+  }
+
+  public void loadNewPassengers() {
+    Collection<Person> arrayOfAstronautsOnCurrentPlanet = game.getSpacecraft().getCurrentPlanet()
+        .getArrayOfAstronautsOnPlanet();
+    // If there are no astronauts on the planet then... print none
+    if (arrayOfAstronautsOnCurrentPlanet.size() <= 0) {
+      View.printNoAstronautsToLoad();
+    }
+    if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth")) {
+      View.printCannotRemovePeopleFromEarth();
+    }
+    if (arrayOfAstronautsOnCurrentPlanet.size() > 0 && !game.getSpacecraft().getCurrentPlanet()
+        .getName().equals("Earth")) {
+      game.getSpacecraft().addPassengers(arrayOfAstronautsOnCurrentPlanet);
+      arrayOfAstronautsOnCurrentPlanet.clear();
+      game.getSpacecraft().typeAndNumOfPassengersOnBoard();
+      determineIfEngineerIsOnBoard();
+    }
+  }
+
+  public void unloadPassengersOnEarth() {
+    Planet currentPlanet = game.getSpacecraft().getCurrentPlanet();
+    Spacecraft spacecraft = game.getSpacecraft();
+
+    if (currentPlanet.getName().equals("Earth")) {
+      currentPlanet.getArrayOfAstronautsOnPlanet().addAll(game.getSpacecraft().getPassengers());
+      game.getSpacecraft().setNumOfEngineersOnBoard(0);
+      spacecraft.getPassengers().clear();
+    } else {
+      View.printYouCantUnloadPassengersIfCurrentPlanetNotEarth();
+    }
+  }
+
+
+  public void determineIfEngineerIsOnBoard() {
+    if (game.getSpacecraft().getNumOfEngineersOnBoard() > 0) {
+      View.printYouveGotAnEngineer();
+    } else {
+      View.printYouHaventGotAnEngineerOnBoard();
+    }
+  }
+
+
 
   public void useFuel(){
     if (game.getSpacecraft().getCurrentPlanet().getItem().equals("fuel")){
