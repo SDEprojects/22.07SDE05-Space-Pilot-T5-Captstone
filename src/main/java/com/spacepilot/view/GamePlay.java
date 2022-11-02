@@ -253,6 +253,9 @@ public class GamePlay {
     settingsButton.setForeground(Color.blue);
     settingsButton.setOpaque(false);
     settingsButton.setFont(planetInfoFont);
+    settingsButton.addActionListener(e -> {
+      new SettingsMenu();
+    });
 
     quitButton = new JButton("Quit");
     quitButton.setForeground(Color.blue);
