@@ -2,7 +2,6 @@ package com.spacepilot.view;
 
 import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
-import com.spacepilot.model.Spacecraft;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -23,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import javax.swing.text.html.parser.Parser;
 
 public class GamePlay {
 
@@ -33,8 +31,11 @@ public class GamePlay {
   private Consumer<String> moveListener;
 
   // Adds images onto the gameplay play panel
+
+  String planet = "Earth";
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
-  URL earthImage = getClass().getClassLoader().getResource("GUI/Earth.png");
+  URL planetImage = getClass().getClassLoader().getResource("GUI/" + planet + ".png");
+  //  URL earthImage = getClass().getClassLoader().getResource("GUI/Earth.png");
   URL rocketImage = getClass().getClassLoader().getResource("GUI/Rocket.png");
   InputStream stream = getClass().getClassLoader()
       .getResourceAsStream("GUI/Dashhorizon-eZ5wg.otf");
@@ -323,7 +324,8 @@ public class GamePlay {
     midPanel.setBackground(Color.black);
     midPanel.setOpaque(false);
 
-    ImageIcon planetImg = new ImageIcon(earthImage);
+    ImageIcon planetImg = new ImageIcon(planetImage);
+
     planetImg.setImage(planetImg.getImage().getScaledInstance(650, 650, Image.SCALE_DEFAULT));
     midPanel.add(new JLabel(planetImg));
 
@@ -366,6 +368,7 @@ public class GamePlay {
   public void setMoveListener(Consumer<String> moveListener) {
     this.moveListener = moveListener;
   }
+
 }
 
 

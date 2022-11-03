@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class TravelMenu {
+public class TravelMenu extends JFrame{
 
   private GUIController controller;
   private Game game;
@@ -56,6 +56,7 @@ public class TravelMenu {
     travelPanel.add(mercuryButton);
     mercuryButton.addActionListener(e -> {
       moveListener.accept("mercury");
+//      gamePlay.planet = "Mercury";
       travelFrame.setVisible(false);
 
     });
