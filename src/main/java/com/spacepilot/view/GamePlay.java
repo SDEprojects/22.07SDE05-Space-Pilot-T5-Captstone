@@ -37,8 +37,6 @@ public class GamePlay {
 
   // Adds images onto the gameplay play panel
 
-  String planet = "Earth";
-
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
   //  URL earthImage = getClass().getClassLoader().getResource("GUI/Earth.png");
   URL rocketImage = getClass().getClassLoader().getResource("GUI/Rocket.png");
@@ -335,8 +333,12 @@ public class GamePlay {
     midPanel.setBounds(213, 30, 575, 650);
     midPanel.setBackground(Color.black);
     midPanel.setOpaque(false);
+    planetImages(game.getSpacecraft().getCurrentPlanet().getName());
 
-    // TODO make these into one method
+    return midPanel;
+  }
+
+  public JPanel planetImages(String planet) {
     URL planetImage = getClass().getClassLoader().getResource("GUI/" + planet + ".png");
     ImageIcon planetImg = new ImageIcon(planetImage);
 

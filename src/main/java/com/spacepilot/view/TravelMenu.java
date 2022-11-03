@@ -57,7 +57,7 @@ public class TravelMenu extends JFrame{
 
     mercuryButton.addActionListener(e -> {
       moveListener.accept("mercury");
-//      gamePlay.planet = "GUI/Mercury.png";
+//      gamePlay.planetImages("mercury");
       travelFrame.setVisible(false);
     });
 
