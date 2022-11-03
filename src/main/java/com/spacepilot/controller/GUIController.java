@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.spacepilot.Main;
 
+import com.spacepilot.model.Engineer;
 import com.spacepilot.model.Game;
 
 import com.spacepilot.model.Person;
@@ -159,7 +160,7 @@ public class GUIController {
       return;
     }
     if (repairCounter < 3) {
-      //  Engineer.repairSpacecraft(game.getSpacecraft());
+      Engineer.repairSpacecraft(game.getSpacecraft());
       View.printRepair();
 
       repairCounter++;
