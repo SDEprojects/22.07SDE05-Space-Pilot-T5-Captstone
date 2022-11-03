@@ -1,5 +1,6 @@
 package com.spacepilot.view;
 
+import com.spacepilot.Main;
 import com.spacepilot.controller.Controller;
 import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
@@ -145,11 +146,12 @@ public class Title {
 
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
-      game = new Game();
+//      game = new Game();
+      game = Main.createNewGame();
       controller = new GUIController(game);
       frame.remove(contentPanel);
       try {
-        gamePlay = new GamePlay(controller);
+        gamePlay = new GamePlay(controller, game);
         gamePlay.setMoveListener(new Consumer<String>() {
                                    @Override
                                    public void accept(String location) {

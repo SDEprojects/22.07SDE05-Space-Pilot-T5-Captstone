@@ -9,7 +9,7 @@ public class Game {
 
   // Variables, setters, and getters.
   private boolean isOver;
-  private int remainingDays = 10;
+  private int remainingDays;
   private Spacecraft spacecraft;
   private int totalNumberOfAstronauts;
   private List<Planet> planets;
