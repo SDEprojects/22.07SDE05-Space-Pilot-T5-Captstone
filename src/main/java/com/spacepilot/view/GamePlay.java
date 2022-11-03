@@ -50,6 +50,7 @@ public class GamePlay {
   JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, engineersOnboard;
   JLabel planetLabel, shipConditionLabel, remainingDaysLabel, remainingAstronautsLabel, passengersOnboardLabel, engineersOnboardLabel;
   JButton loadButton, unloadButton, repairButton, travelButton, settingsButton, quitButton;
+  JTextPane description;
   private TravelMenu travelMenu;
 
   public GamePlay(GUIController controller, Game game)
@@ -298,6 +299,13 @@ public class GamePlay {
   private void unloadFunctionality() {
     unloadButton.addActionListener(e -> {
       controller.unloadPassengersOnEarth();
+      update(String.valueOf(game.getRemainingDays()),
+          String.valueOf(game.getSpacecraft().getHealth()),
+          String.valueOf(game.getSpacecraft().getCurrentPlanet().getName()),
+          String.valueOf(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
+              controller.returnPlanet("earth"))),
+          String.valueOf(game.getSpacecraft().getPassengers().size()),
+          String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard()));
     });
   }
 
@@ -348,11 +356,28 @@ public class GamePlay {
     return midPanel;
   }
 
+  public void setDescription(JTextPane description) {
+    this.description = description;
+  }
+
   // Creates the text panel for main game play
   private JPanel createTextPanel() {
     textPanel = new JPanel();
     textPanel.setBounds(200, 650, 600, 310);
     textPanel.setBackground(Color.black);
+
+    description = new JTextPane();
+    description.setBounds(200, 650, 600, 310);
+    description.setFont(planetInfoFont);
+    description.setBackground(Color.black);
+    description.setForeground(Color.white);
+    description.setOpaque(false);
+    description.setEditable(false);
+
+    StyledDocument doc = description.getStyledDocument();
+    SimpleAttributeSet center = new SimpleAttributeSet();
+    StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+    doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
     return textPanel;
   }
