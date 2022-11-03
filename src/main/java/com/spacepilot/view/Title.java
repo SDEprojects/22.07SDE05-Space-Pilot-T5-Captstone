@@ -156,6 +156,7 @@ public class Title {
                                      System.out.println("moving to "+ location);
                                      Planet newPlanet =  controller.returnPlanet(location.toUpperCase());
                                      controller.getGame().getSpacecraft().setCurrentPlanet(newPlanet);
+                                     game.setRemainingDays(game.getRemainingDays() - 1);
                                      updateGamePlayScreen();
                                    }
                                  }
