@@ -356,10 +356,6 @@ public class GamePlay {
     return midPanel;
   }
 
-  public void setDescription(JTextPane description) {
-    this.description = description;
-  }
-
   // Creates the text panel for main game play
   private JPanel createTextPanel() {
     textPanel = new JPanel();
@@ -373,11 +369,14 @@ public class GamePlay {
     description.setForeground(Color.white);
     description.setOpaque(false);
     description.setEditable(false);
+    description.setText("This is the dialog area during gameplay!");
 
     StyledDocument doc = description.getStyledDocument();
     SimpleAttributeSet center = new SimpleAttributeSet();
     StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
     doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+    textPanel.add(description);
 
     return textPanel;
   }
