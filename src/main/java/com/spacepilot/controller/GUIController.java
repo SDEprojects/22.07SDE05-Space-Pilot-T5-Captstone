@@ -11,6 +11,7 @@ import com.spacepilot.model.Game;
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
+import com.spacepilot.view.GamePlay;
 import com.spacepilot.view.View;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import javax.sound.midi.MidiUnavailableException;
 
 public class GUIController {
 
+  private GamePlay gamePlay;
   private Game game;
   private int repairCounter = 0;
   private double planetRandomizer;
@@ -175,6 +177,7 @@ public class GUIController {
     // If there are no astronauts on the planet then... print none
     if (arrayOfAstronautsOnCurrentPlanet.size() <= 0) {
       View.printNoAstronautsToLoad();
+
     }
     if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth")) {
       View.printCannotRemovePeopleFromEarth();

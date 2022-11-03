@@ -17,11 +17,16 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class GamePlay {
 
@@ -33,8 +38,8 @@ public class GamePlay {
   // Adds images onto the gameplay play panel
 
   String planet = "Earth";
+
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
-  URL planetImage = getClass().getClassLoader().getResource("GUI/" + planet + ".png");
   //  URL earthImage = getClass().getClassLoader().getResource("GUI/Earth.png");
   URL rocketImage = getClass().getClassLoader().getResource("GUI/Rocket.png");
   InputStream stream = getClass().getClassLoader()
@@ -49,7 +54,7 @@ public class GamePlay {
   JButton loadButton, unloadButton, repairButton, travelButton, settingsButton, quitButton;
   private TravelMenu travelMenu;
 
-  public GamePlay(GUIController controller)
+  public GamePlay(GUIController controller, Game game)
       throws IOException, FontFormatException, MidiUnavailableException, InvalidMidiDataException, URISyntaxException {
     ClassLoader loader = getClass().getClassLoader(); // This class loader can be used to load all resources for this class
     this.game = game;
@@ -282,6 +287,13 @@ public class GamePlay {
   private void loadFunctionality() {
     loadButton.addActionListener(e -> {
       controller.loadNewPassengers();
+      update(String.valueOf(game.getRemainingDays()),
+          String.valueOf(game.getSpacecraft().getHealth()),
+          String.valueOf(game.getSpacecraft().getCurrentPlanet().getName()),
+          String.valueOf(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
+              controller.returnPlanet("earth"))),
+          String.valueOf(game.getSpacecraft().getPassengers().size()),
+          String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard()));
     });
   }
 
@@ -324,6 +336,8 @@ public class GamePlay {
     midPanel.setBackground(Color.black);
     midPanel.setOpaque(false);
 
+    // TODO make these into one method
+    URL planetImage = getClass().getClassLoader().getResource("GUI/" + planet + ".png");
     ImageIcon planetImg = new ImageIcon(planetImage);
 
     planetImg.setImage(planetImg.getImage().getScaledInstance(650, 650, Image.SCALE_DEFAULT));
@@ -341,6 +355,7 @@ public class GamePlay {
     return textPanel;
   }
 
+
   // Creates the main background image with the current planet
   private JPanel createPlanetPanel() {
     planetPanel = new JPanel();
@@ -355,10 +370,12 @@ public class GamePlay {
     return planetPanel;
   }
 
-  public void update(String days, String condition, String planet, String remainingAstronauts, String passengersOnboard, String engineersOnboard) {
-    remainingDaysLabel.setText(""+ days);
-    shipConditionLabel.setText(""+ condition);
-    planetLabel.setText("" +  planet);
+  // TODO update this so it takes no parameters
+  public void update(String days, String condition, String planet, String remainingAstronauts,
+      String passengersOnboard, String engineersOnboard) {
+    remainingDaysLabel.setText("" + days);
+    shipConditionLabel.setText("" + condition);
+    planetLabel.setText("" + planet);
     remainingAstronautsLabel.setText("" + remainingAstronauts);
     passengersOnboardLabel.setText("" + passengersOnboard);
     engineersOnboardLabel.setText("" + engineersOnboard);

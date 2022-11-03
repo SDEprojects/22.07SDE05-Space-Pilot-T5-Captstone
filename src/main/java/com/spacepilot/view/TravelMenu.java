@@ -54,11 +54,11 @@ public class TravelMenu extends JFrame{
     mercuryButton.setContentAreaFilled(false);
     mercuryButton.setFont(planetFont);
     travelPanel.add(mercuryButton);
+
     mercuryButton.addActionListener(e -> {
       moveListener.accept("mercury");
-//      gamePlay.planet = "Mercury";
+//      gamePlay.planet = "GUI/Mercury.png";
       travelFrame.setVisible(false);
-
     });
 
     venusButton.setForeground(Color.yellow);
