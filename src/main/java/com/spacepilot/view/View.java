@@ -111,7 +111,8 @@ public class View {
   // Prints if no engineer are available
   public static void printNoEngineerAlert() {
     System.out.println();
-    System.out.println(ANSI_RED +"There are no engineers on board! You need some Engineers!" + ANSI_RESET);
+    System.out.println(
+        ANSI_RED + "There are no engineers on board! You need some Engineers!" + ANSI_RESET);
     System.out.println();
   }
 
@@ -206,46 +207,52 @@ public class View {
   }
 
   // print all planets that can be traveled to
-  public static void printPlanets(List<Planet> planets){
+  public static void printPlanets(List<Planet> planets) {
 
-    for (Planet planet : planets){
+    for (Planet planet : planets) {
       System.out.println(planet.getName());
     }
 
   }
 
-  public static void spacecraftFull(){
+  public static void spacecraftFull() {
     System.out.println();
-    System.out.println("The spacecraft is full, unload on earth to continue rescuing more astronauts");
-    System.out.println();
-  }
-
-  public static void willPutCraftOverCapacity(){
-    System.out.println();
-    System.out.println(ANSI_RED + "Loading will put your ship over capacity, unload on earth and return" + ANSI_RESET);
+    System.out.println(
+        "The spacecraft is full, unload on earth to continue rescuing more astronauts");
     System.out.println();
   }
 
-  public static void shipDestroyed(){
+  public static void willPutCraftOverCapacity() {
+    System.out.println();
+    System.out.println(
+        ANSI_RED + "Loading will put your ship over capacity, unload on earth and return"
+            + ANSI_RESET);
+    System.out.println();
+  }
+
+  public static void shipDestroyed() {
     System.out.println();
     System.out.println(ANSI_RED + "Your ship has been destroyed!" + ANSI_RESET);
   }
 
-  public static void ranOutOfTime(){
+  public static void ranOutOfTime() {
     System.out.println();
-    System.out.println(ANSI_RED + "You did not rescue the necessary amount of astronauts in the given time!");
+    System.out.println(
+        ANSI_RED + "You did not rescue the necessary amount of astronauts in the given time!");
     System.out.println();
   }
 
-  public static void noFuelToUse(){
+  public static void noFuelToUse() {
     System.out.println();
     System.out.println("There is now fuel to use!");
     System.out.println();
   }
 
-  public static void fuelOnPlanet(){
+  public static void fuelOnPlanet() {
     System.out.println();
-    System.out.println(ANSI_BLUE + "Look There is fuel, type in \"use-fuel\" to fuel up and extend your mission time by 2 days!" + ANSI_RESET);
+    System.out.println(ANSI_BLUE
+        + "Look There is fuel, type in \"use-fuel\" to fuel up and extend your mission time by 2 days!"
+        + ANSI_RESET);
     System.out.println();
   }
 }

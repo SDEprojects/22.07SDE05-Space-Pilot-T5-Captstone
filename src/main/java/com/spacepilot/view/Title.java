@@ -164,10 +164,8 @@ public class Title {
                                  }
         );
         updateGamePlayScreen();
-      } catch (IOException | FontFormatException | MidiUnavailableException |
-               URISyntaxException ex) {
-        throw new RuntimeException(ex);
-      } catch (InvalidMidiDataException ex) {
+      } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
+               InvalidMidiDataException ex) {
         throw new RuntimeException(ex);
       }
     });
