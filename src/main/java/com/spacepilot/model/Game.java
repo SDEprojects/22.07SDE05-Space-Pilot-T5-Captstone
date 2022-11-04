@@ -3,7 +3,6 @@ package com.spacepilot.model;
 import com.spacepilot.view.View;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 public class Game {
 

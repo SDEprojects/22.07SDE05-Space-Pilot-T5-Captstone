@@ -1,6 +1,5 @@
 package com.spacepilot.view;
 
-import com.spacepilot.controller.Controller;
 import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
 import com.spacepilot.model.Planet;
@@ -13,12 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class TravelMenu extends JFrame{
-
-  private GUIController controller;
-  private Game game;
-  private Planet planet;
-  private GamePlay gamePlay;
+public class TravelMenu{
 
   Font planetFont = new Font("Roboto", Font.BOLD, 20);
 
@@ -36,6 +30,10 @@ public class TravelMenu extends JFrame{
   public TravelMenu(Consumer<String> moveListener) {
     setMoveListener(moveListener);
 
+    JFrame frame = GamePlay.frame;
+    JPanel midPanel = GamePlay.midPanel;
+    JPanel contentPanel = GamePlay.contentPanel;
+    JPanel backgroundImagePanel = GamePlay.backgroundImagePanel;
     JFrame travelFrame = new JFrame();
     travelFrame.setSize(400, 400);
     travelFrame.setVisible(true);
@@ -57,8 +55,14 @@ public class TravelMenu extends JFrame{
 
     mercuryButton.addActionListener(e -> {
       moveListener.accept("mercury");
-//      gamePlay.planetImages("mercury");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("mercury");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     venusButton.setForeground(Color.yellow);
@@ -71,6 +75,13 @@ public class TravelMenu extends JFrame{
     venusButton.addActionListener(e -> {
       moveListener.accept("venus");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("venus");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     earthButton.setForeground(Color.green);
@@ -83,6 +94,13 @@ public class TravelMenu extends JFrame{
     earthButton.addActionListener(e -> {
       moveListener.accept("earth");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("earth");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     moonButton.setForeground(Color.lightGray);
@@ -95,6 +113,13 @@ public class TravelMenu extends JFrame{
     moonButton.addActionListener(e -> {
       moveListener.accept("moon");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("moon");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     marsButton.setForeground(Color.red);
@@ -107,6 +132,13 @@ public class TravelMenu extends JFrame{
     marsButton.addActionListener(e -> {
       moveListener.accept("mars");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("mars");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     jupiterButton.setForeground(Color.orange);
@@ -119,6 +151,13 @@ public class TravelMenu extends JFrame{
     jupiterButton.addActionListener(e -> {
       moveListener.accept("jupiter");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("jupiter");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     saturnButton.setForeground(Color.magenta);
@@ -131,6 +170,13 @@ public class TravelMenu extends JFrame{
     saturnButton.addActionListener(e -> {
       moveListener.accept("saturn");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("saturn");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     neptuneButton.setForeground(Color.blue);
@@ -143,6 +189,13 @@ public class TravelMenu extends JFrame{
     neptuneButton.addActionListener(e -> {
       moveListener.accept("neptune");
       travelFrame.setVisible(false);
+      GamePlay.planetImages("neptune");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
+      contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
+      frame.add(contentPanel);
     });
 
     travelPanel.setLayout(new GridLayout(4, 2));

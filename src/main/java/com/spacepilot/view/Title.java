@@ -1,7 +1,6 @@
 package com.spacepilot.view;
 
 import com.spacepilot.Main;
-import com.spacepilot.controller.Controller;
 import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
 import com.spacepilot.model.Planet;
@@ -9,9 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,6 +43,7 @@ public class Title {
   // Provide the images to the introduction screen.
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
   URL spaceShip = getClass().getClassLoader().getResource("GUI/Rocket.png");
+  URL iconURL = getClass().getClassLoader().getResource("GUI/earth.png");
   private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   Font titleFont = new Font("Roboto", Font.BOLD, 50);
   Font gameStartFont = new Font("Times New Roman", Font.BOLD, 25);
@@ -61,6 +59,9 @@ public class Title {
 
     // Creates the initial frame for everything
     frame = new JFrame("Space Pilot: Homebound");
+    ImageIcon icon = new ImageIcon(iconURL);
+    frame.setIconImage(icon.getImage());
+
     frame.setBackground(Color.black);
     frame.setSize(1000, 1000);
     frame.setResizable(false);
@@ -146,10 +147,10 @@ public class Title {
 
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
-//      game = new Game();
       game = Main.createNewGame();
       controller = new GUIController(game);
       frame.remove(contentPanel);
+
       try {
         gamePlay = new GamePlay(controller, game);
         gamePlay.setMoveListener(new Consumer<String>() {

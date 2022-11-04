@@ -11,8 +11,10 @@ import com.spacepilot.model.Game;
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
+
 import com.spacepilot.view.GamePlay;
 import com.spacepilot.view.Title;
+
 import com.spacepilot.view.View;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,14 +29,11 @@ import java.util.List;
 import java.util.Random;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
-import javax.swing.JTextPane;
 
 public class GUIController {
 
-  private GamePlay gamePlay;
   private Game game;
   private int repairCounter = 0;
-  private double planetRandomizer;
 
 
   public GUIController(Game game){

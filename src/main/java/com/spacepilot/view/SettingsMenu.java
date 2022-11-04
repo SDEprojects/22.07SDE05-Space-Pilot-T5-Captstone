@@ -1,15 +1,20 @@
 package com.spacepilot.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 public class SettingsMenu {
 
+  private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   Font settingsFont = new Font("Roboto", Font.BOLD, 20);
 
   JButton musicOn = new JButton("Music On");
@@ -69,6 +74,40 @@ public class SettingsMenu {
 
     settingsPanel.setLayout(new GridLayout(3, 2));
     settingsFrame.add(settingsPanel);
+
+    help.addActionListener(e -> {
+      JFrame helpFrame = new JFrame("Help");
+      helpFrame.setSize(800, 400);
+      helpFrame.setVisible(true);
+      helpFrame.setResizable(false);
+      helpFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+      JPanel helpPanel = new JPanel();
+      helpPanel.setBounds(0, 0, 800, 400);
+      helpPanel.setBackground(Color.black);
+      helpPanel.setOpaque(true);
+      helpPanel.setLayout(new BorderLayout());
+
+      JTextArea helpText = new JTextArea();
+      helpText.setLineWrap(true);
+      helpText.setFont(new Font(Font.DIALOG, Font.BOLD, 19));
+      helpText.setBackground(Color.black);
+      helpText.setForeground(Color.orange);
+      helpText.setWrapStyleWord(true);
+      helpText.setEditable(false);
+      helpText.setText(bundle.getString("help"));
+      helpPanel.add(helpText, BorderLayout.NORTH);
+
+      JButton helpQuitButton = new JButton("Exit Help");
+      helpPanel.add(helpQuitButton, BorderLayout.SOUTH);
+
+      helpFrame.setContentPane(helpPanel);
+
+      helpQuitButton.addActionListener(evt -> {
+        helpFrame.dispose();
+      });
+      helpFrame.setLocationRelativeTo(GamePlay.frame);
+    });
 
     settingsFrame.setVisible(true);
   }
