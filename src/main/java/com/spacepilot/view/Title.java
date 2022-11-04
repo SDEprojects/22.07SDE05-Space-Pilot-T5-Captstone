@@ -29,12 +29,10 @@ import javax.swing.text.StyledDocument;
 public class Title {
 
   private Game game;
-//  private Controller controller;
-
   private GUIController controller;
   public static JFrame frame;
-
   private GamePlay gamePlay;
+
   JPanel titlePanel, imagePanel, playGamePanel, introPanel, spacePanel;
   JTextPane intro;
   JLabel title;
@@ -44,12 +42,13 @@ public class Title {
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
   URL spaceShip = getClass().getClassLoader().getResource("GUI/Rocket.png");
   URL iconURL = getClass().getClassLoader().getResource("GUI/earth.png");
+
   private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   Font titleFont = new Font("Roboto", Font.BOLD, 50);
   Font gameStartFont = new Font("Times New Roman", Font.BOLD, 25);
   Font introFont = new Font(Font.MONOSPACED, Font.BOLD, 20);
 
-  // This PSVM is for testing purposes only, will be removed later
+  // This PSVM runs our GUI
   public static void main(String[] args) {
 
     new Title();
@@ -147,6 +146,7 @@ public class Title {
 
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
+
         game = Main.createNewGame();
         controller = new GUIController(game);
         frame.remove(contentPanel);
@@ -178,6 +178,7 @@ public class Title {
                                            }
                                            updateGamePlayScreen();
                                          }
+
                                      }
                                    }
           );

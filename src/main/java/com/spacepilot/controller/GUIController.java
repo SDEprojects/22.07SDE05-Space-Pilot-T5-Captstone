@@ -8,6 +8,7 @@ import com.spacepilot.Main;
 import com.spacepilot.model.Engineer;
 import com.spacepilot.model.Game;
 
+import com.spacepilot.model.Music;
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
@@ -30,8 +31,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.ResourceBundle;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.ImageIcon;
@@ -50,23 +54,33 @@ public class GUIController {
   private Game game;
   private int repairCounter = 0;
 
+
   Font titleFont = new Font("Roboto", Font.BOLD, 50);
   Font gameStartFont = new Font("Times New Roman", Font.BOLD, 25);
 
 
   Font lossFont = new Font(Font.MONOSPACED, Font.BOLD, 20);
 
+  private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
+
+
   public GUIController(Game game){
     this.game = game;
   }
 
-  public void play() throws IOException, URISyntaxException, MidiUnavailableException, InvalidMidiDataException {
+  public void play()
+      throws IOException, URISyntaxException, MidiUnavailableException, InvalidMidiDataException {
     // create and set up game environment
     setUpGame();
 
-    // play music
-    //    Music.playMusic();
-    game.setDialogue("Welcome to the game");
+
+//     play music
+        Music.playMusic();
+
+    checkGameResult();
+    game.setDialogue(bundle.getString("intro"));
+    while (!game.isOver()) {
+
 
 //      Music.stopMusic(); // Close sequencer so that the program can terminate
   }
