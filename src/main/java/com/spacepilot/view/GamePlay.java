@@ -37,6 +37,7 @@ public class GamePlay {
   // Adds images onto the gameplay play panel
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
   URL rocketImage = getClass().getClassLoader().getResource("GUI/Rocket.png");
+
   InputStream stream = getClass().getClassLoader()
       .getResourceAsStream("GUI/Dashhorizon-eZ5wg.otf");
   Font planetInfoFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(20f);
@@ -78,7 +79,6 @@ public class GamePlay {
 
     contentPanel = new JPanel();
     contentPanel.setLayout(null);
-//    contentPanel.setOpaque(false);
     contentPanel.setBackground(Color.lightGray);
 
     // Add everything into the gameplay panel

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
@@ -34,13 +35,13 @@ public class GUIController {
 
   private Game game;
   private int repairCounter = 0;
-
+  private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
 
   public GUIController(Game game){
     this.game = game;
   }
 
-  public void play() throws IOException, URISyntaxException, MidiUnavailableException, InvalidMidiDataException {
+  public void play() throws IOException, URISyntaxException {
     // create and set up game environment
     setUpGame();
 
@@ -48,7 +49,7 @@ public class GUIController {
     //    Music.playMusic();
 
     checkGameResult();
-    game.setDialogue("Welcome to the game");
+    game.setDialogue(bundle.getString("intro"));
     while (!game.isOver()) {
 
       checkGameResult();
