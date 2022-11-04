@@ -1,5 +1,6 @@
 package com.spacepilot.model;
 
+import com.spacepilot.view.View;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +14,8 @@ public class Game {
   private Spacecraft spacecraft;
   private int totalNumberOfAstronauts;
   private List<Planet> planets;
+
+  private String dialogue;
 
   public Collection<Person> getSavedAstros;
 
@@ -64,6 +67,14 @@ public class Game {
     this.planets = planets;
   }
 
+  public String getDialogue() {
+    return dialogue;
+  }
+
+  public void setDialogue(String dialogue) {
+    this.dialogue = dialogue;
+  }
+
   // Calculates the total number of astronauts needed
   public int calculateRemainingAstronautsViaTotalNumOfAstronauts(Planet earth) {
     int astronautsOnEarth = earth.getNumOfAstronautsOnPlanet();
@@ -73,4 +84,14 @@ public class Game {
     return remainingNumberOfAstronautsToPickUp;
   }
 
+  public void randomEvents(){
+    String event = getSpacecraft().getCurrentPlanet().randomEncounter();
+    Spacecraft spacecraft = getSpacecraft();
+    if (event != null) {
+      // decrement spacecraft health by 1.
+      spacecraft.setHealth(spacecraft.getHealth() - 1);
+      // alert the user about the event
+      setDialogue(View.printEventAlert(event));
+    }
+  }
 }

@@ -155,11 +155,18 @@ public class Title {
         gamePlay.setMoveListener(new Consumer<String>() {
                                    @Override
                                    public void accept(String location) {
-                                     System.out.println("moving to "+ location);
-                                     Planet newPlanet =  controller.returnPlanet(location.toUpperCase());
-                                     controller.getGame().getSpacecraft().setCurrentPlanet(newPlanet);
-                                     game.setRemainingDays(game.getRemainingDays() - 1);
-                                     updateGamePlayScreen();
+                                     if(location.equals(game.getSpacecraft().getCurrentPlanet().getName())){
+                                       game.setDialogue(View.printSamePlanetAlert());
+                                     }else {
+                                       game.setDialogue("You are now on " + location);
+                                       Planet newPlanet = controller.returnPlanet(
+                                           location.toUpperCase());
+                                       controller.getGame().getSpacecraft()
+                                           .setCurrentPlanet(newPlanet);
+                                       game.setRemainingDays(game.getRemainingDays() - 1);
+                                       game.randomEvents();
+                                       updateGamePlayScreen();
+                                     }
                                    }
                                  }
         );
@@ -183,7 +190,8 @@ public class Title {
             controller.returnPlanet("Earth")));
     String passengersOnboard = String.valueOf(game.getSpacecraft().getPassengers().size());
     String engineersOnboard = String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard());
+    String dialogue = game.getDialogue();
     gamePlay.update(remainingDays, condition, planet, remainingAstronauts, passengersOnboard,
-        engineersOnboard);
+        engineersOnboard, dialogue);
   }
 }
