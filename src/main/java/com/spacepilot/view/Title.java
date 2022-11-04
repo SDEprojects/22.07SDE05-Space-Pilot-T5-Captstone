@@ -1,7 +1,6 @@
 package com.spacepilot.view;
 
 import com.spacepilot.Main;
-import com.spacepilot.controller.Controller;
 import com.spacepilot.controller.GUIController;
 import com.spacepilot.model.Game;
 import com.spacepilot.model.Planet;
@@ -9,9 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -146,11 +143,10 @@ public class Title {
 
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
-//      game = new Game();
       game = Main.createNewGame();
       controller = new GUIController(game);
       frame.remove(contentPanel);
-      frame.add(imagePanel);
+
       try {
         gamePlay = new GamePlay(controller, game);
         gamePlay.setMoveListener(new Consumer<String>() {

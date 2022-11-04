@@ -74,7 +74,7 @@ public class GamePlay {
     createRocketPanel();
     createTextPanel();
     createMidPanel();
-//    createBackgroundImagePanel();
+    createBackgroundImagePanel();
 
     contentPanel = new JPanel();
     contentPanel.setLayout(null);
@@ -88,7 +88,7 @@ public class GamePlay {
     contentPanel.add(rocketPanel);
     contentPanel.add(textPanel);
     contentPanel.add(midPanel);
-//    contentPanel.add(backgroundImagePanel);
+    contentPanel.add(backgroundImagePanel);
 
     frame.add(contentPanel);
 
@@ -356,8 +356,6 @@ public class GamePlay {
 
   public static void planetImages(String planet) {
     midPanel.removeAll();
-//    midPanel.revalidate();
-//    midPanel.repaint();
     URL planetImage = GamePlay.class.getClassLoader().getResource("GUI/" + planet + ".png");
     ImageIcon planetImg = new ImageIcon(planetImage);
 
@@ -390,7 +388,6 @@ public class GamePlay {
 
     return textPanel;
   }
-
 
   // Creates the main background image with the current planet
   private JPanel createBackgroundImagePanel() {
