@@ -59,7 +59,7 @@ public class GamePlay {
   private TravelMenu travelMenu;
 
   public GamePlay(GUIController controller, Game game)
-      throws IOException, FontFormatException, MidiUnavailableException, InvalidMidiDataException, URISyntaxException {
+      throws IOException, FontFormatException, MidiUnavailableException, InvalidMidiDataException, URISyntaxException, InterruptedException {
     ClassLoader loader = getClass().getClassLoader(); // This class loader can be used to load all resources for this class
     this.game = game;
     this.controller = controller;
