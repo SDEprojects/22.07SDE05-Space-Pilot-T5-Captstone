@@ -78,7 +78,7 @@ public class GamePlay {
 
     contentPanel = new JPanel();
     contentPanel.setLayout(null);
-    contentPanel.setOpaque(true);
+//    contentPanel.setOpaque(false);
     contentPanel.setBackground(Color.lightGray);
 
     // Add everything into the gameplay panel
