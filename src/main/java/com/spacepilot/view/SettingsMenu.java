@@ -1,10 +1,14 @@
 package com.spacepilot.view;
 
+import com.spacepilot.model.Music;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.IOException;
 import java.util.ResourceBundle;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -107,6 +111,18 @@ public class SettingsMenu {
         helpFrame.dispose();
       });
       helpFrame.setLocationRelativeTo(GamePlay.frame);
+    });
+
+    musicOn.addActionListener(e -> {
+      try {
+        Music.playMusic();
+      } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
+        throw new RuntimeException(ex);
+      }
+    });
+
+    musicOff.addActionListener(e -> {
+      Music.stopMusic();
     });
 
     settingsFrame.setVisible(true);
