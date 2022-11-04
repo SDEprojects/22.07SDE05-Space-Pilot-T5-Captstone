@@ -301,7 +301,7 @@ public class GamePlay {
           String.valueOf(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
               controller.returnPlanet("earth"))),
           String.valueOf(game.getSpacecraft().getPassengers().size()),
-          String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard()));
+          String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard()), game.getDialogue());
     });
   }
 
@@ -314,13 +314,20 @@ public class GamePlay {
           String.valueOf(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
               controller.returnPlanet("earth"))),
           String.valueOf(game.getSpacecraft().getPassengers().size()),
-          String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard()));
+          String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard()), game.getDialogue());
     });
   }
 
   private void repairFunctionality() {
     repairButton.addActionListener(e -> {
       controller.repairShipConditions(Integer.parseInt(engineersOnboardLabel.getText()));
+      update(String.valueOf(game.getRemainingDays()),
+          String.valueOf(game.getSpacecraft().getHealth()),
+          String.valueOf(game.getSpacecraft().getCurrentPlanet().getName()),
+          String.valueOf(game.calculateRemainingAstronautsViaTotalNumOfAstronauts(
+              controller.returnPlanet("earth"))),
+          String.valueOf(game.getSpacecraft().getPassengers().size()),
+          String.valueOf(game.getSpacecraft().getNumOfEngineersOnBoard()), game.getDialogue());
     });
   }
 
@@ -365,7 +372,7 @@ public class GamePlay {
   }
 
   // Creates the text panel for main game play
-  private JPanel createTextPanel() {
+  public JPanel createTextPanel() {
     textPanel = new JPanel();
     textPanel.setBounds(200, 650, 600, 310);
     textPanel.setBackground(Color.black);
@@ -377,7 +384,6 @@ public class GamePlay {
     description.setForeground(Color.white);
     description.setOpaque(false);
     description.setEditable(false);
-    description.setText("This is the dialog area during gameplay!");
 
     StyledDocument doc = description.getStyledDocument();
     SimpleAttributeSet center = new SimpleAttributeSet();
@@ -404,14 +410,14 @@ public class GamePlay {
 
   // TODO update this so it takes no parameters
   public void update(String days, String condition, String planet, String remainingAstronauts,
-      String passengersOnboard, String engineersOnboard) {
+      String passengersOnboard, String engineersOnboard, String dialogue) {
     remainingDaysLabel.setText("" + days);
     shipConditionLabel.setText("" + condition);
     planetLabel.setText("" + planet);
     remainingAstronautsLabel.setText("" + remainingAstronauts);
     passengersOnboardLabel.setText("" + passengersOnboard);
     engineersOnboardLabel.setText("" + engineersOnboard);
-
+    description.setText(dialogue);
   }
 
   public void setMoveListener(Consumer<String> moveListener) {

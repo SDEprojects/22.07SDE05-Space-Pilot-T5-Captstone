@@ -100,26 +100,20 @@ public class View {
   }
 
   // Prompts the user if they are already on a planet they are trying to move to.
-  public static void printSamePlanetAlert() {
-    System.out.println();
-    System.out.println(ANSI_RED + "System: You are already there");
-    System.out.println();
+  public static String printSamePlanetAlert() {
+    return "System: You are already there";
   }
 
   // Prints if no engineer are available
-  public static void printNoEngineerAlert() {
-    System.out.println();
-    System.out.println(
-        ANSI_RED + "There are no engineers on board! You need some Engineers!" + ANSI_RESET);
-    System.out.println();
+  public static String printNoEngineerAlert() {
+
+   return "There are no engineers on board! You need some Engineers!";
+
   }
 
   // Prints an event if you have been damaged, and tells you what event.
-  public static void printEventAlert(String event) {
-    System.out.println();
-    System.out.println(
-        ANSI_RED + "MISSION CONTROL: Your spacecraft has been damaged by " + event + ANSI_RESET);
-    System.out.println();
+  public static String printEventAlert(String event) {
+    return "MISSION CONTROL: \n\nYour spacecraft has been damaged by \n" + event + ".";
   }
 
   // Tells the user when they pick up engineers
@@ -148,15 +142,14 @@ public class View {
   }
 
   // prints the gameover message
-  public static void printGameOverMessage(boolean userWon) {
+  public static String printGameOverMessage(boolean userWon) {
     System.out.println();
     if (userWon) {
-      System.out.println();
-      System.out.println(ANSI_GREEN + gameText.getUserWon() + ANSI_RESET);
+      return gameText.getUserWon() ;
     } else {
-      System.out.println();
-      System.out.println(ANSI_RED + gameText.getUserLost() + ANSI_RESET);
+      return gameText.getUserLost();
     }
+
   }
 
   // tells the user when they make an invalid command
@@ -176,32 +169,29 @@ public class View {
   }
 
   // Tells the user when there is nobody to load
-  public static void printNoAstronautsToLoad() {
-    System.out.println("There aren't any astronauts to rescue on this planet.");
+  public static String printNoAstronautsToLoad() {
+    return "There aren't any astronauts to rescue on this planet.";
   }
 
   // Cannot load people from Earth
-  public static void printCannotRemovePeopleFromEarth() {
-    System.out.println(
-        "All passengers dropped off on Earth must remain there, as planet Earth is their final destination.");
+  public static String printCannotRemovePeopleFromEarth() {
+       return "All passengers dropped off on Earth must remain there, as planet Earth is their final destination.";
   }
 
   // You can only unload on Earth
-  public static void printYouCantUnloadPassengersIfCurrentPlanetNotEarth() {
-    System.out.println("Passengers can only be dropped off on Earth.");
+  public static String printYouCantUnloadPassengersIfCurrentPlanetNotEarth() {
+    return "Passengers can only be dropped off on Earth.";
   }
 
   // You have repaired your spacecraft
-  public static void printRepair() {
-    System.out.println();
-    System.out.println("Spacecraft repair was successful.");
-    System.out.println();
+  public static String printRepair() {
+    return "Spacecraft repair was successful.";
   }
 
   // You can repair only twice in each round.
-  public static void printRepairLimit() {
-    System.out.println(ANSI_RED + "Sorry, you cannot use the repair command\n"
-        + "more than three times per round of the game." + ANSI_RESET);
+  public static String printRepairLimit() {
+    return "Sorry, you cannot use the repair command\n"
+        + "more than three times per round of the game.";
   }
 
   // print all planets that can be traveled to
@@ -213,19 +203,13 @@ public class View {
 
   }
 
-  public static void spacecraftFull() {
-    System.out.println();
-    System.out.println(
-        "The spacecraft is full, unload on earth to continue rescuing more astronauts");
-    System.out.println();
+  public static String spacecraftFull() {
+      return  "The spacecraft is full, \nunload on earth to continue rescuing more astronauts";
+
   }
 
-  public static void willPutCraftOverCapacity() {
-    System.out.println();
-    System.out.println(
-        ANSI_RED + "Loading will put your ship over capacity, unload on earth and return"
-            + ANSI_RESET);
-    System.out.println();
+  public static String willPutCraftOverCapacity() {
+    return "Loading will put your ship over capacity, \nunload on earth and return";
   }
 
   public static void shipDestroyed() {
@@ -233,11 +217,8 @@ public class View {
     System.out.println(ANSI_RED + "Your ship has been destroyed!" + ANSI_RESET);
   }
 
-  public static void ranOutOfTime() {
-    System.out.println();
-    System.out.println(
-        ANSI_RED + "You did not rescue the necessary amount of astronauts in the given time!");
-    System.out.println();
+  public static String ranOutOfTime() {
+        return "You did not rescue the necessary amount of astronauts in the given time!";
   }
 
   public static void noFuelToUse() {
@@ -252,5 +233,19 @@ public class View {
         + "Look There is fuel, type in \"use-fuel\" to fuel up and extend your mission time by 2 days!"
         + ANSI_RESET);
     System.out.println();
+  }
+
+  public static String printPassengersLoaded() {
+
+  return "The Passengers have been loaded!";
+
+  }
+
+  public static String printUnloadSuccessful(){
+    return "Passengers were unloaded successfully";
+  }
+
+  public static String printShipAtFullHealth(){
+    return "Cannot repair, \nShip is at full health";
   }
 }

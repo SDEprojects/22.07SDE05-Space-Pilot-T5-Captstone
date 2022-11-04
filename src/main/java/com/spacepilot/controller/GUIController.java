@@ -11,6 +11,10 @@ import com.spacepilot.model.Game;
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
+
+import com.spacepilot.view.GamePlay;
+import com.spacepilot.view.Title;
+
 import com.spacepilot.view.View;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -43,15 +47,13 @@ public class GUIController {
     // play music
     //    Music.playMusic();
 
-    // while game is not over, allow the user to continue to play
-//        while (!game.isOver()) {
-//            // print current game info
-//            //displayGameState();
-//            // prompt the user to enter their next command (saved as userInput)
-//
-//            checkGameResult();
-//        }
-    //  Music.stopMusic(); // Close sequencer so that the program can terminate
+    checkGameResult();
+    game.setDialogue("Welcome to the game");
+    while (!game.isOver()) {
+
+      checkGameResult();
+    }
+//      Music.stopMusic(); // Close sequencer so that the program can terminate
   }
 
   public void saveGame(Game game) throws IOException {
@@ -155,37 +157,42 @@ public class GUIController {
 
   public void repairShipConditions(int engineerCount) {
     if (engineerCount == 0) {
-      View.printNoEngineerAlert();
+      game.setDialogue(View.printNoEngineerAlert());
       return;
     }
     if (repairCounter < 3) {
       Engineer.repairSpacecraft(game.getSpacecraft());
-      View.printRepair();
+      game.setDialogue(View.printRepair());
 
       repairCounter++;
+    } else if (game.getSpacecraft().getHealth() == 3) {
+      game.setDialogue(View.printShipAtFullHealth());
     } else {
-      View.printRepairLimit();
+      game.setDialogue(View.printRepairLimit());
     }
   }
 
   public void loadNewPassengers() {
     Collection<Person> arrayOfAstronautsOnCurrentPlanet = game.getSpacecraft().getCurrentPlanet()
         .getArrayOfAstronautsOnPlanet();
-    // If there are no astronauts on the planet then... print none
-    if (arrayOfAstronautsOnCurrentPlanet.size() <= 0) {
-      View.printNoAstronautsToLoad();
 
-    }
-    if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth")) {
-      View.printCannotRemovePeopleFromEarth();
-    }
-    if (arrayOfAstronautsOnCurrentPlanet.size() > 0 && !game.getSpacecraft().getCurrentPlanet()
-        .getName().equals("Earth")) {
+    if (arrayOfAstronautsOnCurrentPlanet.size() <= 0) {
+      game.setDialogue(View.printNoAstronautsToLoad());
+
+    }else if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth")) {
+      game.setDialogue(View.printCannotRemovePeopleFromEarth());
+    }else if (game.getSpacecraft().getPassengers().size() >= 5){
+      game.setDialogue(View.spacecraftFull());
+    } else if (game.getSpacecraft().getCurrentPlanet().getArrayOfAstronautsOnPlanet().size() + game.getSpacecraft().getPassengers().size() > 5) {
+      game.setDialogue(View.willPutCraftOverCapacity());
+    } else {
       game.getSpacecraft().addPassengers(arrayOfAstronautsOnCurrentPlanet);
       arrayOfAstronautsOnCurrentPlanet.clear();
       game.getSpacecraft().typeAndNumOfPassengersOnBoard();
       determineIfEngineerIsOnBoard();
+      game.setDialogue(View.printPassengersLoaded());
     }
+
   }
 
   public void unloadPassengersOnEarth() {
@@ -196,8 +203,9 @@ public class GUIController {
       currentPlanet.getArrayOfAstronautsOnPlanet().addAll(game.getSpacecraft().getPassengers());
       game.getSpacecraft().setNumOfEngineersOnBoard(0);
       spacecraft.getPassengers().clear();
+      game.setDialogue(View.printUnloadSuccessful());
     } else {
-      View.printYouCantUnloadPassengersIfCurrentPlanetNotEarth();
+      game.setDialogue(View.printYouCantUnloadPassengersIfCurrentPlanetNotEarth());
     }
   }
 
@@ -230,6 +238,7 @@ public class GUIController {
     if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && userWon ){
       View.printGameOverMessage(true);
       game.setOver(true);}
+
   }
 
   public Game getGame(){
