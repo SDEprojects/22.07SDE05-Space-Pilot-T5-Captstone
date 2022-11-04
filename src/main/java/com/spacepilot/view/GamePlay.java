@@ -366,7 +366,7 @@ public class GamePlay {
     URL planetImage = GamePlay.class.getClassLoader().getResource("GUI/" + planet + ".png");
     ImageIcon planetImg = new ImageIcon(planetImage);
 
-    planetImg.setImage(planetImg.getImage().getScaledInstance(650, 650, Image.SCALE_DEFAULT));
+    planetImg.setImage(planetImg.getImage().getScaledInstance(575, 575, Image.SCALE_DEFAULT));
     midPanel.add(new JLabel(planetImg));
 
   }
