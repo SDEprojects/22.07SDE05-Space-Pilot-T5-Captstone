@@ -8,6 +8,7 @@ import com.spacepilot.Main;
 import com.spacepilot.model.Engineer;
 import com.spacepilot.model.Game;
 
+import com.spacepilot.model.Music;
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
@@ -45,8 +46,8 @@ public class GUIController {
     // create and set up game environment
     setUpGame();
 
-    // play music
-    //    Music.playMusic();
+//     play music
+        Music.playMusic();
 
     checkGameResult();
     game.setDialogue(bundle.getString("intro"));
