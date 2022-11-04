@@ -17,7 +17,6 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,8 +44,15 @@ public class GamePlay {
   Font planetInfoFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(20f);
   Border black = BorderFactory.createLineBorder(Color.black);
 
+  static JFrame frame;
   JPanel currentPlanetPanel, shipConditionPanel, remainingDaysPanel, remainingAstronautsPanel, passengersOnboardPanel, engineersOnboardPanel;
-  JPanel leftPanel, midPanel, rocketPanel, rightPanel, planetPanel, textPanel;
+  JPanel leftPanel;
+  static JPanel midPanel;
+  JPanel rocketPanel;
+  JPanel rightPanel;
+  static JPanel backgroundImagePanel;
+  JPanel textPanel;
+  static JPanel contentPanel;
   JLabel currentPlanet, shipCondition, remainingDays, remainingAstronauts, passengersOnboard, engineersOnboard;
   JLabel planetLabel, shipConditionLabel, remainingDaysLabel, remainingAstronautsLabel, passengersOnboardLabel, engineersOnboardLabel;
   JButton loadButton, unloadButton, repairButton, travelButton, settingsButton, quitButton;
@@ -59,27 +65,30 @@ public class GamePlay {
     this.game = game;
     this.controller = controller;
     controller.play();
-    JFrame frame = Title.frame;
+    frame = Title.frame;
 
     // Calls upon the creation of each panel for the main gameplay.
+
     createLeftPanel();
     createRightPanel();
     createRocketPanel();
     createTextPanel();
     createMidPanel();
-    createPlanetPanel();
+//    createBackgroundImagePanel();
 
-    JPanel contentPanel = new JPanel();
+    contentPanel = new JPanel();
     contentPanel.setLayout(null);
     contentPanel.setOpaque(true);
+    contentPanel.setBackground(Color.lightGray);
 
     // Add everything into the gameplay panel
+
     contentPanel.add(leftPanel);
     contentPanel.add(rightPanel);
     contentPanel.add(rocketPanel);
     contentPanel.add(textPanel);
     contentPanel.add(midPanel);
-    contentPanel.add(planetPanel);
+//    contentPanel.add(backgroundImagePanel);
 
     frame.add(contentPanel);
 
@@ -336,24 +345,25 @@ public class GamePlay {
   }
 
   // Creates the game play panel to give the user a visual representation as to what is going on.
-  private JPanel createMidPanel() {
+  private void createMidPanel() {
     midPanel = new JPanel();
     midPanel.setBounds(213, 30, 575, 650);
     midPanel.setBackground(Color.black);
     midPanel.setOpaque(false);
-    planetImages(game.getSpacecraft().getCurrentPlanet().getName());
+    planetImages("earth");
 
-    return midPanel;
   }
 
-  public JPanel planetImages(String planet) {
-    URL planetImage = getClass().getClassLoader().getResource("GUI/" + planet + ".png");
+  public static void planetImages(String planet) {
+    midPanel.removeAll();
+//    midPanel.revalidate();
+//    midPanel.repaint();
+    URL planetImage = GamePlay.class.getClassLoader().getResource("GUI/" + planet + ".png");
     ImageIcon planetImg = new ImageIcon(planetImage);
 
     planetImg.setImage(planetImg.getImage().getScaledInstance(650, 650, Image.SCALE_DEFAULT));
     midPanel.add(new JLabel(planetImg));
 
-    return midPanel;
   }
 
   // Creates the text panel for main game play
@@ -383,17 +393,16 @@ public class GamePlay {
 
 
   // Creates the main background image with the current planet
-  private JPanel createPlanetPanel() {
-    planetPanel = new JPanel();
-    planetPanel.setBackground(Color.black);
-    planetPanel.setBounds(0, 0, 1000, 1000);
+  private JPanel createBackgroundImagePanel() {
+    backgroundImagePanel = new JPanel();
+    backgroundImagePanel.setBackground(Color.black);
+    backgroundImagePanel.setBounds(0, 0, 1000, 1000);
     ImageIcon backgroundImg = new ImageIcon(titleImage);
     backgroundImg.setImage(
         backgroundImg.getImage().getScaledInstance(1000, 1000, Image.SCALE_DEFAULT));
 
-    planetPanel.add(new JLabel(backgroundImg));
-
-    return planetPanel;
+    backgroundImagePanel.add(new JLabel(backgroundImg));
+    return backgroundImagePanel;
   }
 
   // TODO update this so it takes no parameters
