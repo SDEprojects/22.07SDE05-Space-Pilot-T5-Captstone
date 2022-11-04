@@ -184,7 +184,7 @@ public class Title {
           );
           updateGamePlayScreen();
         } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
-                 InvalidMidiDataException ex) {
+                 InvalidMidiDataException | InterruptedException ex) {
           throw new RuntimeException(ex);
         }
     });
