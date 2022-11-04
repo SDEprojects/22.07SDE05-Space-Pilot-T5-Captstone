@@ -42,7 +42,8 @@ public class GUIController {
     this.game = game;
   }
 
-  public void play() throws IOException, URISyntaxException {
+  public void play()
+      throws IOException, URISyntaxException, MidiUnavailableException, InvalidMidiDataException {
     // create and set up game environment
     setUpGame();
 
