@@ -117,15 +117,15 @@ public class View {
   }
 
   // Tells the user when they pick up engineers
-  public static void printYouveGotAnEngineer() {
-    System.out.println(ANSI_GREEN + "You have got at least 1 engineer on board...\n"
-        + "and they've got the ability to repair the spacecraft!" + ANSI_RESET);
+  public static String printYouveGotAnEngineer() {
+    return "You have got at least 1 engineer on board...\n"
+        + "and they've got the ability to repair the spacecraft!";
   }
 
   // Tells the user they cannot repair if they do not have engineers if prompted to repair
-  public static void printYouHaventGotAnEngineerOnBoard() {
-    System.out.println(ANSI_GREEN + "You don't have any engineers on board...\n"
-        + "thus, you cannot repair the spacecraft." + ANSI_RESET);
+  public static String printYouHaventGotAnEngineerOnBoard() {
+    return "You don't have any engineers on board...\n"
+        + "thus, you cannot repair the spacecraft.";
   }
 
   // Unsure when this prompt would be displayed.
@@ -145,9 +145,9 @@ public class View {
   public static String printGameOverMessage(boolean userWon) {
     System.out.println();
     if (userWon) {
-      return gameText.getUserWon() ;
+      return "Congratulations! YOU WON! You have saved the Astronauts. Enjoy Retirement!" ;
     } else {
-      return gameText.getUserLost();
+      return "You Failed!!!";
     }
 
   }
@@ -212,13 +212,14 @@ public class View {
     return "Loading will put your ship over capacity, \nunload on earth and return";
   }
 
-  public static void shipDestroyed() {
-    System.out.println();
-    System.out.println(ANSI_RED + "Your ship has been destroyed!" + ANSI_RESET);
+  public static String shipDestroyed() {
+    return "Your ship has been destroyed!"
+        + "\n\n You failed!";
   }
 
   public static String ranOutOfTime() {
-        return "You did not rescue the necessary amount of astronauts in the given time!";
+        return "You did not rescue the necessary amount \nof astronauts in the given time! "
+            + "\n\n You failed!";
   }
 
   public static void noFuelToUse() {
