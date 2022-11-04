@@ -150,6 +150,7 @@ public class Title {
       game = Main.createNewGame();
       controller = new GUIController(game);
       frame.remove(contentPanel);
+      frame.add(imagePanel);
       try {
         gamePlay = new GamePlay(controller, game);
         gamePlay.setMoveListener(new Consumer<String>() {
