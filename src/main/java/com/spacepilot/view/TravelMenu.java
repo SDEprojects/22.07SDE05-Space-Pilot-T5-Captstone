@@ -14,10 +14,6 @@ import javax.swing.WindowConstants;
 
 public class TravelMenu{
 
-  private GUIController controller;
-  private Game game;
-  private Planet planet;
-
   Font planetFont = new Font("Roboto", Font.BOLD, 20);
 
   JButton earthButton = new JButton("Earth");
@@ -61,7 +57,11 @@ public class TravelMenu{
       moveListener.accept("mercury");
       travelFrame.setVisible(false);
       GamePlay.planetImages("mercury");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 
@@ -76,7 +76,11 @@ public class TravelMenu{
       moveListener.accept("venus");
       travelFrame.setVisible(false);
       GamePlay.planetImages("venus");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 
@@ -91,7 +95,11 @@ public class TravelMenu{
       moveListener.accept("earth");
       travelFrame.setVisible(false);
       GamePlay.planetImages("earth");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 
@@ -106,7 +114,11 @@ public class TravelMenu{
       moveListener.accept("moon");
       travelFrame.setVisible(false);
       GamePlay.planetImages("moon");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 
@@ -121,7 +133,11 @@ public class TravelMenu{
       moveListener.accept("mars");
       travelFrame.setVisible(false);
       GamePlay.planetImages("mars");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 
@@ -136,7 +152,11 @@ public class TravelMenu{
       moveListener.accept("jupiter");
       travelFrame.setVisible(false);
       GamePlay.planetImages("jupiter");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 
@@ -151,7 +171,11 @@ public class TravelMenu{
       moveListener.accept("saturn");
       travelFrame.setVisible(false);
       GamePlay.planetImages("saturn");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 
@@ -166,7 +190,11 @@ public class TravelMenu{
       moveListener.accept("neptune");
       travelFrame.setVisible(false);
       GamePlay.planetImages("neptune");
+      contentPanel.remove(midPanel);
+      contentPanel.remove(backgroundImagePanel);
+      frame.remove(contentPanel);
       contentPanel.add(midPanel);
+      contentPanel.add(backgroundImagePanel);
       frame.add(contentPanel);
     });
 

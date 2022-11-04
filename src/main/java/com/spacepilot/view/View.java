@@ -2,8 +2,6 @@ package com.spacepilot.view;
 
 import com.google.gson.Gson;
 import com.spacepilot.Main;
-import com.spacepilot.controller.Controller;
-import com.spacepilot.model.Game;
 import com.spacepilot.model.GameText;
 import com.spacepilot.model.Planet;
 import java.io.IOException;
