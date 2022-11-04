@@ -35,9 +35,7 @@ public class GamePlay {
   private Consumer<String> moveListener;
 
   // Adds images onto the gameplay play panel
-
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
-  //  URL earthImage = getClass().getClassLoader().getResource("GUI/Earth.png");
   URL rocketImage = getClass().getClassLoader().getResource("GUI/Rocket.png");
   InputStream stream = getClass().getClassLoader()
       .getResourceAsStream("GUI/Dashhorizon-eZ5wg.otf");
@@ -67,6 +65,7 @@ public class GamePlay {
     controller.play();
     frame = Title.frame;
 
+
     // Calls upon the creation of each panel for the main gameplay.
 
     createLeftPanel();
@@ -75,6 +74,7 @@ public class GamePlay {
     createTextPanel();
     createMidPanel();
     createBackgroundImagePanel();
+
 
     contentPanel = new JPanel();
     contentPanel.setLayout(null);
