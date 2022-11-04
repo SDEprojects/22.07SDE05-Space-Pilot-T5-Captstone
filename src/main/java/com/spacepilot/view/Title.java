@@ -147,35 +147,45 @@ public class Title {
 
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
-      game = Main.createNewGame();
-      controller = new GUIController(game);
-      frame.remove(contentPanel);
+        game = Main.createNewGame();
+        controller = new GUIController(game);
+        frame.remove(contentPanel);
 
-      try {
-        gamePlay = new GamePlay(controller, game);
-        gamePlay.setMoveListener(new Consumer<String>() {
-                                   @Override
-                                   public void accept(String location) {
-                                     if(location.equals(game.getSpacecraft().getCurrentPlanet().getName())){
-                                       game.setDialogue(View.printSamePlanetAlert());
-                                     }else {
-                                       game.setDialogue("You are now on " + location);
-                                       Planet newPlanet = controller.returnPlanet(
-                                           location.toUpperCase());
-                                       controller.getGame().getSpacecraft()
-                                           .setCurrentPlanet(newPlanet);
-                                       game.setRemainingDays(game.getRemainingDays() - 1);
-                                       game.randomEvents();
-                                       updateGamePlayScreen();
+        try {
+
+            gamePlay = new GamePlay(controller, game);
+
+          gamePlay.setMoveListener(new Consumer<String>() {
+                                     @Override
+                                     public void accept(String location) {
+                                         if (location.equals(
+                                             game.getSpacecraft().getCurrentPlanet().getName())) {
+                                           game.setDialogue(View.printSamePlanetAlert());
+                                         } else {
+                                           game.setDialogue("You are now on " + location);
+                                           Planet newPlanet = controller.returnPlanet(
+                                               location.toUpperCase());
+                                           controller.getGame().getSpacecraft()
+                                               .setCurrentPlanet(newPlanet);
+                                           game.setRemainingDays(game.getRemainingDays() - 1);
+                                           game.randomEvents();
+
+                                           try {
+                                               controller.checkGameResult();
+
+                                           } catch (InterruptedException ex) {
+                                             throw new RuntimeException(ex);
+                                           }
+                                           updateGamePlayScreen();
+                                         }
                                      }
                                    }
-                                 }
-        );
-        updateGamePlayScreen();
-      } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
-               InvalidMidiDataException ex) {
-        throw new RuntimeException(ex);
-      }
+          );
+          updateGamePlayScreen();
+        } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
+                 InvalidMidiDataException ex) {
+          throw new RuntimeException(ex);
+        }
     });
 
     frame.setVisible(true);

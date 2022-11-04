@@ -16,6 +16,9 @@ import com.spacepilot.view.GamePlay;
 import com.spacepilot.view.Title;
 
 import com.spacepilot.view.View;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,14 +30,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
+import javax.swing.WindowConstants;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class GUIController {
 
   private Game game;
   private int repairCounter = 0;
 
+  Font titleFont = new Font("Roboto", Font.BOLD, 50);
+  Font gameStartFont = new Font("Times New Roman", Font.BOLD, 25);
+
+
+  Font lossFont = new Font(Font.MONOSPACED, Font.BOLD, 20);
 
   public GUIController(Game game){
     this.game = game;
@@ -46,13 +66,8 @@ public class GUIController {
 
     // play music
     //    Music.playMusic();
-
-    checkGameResult();
     game.setDialogue("Welcome to the game");
-    while (!game.isOver()) {
 
-      checkGameResult();
-    }
 //      Music.stopMusic(); // Close sequencer so that the program can terminate
   }
 
@@ -159,16 +174,15 @@ public class GUIController {
     if (engineerCount == 0) {
       game.setDialogue(View.printNoEngineerAlert());
       return;
-    }
-    if (repairCounter < 3) {
+    }else if (game.getSpacecraft().getHealth() == 3) {
+      game.setDialogue(View.printShipAtFullHealth());
+    } else if(repairCounter > 3) {
+      game.setDialogue(View.printRepairLimit());
+    } else if (repairCounter < 3) {
       Engineer.repairSpacecraft(game.getSpacecraft());
       game.setDialogue(View.printRepair());
 
       repairCounter++;
-    } else if (game.getSpacecraft().getHealth() == 3) {
-      game.setDialogue(View.printShipAtFullHealth());
-    } else {
-      game.setDialogue(View.printRepairLimit());
     }
   }
 
@@ -212,9 +226,9 @@ public class GUIController {
 
   public void determineIfEngineerIsOnBoard() {
     if (game.getSpacecraft().getNumOfEngineersOnBoard() > 0) {
-      View.printYouveGotAnEngineer();
+      game.setDialogue(View.printYouveGotAnEngineer());
     } else {
-      View.printYouHaventGotAnEngineerOnBoard();
+      game.setDialogue(View.printYouHaventGotAnEngineerOnBoard());
     }
   }
 
@@ -230,14 +244,252 @@ public class GUIController {
     }
   }
 
-  public void checkGameResult() {
+  public void checkGameResult() throws InterruptedException {
     int numRescuedPassengers = returnPlanet("earth").getNumOfAstronautsOnPlanet();
     int totalNumberOfPersonsCreatedInSolarSystem = game.getTotalNumberOfAstronauts();
 
     boolean userWon = (float) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (float) 4 / 4;
     if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && userWon ){
-      View.printGameOverMessage(true);
-      game.setOver(true);}
+      game.setDialogue(View.printGameOverMessage(true));
+      createWinFrame();
+    } else if(game.getRemainingDays() < 1){
+      game.setDialogue(View.ranOutOfTime());
+      createLoseFrame();
+    } else if(game.getSpacecraft().getHealth() < 1){
+      game.setDialogue(View.shipDestroyed());
+      createLoseFrame();
+    }
+
+
+  }
+
+  public JFrame createLoseFrame(){
+    JFrame frame = new JFrame("Space Pilot: Homebound");
+
+    frame.setBackground(Color.black);
+    frame.setSize(500, 500);
+    frame.setResizable(false);
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+    JPanel titlePanel = new JPanel();
+    titlePanel.setBounds(0, 50, 500, 100);
+    titlePanel.setBackground(Color.black);
+    titlePanel.setOpaque(false);
+    JLabel title = new JLabel("Space Pilot: Homebound");
+    title.setForeground(Color.red);
+    title.setFont(titleFont);
+    titlePanel.add(title);
+
+    JPanel playGamePanel = new JPanel();
+    playGamePanel.setBounds(0, 400, 500, 50);
+    playGamePanel.setOpaque(false);
+    JButton playGameButton = new JButton("START GAME");
+    playGameButton.setForeground(Color.red);
+    playGameButton.setBackground(Color.black);
+    playGameButton.setFont(gameStartFont);
+//    playGameButton.setBorderPainted(false);
+    playGamePanel.add(playGameButton);
+    playGameButton.addActionListener(e -> {
+      GamePlay gamePlay;
+      game = Main.createNewGame();
+      GUIController controller = new GUIController(game);
+      Title newTitle = new Title();
+
+      try {
+
+        gamePlay = new GamePlay(controller, game);
+
+        gamePlay.setMoveListener(new Consumer<String>() {
+                                   @Override
+                                   public void accept(String location) {
+                                     if (location.equals(
+                                         game.getSpacecraft().getCurrentPlanet().getName())) {
+                                       game.setDialogue(View.printSamePlanetAlert());
+                                     } else {
+                                       game.setDialogue("You are now on " + location);
+                                       Planet newPlanet = controller.returnPlanet(
+                                           location.toUpperCase());
+                                       controller.getGame().getSpacecraft()
+                                           .setCurrentPlanet(newPlanet);
+                                       game.setRemainingDays(game.getRemainingDays() - 1);
+                                       game.randomEvents();
+
+                                       try {
+                                         controller.checkGameResult();
+
+                                       } catch (InterruptedException ex) {
+                                         throw new RuntimeException(ex);
+                                       }
+                                       newTitle.updateGamePlayScreen();
+                                     }
+                                   }
+                                 }
+        );
+        newTitle.updateGamePlayScreen();
+      } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
+               InvalidMidiDataException ex) {
+        throw new RuntimeException(ex);
+      }
+    });
+
+    JPanel quitGamePanel = new JPanel();
+    quitGamePanel.setBounds(0, 400, 500, 50);
+    quitGamePanel.setOpaque(false);
+    JButton quitGameButton = new JButton("Quit");
+    quitGameButton.setForeground(Color.red);
+    quitGameButton.setBackground(Color.black);
+    quitGameButton.setFont(gameStartFont);
+//    playGameButton.setBorderPainted(false);
+    quitGamePanel.add(quitGameButton);
+    quitGameButton.addActionListener(e -> {
+      System.exit(0);
+    });
+
+    JPanel losePanel = new JPanel();
+    losePanel.setBounds(0, 400, 1000, 500);
+    losePanel.setOpaque(false);
+
+    // Changes information about the text itself
+    JTextPane loss = new JTextPane();
+    loss.setBounds(0, 400, 1000, 500);
+    loss.setFont(lossFont);
+    loss.setBackground(Color.black);
+    loss.setForeground(Color.orange);
+    loss.setOpaque(false);
+    loss.setEditable(false);
+
+    StyledDocument doc = loss.getStyledDocument();
+    SimpleAttributeSet center = new SimpleAttributeSet();
+    StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+    doc.setParagraphAttributes(0, doc.getLength(), center, false);
+    if (game.getRemainingDays() < 1) {
+      loss.setText(View.ranOutOfTime());
+    } else if(game.getSpacecraft().getHealth() < 1){
+      loss.setText(View.shipDestroyed());
+    }
+
+    losePanel.add(loss);
+
+    frame.add(titlePanel);
+    frame.add(playGamePanel);
+    frame.add(quitGamePanel);
+    frame.add(losePanel);
+
+    return frame;
+
+  }
+
+  public JFrame createWinFrame(){
+    JFrame frame = new JFrame("Space Pilot: Homebound");
+
+    frame.setBackground(Color.black);
+    frame.setSize(500, 500);
+    frame.setResizable(false);
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+    JPanel titlePanel = new JPanel();
+    titlePanel.setBounds(0, 50, 500, 100);
+    titlePanel.setBackground(Color.black);
+    titlePanel.setOpaque(false);
+    JLabel title = new JLabel("Space Pilot: Homebound");
+    title.setForeground(Color.red);
+    title.setFont(titleFont);
+    titlePanel.add(title);
+
+    JPanel playGamePanel = new JPanel();
+    playGamePanel.setBounds(0, 400, 500, 50);
+    playGamePanel.setOpaque(false);
+    JButton playGameButton = new JButton("START GAME");
+    playGameButton.setForeground(Color.red);
+    playGameButton.setBackground(Color.black);
+    playGameButton.setFont(gameStartFont);
+//    playGameButton.setBorderPainted(false);
+    playGamePanel.add(playGameButton);
+    playGameButton.addActionListener(e -> {
+      GamePlay gamePlay;
+      game = Main.createNewGame();
+      GUIController controller = new GUIController(game);
+      Title newTitle = new Title();
+
+      try {
+
+        gamePlay = new GamePlay(controller, game);
+
+        gamePlay.setMoveListener(new Consumer<String>() {
+                                   @Override
+                                   public void accept(String location) {
+                                     if (location.equals(
+                                         game.getSpacecraft().getCurrentPlanet().getName())) {
+                                       game.setDialogue(View.printSamePlanetAlert());
+                                     } else {
+                                       game.setDialogue("You are now on " + location);
+                                       Planet newPlanet = controller.returnPlanet(
+                                           location.toUpperCase());
+                                       controller.getGame().getSpacecraft()
+                                           .setCurrentPlanet(newPlanet);
+                                       game.setRemainingDays(game.getRemainingDays() - 1);
+                                       game.randomEvents();
+
+                                       try {
+                                         controller.checkGameResult();
+
+                                       } catch (InterruptedException ex) {
+                                         throw new RuntimeException(ex);
+                                       }
+                                       newTitle.updateGamePlayScreen();
+                                     }
+                                   }
+                                 }
+        );
+        newTitle.updateGamePlayScreen();
+      } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
+               InvalidMidiDataException ex) {
+        throw new RuntimeException(ex);
+      }
+    });
+
+    JPanel quitGamePanel = new JPanel();
+    quitGamePanel.setBounds(0, 400, 500, 50);
+    quitGamePanel.setOpaque(false);
+    JButton quitGameButton = new JButton("Quit");
+    quitGameButton.setForeground(Color.red);
+    quitGameButton.setBackground(Color.black);
+    quitGameButton.setFont(gameStartFont);
+//    playGameButton.setBorderPainted(false);
+    quitGamePanel.add(quitGameButton);
+    quitGameButton.addActionListener(e -> {
+      System.exit(0);
+    });
+
+    JPanel winPanel = new JPanel();
+    winPanel.setBounds(0, 400, 1000, 500);
+    winPanel.setOpaque(false);
+
+    // Changes information about the text itself
+    JTextPane win = new JTextPane();
+    win.setBounds(0, 400, 1000, 500);
+    win.setFont(lossFont);
+    win.setBackground(Color.black);
+    win.setForeground(Color.orange);
+    win.setOpaque(false);
+    win.setEditable(false);
+
+    StyledDocument doc = win.getStyledDocument();
+    SimpleAttributeSet center = new SimpleAttributeSet();
+    StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+    doc.setParagraphAttributes(0, doc.getLength(), center, false);
+    win.setText(View.printGameOverMessage(true));
+
+    winPanel.add(win);
+
+    frame.add(titlePanel);
+    frame.add(playGamePanel);
+    frame.add(quitGamePanel);
+    frame.add(winPanel);
+
+    return frame;
 
   }
 
