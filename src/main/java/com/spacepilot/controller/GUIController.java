@@ -265,12 +265,15 @@ public class GUIController {
           (float) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (float) 4 / 4;
       if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && userWon) {
         game.setDialogue(View.printGameOverMessage(true));
+        Music.stopMusic();
         createWinFrame();
       } else if (game.getRemainingDays() < 1) {
         game.setDialogue(View.ranOutOfTime());
+        Music.stopMusic();
         createLoseFrame();
       } else if (game.getSpacecraft().getHealth() < 1) {
         game.setDialogue(View.shipDestroyed());
+        Music.stopMusic();
         createLoseFrame();
       }
 
@@ -281,13 +284,13 @@ public class GUIController {
       JFrame frame = new JFrame("Space Pilot: Homebound");
 
       frame.setBackground(Color.black);
-      frame.setSize(700, 700);
+      frame.setSize(800, 800);
       frame.setResizable(false);
       frame.setLocationRelativeTo(null);
       frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
       JPanel titlePanel = new JPanel();
-      titlePanel.setBounds(0, 50, 500, 100);
+      titlePanel.setBounds(0, 50, 800, 200);
       titlePanel.setBackground(Color.black);
       titlePanel.setOpaque(false);
       JLabel title = new JLabel("Space Pilot: Homebound");
@@ -296,7 +299,7 @@ public class GUIController {
       titlePanel.add(title);
 
       JPanel playGamePanel = new JPanel();
-      playGamePanel.setBounds(0, 400, 800, 100);
+      playGamePanel.setBounds(60, 600, 800, 100);
       playGamePanel.setOpaque(false);
       JButton playGameButton = new JButton("START GAME");
       playGameButton.setForeground(Color.red);
@@ -349,7 +352,7 @@ public class GUIController {
       });
 
       JPanel quitGamePanel = new JPanel();
-      quitGamePanel.setBounds(0, 400, 500, 50);
+      quitGamePanel.setBounds(50, 600, 500, 50);
       quitGamePanel.setOpaque(false);
       JButton quitGameButton = new JButton("Quit");
       quitGameButton.setForeground(Color.red);
@@ -362,12 +365,12 @@ public class GUIController {
       });
 
       JPanel losePanel = new JPanel();
-      losePanel.setBounds(0, 400, 1000, 500);
+      losePanel.setBounds(0, 700, 800, 500);
       losePanel.setOpaque(false);
 
       // Changes information about the text itself
       JTextPane loss = new JTextPane();
-      loss.setBounds(0, 400, 1000, 500);
+      loss.setBounds(0, 400, 800, 500);
       loss.setFont(lossFont);
       loss.setBackground(Color.black);
       loss.setForeground(Color.orange);
