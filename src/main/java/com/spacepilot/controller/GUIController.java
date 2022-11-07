@@ -22,6 +22,8 @@ import com.spacepilot.view.View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Window;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,6 +31,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -61,11 +64,13 @@ public class GUIController {
 
   Font titleFont = new Font("Roboto", Font.BOLD, 50);
   Font gameStartFont = new Font("Times New Roman", Font.BOLD, 25);
-
-
   Font lossFont = new Font(Font.MONOSPACED, Font.BOLD, 20);
-
   private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
+  URL skeletonImage = getClass().getClassLoader().getResource("GUI/Skeleton.png");
+
+  private static JPanel skeletonPanel;
+  private static JFrame frame = new JFrame("Space Pilot: Homebound");
+  private static JPanel contentPanel = new JPanel();
 
 
   public GUIController(Game game){
@@ -82,10 +87,10 @@ public class GUIController {
 
     checkGameResult();
     game.setDialogue(bundle.getString("intro"));
-    while (!game.isOver()) {
-
-//      Music.stopMusic(); // Close sequencer so that the program can terminate
-    }
+//    while (!game.isOver()) {
+//
+////      Music.stopMusic(); // Close sequencer so that the program can terminate
+//    }
   }
 
     public void saveGame (Game game) throws IOException {
@@ -276,105 +281,32 @@ public class GUIController {
         Music.stopMusic();
         createLoseFrame();
       }
-
-
     }
 
     public void createLoseFrame () {
-      JFrame frame = new JFrame("Space Pilot: Homebound");
 
-      frame.setBackground(Color.black);
-      frame.setSize(800, 800);
-      frame.setResizable(false);
-      frame.setLocationRelativeTo(null);
-      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    createFrameForLoss();
 
       JPanel titlePanel = new JPanel();
       titlePanel.setBounds(0, 50, 800, 200);
       titlePanel.setBackground(Color.black);
       titlePanel.setOpaque(false);
-      JLabel title = new JLabel("Space Pilot: Homebound");
-      title.setForeground(Color.red);
-      title.setFont(titleFont);
-      titlePanel.add(title);
-
-      JPanel playGamePanel = new JPanel();
-      playGamePanel.setBounds(60, 600, 800, 100);
-      playGamePanel.setOpaque(false);
-      JButton playGameButton = new JButton("START GAME");
-      playGameButton.setForeground(Color.red);
-      playGameButton.setBackground(Color.black);
-      playGameButton.setFont(gameStartFont);
-//    playGameButton.setBorderPainted(false);
-      playGamePanel.add(playGameButton);
-      playGameButton.addActionListener(e -> {
-        GamePlay gamePlay;
-        game = createNewGame();
-        GUIController controller = new GUIController(game);
-        Title newTitle = new Title();
-
-        try {
-
-          gamePlay = new GamePlay(controller, game);
-
-          gamePlay.setMoveListener(new Consumer<String>() {
-                                     @Override
-                                     public void accept(String location) {
-                                       if (location.equals(
-                                           game.getSpacecraft().getCurrentPlanet().getName())) {
-                                         game.setDialogue(View.printSamePlanetAlert());
-                                       } else {
-                                         game.setDialogue("You are now on " + location);
-                                         Planet newPlanet = controller.returnPlanet(
-                                             location.toUpperCase());
-                                         controller.getGame().getSpacecraft()
-                                             .setCurrentPlanet(newPlanet);
-                                         game.setRemainingDays(game.getRemainingDays() - 1);
-                                         game.randomEvents();
-
-                                         try {
-                                           controller.checkGameResult();
-
-                                         } catch (InterruptedException ex) {
-                                           throw new RuntimeException(ex);
-                                         }
-                                         newTitle.updateGamePlayScreen();
-                                       }
-                                     }
-                                   }
-
-          );
-          newTitle.updateGamePlayScreen();
-        } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
-                 InvalidMidiDataException | InterruptedException ex) {
-          throw new RuntimeException(ex);
-        }
-      });
-
-      JPanel quitGamePanel = new JPanel();
-      quitGamePanel.setBounds(50, 600, 500, 50);
-      quitGamePanel.setOpaque(false);
-      JButton quitGameButton = new JButton("Quit");
-      quitGameButton.setForeground(Color.red);
-      quitGameButton.setBackground(Color.black);
-      quitGameButton.setFont(gameStartFont);
-//    playGameButton.setBorderPainted(false);
-      quitGamePanel.add(quitGameButton);
-      quitGameButton.addActionListener(e -> {
-          System.exit(0);
-      });
+      JLabel mainTitle = new JLabel("Space Pilot: Homebound");
+      mainTitle.setForeground(Color.red);
+      mainTitle.setFont(titleFont);
+      titlePanel.add(mainTitle);
 
       JPanel losePanel = new JPanel();
-      losePanel.setBounds(0, 700, 800, 500);
+      losePanel.setBounds(0, 300, 800, 200);
       losePanel.setOpaque(false);
 
       // Changes information about the text itself
       JTextPane loss = new JTextPane();
-      loss.setBounds(0, 400, 800, 500);
+      loss.setBounds(0, 300, 800, 200);
       loss.setFont(lossFont);
       loss.setBackground(Color.black);
-      loss.setForeground(Color.orange);
-      loss.setOpaque(false);
+      loss.setForeground(Color.red);
+      loss.setOpaque(true);
       loss.setEditable(false);
 
       StyledDocument doc = loss.getStyledDocument();
@@ -389,108 +321,86 @@ public class GUIController {
 
       losePanel.add(loss);
 
-      frame.add(titlePanel);
-      frame.add(playGamePanel);
-      frame.add(quitGamePanel);
-      frame.add(losePanel);
+      JPanel playGamePanel = new JPanel();
+      playGamePanel.setBounds(100, 600, 600, 50);
+      playGamePanel.setOpaque(false);
+      JButton playGameButton = new JButton("Start Game");
+      playGameButton.setForeground(Color.red);
+      playGameButton.setBackground(Color.black);
+      playGameButton.setFont(gameStartFont);
 
+      JButton quitGameButton = new JButton("Quit");
+      quitGameButton.setForeground(Color.red);
+      quitGameButton.setBackground(Color.black);
+      quitGameButton.setFont(gameStartFont);
+
+      playGamePanel.add(playGameButton);
+      playGamePanel.add(quitGameButton);
+      playGamePanel.setLayout(new GridLayout(1, 2));
+
+      playGameButton.addActionListener(e -> {
+        Title title = new Title();
+        title.playNewGame();
+      });
+
+      quitGameButton.addActionListener(e -> {
+        System.exit(0);
+      });
+
+      contentPanel.setLayout(null);
+      contentPanel.setBackground(Color.black);
+      contentPanel.setOpaque(true);
+
+      contentPanel.add(titlePanel);
+      contentPanel.add(losePanel);
+      contentPanel.add(playGamePanel);
+      contentPanel.add(skeletonPanel);
+
+      frame.add(contentPanel);
       frame.setVisible(true);
 
     }
 
-    public void createWinFrame () {
-      JFrame frame = new JFrame("Space Pilot: Homebound");
+  public void createFrameForLoss() {
 
-      frame.setBackground(Color.black);
-      frame.setSize(500, 500);
-      frame.setResizable(false);
-      frame.setLocationRelativeTo(null);
-      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    frame.setBackground(Color.black);
+    frame.setSize(800, 800);
+    frame.setResizable(false);
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+    skeletonPanel = new JPanel();
+    skeletonPanel.setBackground(Color.black);
+    skeletonPanel.setBounds(0, 0, 800, 800);
+    ImageIcon img = new ImageIcon(skeletonImage);
+    img.setImage(img.getImage().getScaledInstance(800, 800, Image.SCALE_DEFAULT));
+
+    skeletonPanel.add(new JLabel(img));
+
+  }
+
+    public void createWinFrame () {
+      createFrame();
 
       JPanel titlePanel = new JPanel();
       titlePanel.setBounds(0, 50, 500, 100);
       titlePanel.setBackground(Color.black);
       titlePanel.setOpaque(false);
-      JLabel title = new JLabel("Space Pilot: Homebound");
-      title.setForeground(Color.red);
-      title.setFont(titleFont);
-      titlePanel.add(title);
-
-      JPanel playGamePanel = new JPanel();
-      playGamePanel.setBounds(0, 400, 500, 50);
-      playGamePanel.setOpaque(false);
-      JButton playGameButton = new JButton("START GAME");
-      playGameButton.setForeground(Color.red);
-      playGameButton.setBackground(Color.black);
-      playGameButton.setFont(gameStartFont);
-//    playGameButton.setBorderPainted(false);
-      playGamePanel.add(playGameButton);
-      playGameButton.addActionListener(e -> {
-        GamePlay gamePlay;
-        Game newGame = createNewGame();
-        GUIController newController = new GUIController(newGame);
-        Title newTitle = new Title();
-
-        try {
-
-          gamePlay = new GamePlay(newController, newGame);
-
-          gamePlay.setMoveListener(new Consumer<String>() {
-                                     @Override
-                                     public void accept(String location) {
-                                       if (location.equals(
-                                           newGame.getSpacecraft().getCurrentPlanet().getName())) {
-                                         newGame.setDialogue(View.printSamePlanetAlert());
-                                       } else {
-                                         newGame.setDialogue("You are now on " + location);
-                                         Planet newPlanet = newController.returnPlanet(
-                                             location.toUpperCase());
-                                         newController.getGame().getSpacecraft()
-                                             .setCurrentPlanet(newPlanet);
-                                         newGame.setRemainingDays(newGame.getRemainingDays() - 1);
-                                         newGame.randomEvents();
-
-                                         try {
-                                           newController.checkGameResult();
-
-                                         } catch (InterruptedException ex) {
-                                           throw new RuntimeException(ex);
-                                         }
-                                         newTitle.updateGamePlayScreen();
-                                       }
-                                     }
-                                   }
-          );
-          newTitle.updateGamePlayScreen();
-        } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
-                 InvalidMidiDataException | InterruptedException ex) {
-          throw new RuntimeException(ex);
-        }
-      });
-
-      JPanel quitGamePanel = new JPanel();
-      quitGamePanel.setBounds(0, 400, 500, 50);
-      quitGamePanel.setOpaque(false);
-      JButton quitGameButton = new JButton("Quit");
-      quitGameButton.setForeground(Color.red);
-      quitGameButton.setBackground(Color.black);
-      quitGameButton.setFont(gameStartFont);
-//    playGameButton.setBorderPainted(false);
-      quitGamePanel.add(quitGameButton);
-      quitGameButton.addActionListener(e -> {
-        System.exit(0);
-      });
+      JLabel titleText = new JLabel("Space Pilot: Homebound");
+      titleText.setForeground(Color.red);
+      titleText.setFont(titleFont);
+      titlePanel.add(titleText);
 
       JPanel winPanel = new JPanel();
-      winPanel.setBounds(0, 400, 1000, 500);
+      winPanel.setBounds(0, 300, 800, 200);
       winPanel.setOpaque(false);
 
       // Changes information about the text itself
       JTextPane win = new JTextPane();
-      win.setBounds(0, 400, 1000, 500);
+      win.setBounds(0, 300, 800, 200);
       win.setFont(lossFont);
       win.setBackground(Color.black);
-      win.setForeground(Color.orange);
+      win.setForeground(Color.green);
       win.setOpaque(false);
       win.setEditable(false);
 
@@ -502,19 +412,56 @@ public class GUIController {
 
       winPanel.add(win);
 
-      frame.add(titlePanel);
-      frame.add(playGamePanel);
-      frame.add(quitGamePanel);
-      frame.add(winPanel);
+      JPanel playGamePanel = new JPanel();
+      playGamePanel.setBounds(100, 600, 600, 50);
+      playGamePanel.setOpaque(false);
+      JButton playGameButton = new JButton("START GAME");
+      playGameButton.setForeground(Color.red);
+      playGameButton.setBackground(Color.black);
+      playGameButton.setFont(gameStartFont);
 
+      JButton quitGameButton = new JButton("Quit");
+      quitGameButton.setForeground(Color.red);
+      quitGameButton.setBackground(Color.black);
+      quitGameButton.setFont(gameStartFont);
+      playGamePanel.add(playGameButton);
+      playGamePanel.add(quitGameButton);
+      playGamePanel.setLayout(new GridLayout(1, 2));
+
+      playGameButton.addActionListener(e -> {
+        Title title = new Title();
+        title.playNewGame();
+      });
+
+      quitGameButton.addActionListener(e -> {
+        System.exit(0);
+      });
+
+      contentPanel.setLayout(null);
+      contentPanel.setBackground(Color.black);
+      contentPanel.setOpaque(true);
+
+      contentPanel.add(titlePanel);
+      contentPanel.add(winPanel);
+      contentPanel.add(playGamePanel);
+
+      frame.add(contentPanel);
       frame.setVisible(true);
 
     }
 
-    public Game getGame () {
-      return game;
+    public void createFrame() {
+      frame = new JFrame("Space Pilot: Homebound");
+
+      frame.setBackground(Color.black);
+      frame.setSize(800, 800);
+      frame.setResizable(false);
+      frame.setLocationRelativeTo(null);
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-
+  public Game getGame () {
+    return game;
+  }
   }
 

@@ -34,6 +34,7 @@ public class Title {
   private GamePlay gamePlay;
 
   JPanel titlePanel, imagePanel, playGamePanel, introPanel, spacePanel;
+  private static JPanel contentPanel = new JPanel();
   JTextPane intro;
   JLabel title;
   JButton playGameButton;
@@ -130,7 +131,7 @@ public class Title {
 
     spacePanel.add(new JLabel(img1));
 
-    JPanel contentPanel = new JPanel();
+//    JPanel contentPanel = new JPanel();
     contentPanel.setLayout(null);
     contentPanel.setBackground(Color.black);
     contentPanel.setOpaque(true);
@@ -144,54 +145,59 @@ public class Title {
 
     frame.add(contentPanel);
 
+    playNewGame();
+    frame.setVisible(true);
+  }
+
+  public void playNewGame() {
+
     // Allows the users to hit the play button
     playGameButton.addActionListener(e -> {
 
-        game = Main.createNewGame();
-        controller = new GUIController(game);
-        frame.remove(contentPanel);
+      game = Main.createNewGame();
+      controller = new GUIController(game);
+      frame.remove(contentPanel);
 
-        try {
+      try {
 
-            gamePlay = new GamePlay(controller, game);
+        gamePlay = new GamePlay(controller, game);
 
-          gamePlay.setMoveListener(new Consumer<String>() {
-                                     @Override
-                                     public void accept(String location) {
-                                         if (location.equals(
-                                             game.getSpacecraft().getCurrentPlanet().getName())) {
-                                           game.setDialogue(View.printSamePlanetAlert());
-                                         } else {
-                                           game.setDialogue("You are now on " + location);
-                                           Planet newPlanet = controller.returnPlanet(
-                                               location.toUpperCase());
-                                           controller.getGame().getSpacecraft()
-                                               .setCurrentPlanet(newPlanet);
-                                           game.setRemainingDays(game.getRemainingDays() - 1);
-                                           game.randomEvents();
+        gamePlay.setMoveListener(new Consumer<String>() {
+                                   @Override
+                                   public void accept(String location) {
+                                     if (location.equals(
+                                         game.getSpacecraft().getCurrentPlanet().getName())) {
+                                       game.setDialogue(View.printSamePlanetAlert());
+                                     } else {
+                                       game.setDialogue("You are now on " + location);
+                                       Planet newPlanet = controller.returnPlanet(
+                                           location.toUpperCase());
+                                       controller.getGame().getSpacecraft()
+                                           .setCurrentPlanet(newPlanet);
+                                       game.setRemainingDays(game.getRemainingDays() - 1);
+                                       game.randomEvents();
 
-                                           try {
-                                               controller.checkGameResult();
+                                       try {
+                                         controller.checkGameResult();
 
-                                           } catch (InterruptedException ex) {
-                                             throw new RuntimeException(ex);
-                                           }
-                                           updateGamePlayScreen();
-                                         }
-
+                                       } catch (InterruptedException ex) {
+                                         throw new RuntimeException(ex);
+                                       }
+                                       updateGamePlayScreen();
                                      }
+
                                    }
-          );
-          updateGamePlayScreen();
-        } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
-                 InvalidMidiDataException | InterruptedException ex) {
-          throw new RuntimeException(ex);
-        }
+                                 }
+        );
+        updateGamePlayScreen();
+      } catch (IOException | FontFormatException | MidiUnavailableException | URISyntaxException |
+               InvalidMidiDataException | InterruptedException ex) {
+        throw new RuntimeException(ex);
+      }
     });
 
-    frame.setVisible(true);
-
   }
+
 
   public void updateGamePlayScreen() {
     String remainingDays = String.valueOf(game.getRemainingDays());
@@ -205,5 +211,7 @@ public class Title {
     String dialogue = game.getDialogue();
     gamePlay.update(remainingDays, condition, planet, remainingAstronauts, passengersOnboard,
         engineersOnboard, dialogue);
+
   }
+
 }
