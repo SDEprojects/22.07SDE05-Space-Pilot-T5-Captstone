@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.spacepilot.Main;
 import com.spacepilot.model.GameText;
 import com.spacepilot.model.Planet;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;

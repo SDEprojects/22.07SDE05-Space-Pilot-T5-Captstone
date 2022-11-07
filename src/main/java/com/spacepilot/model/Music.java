@@ -23,6 +23,7 @@ public final class Music implements JMC {
       InputStream inputStream = Main.class.getResourceAsStream("/black-hole-audio.mp3.mid");
       sequencer.setSequence(inputStream);
       sequencer.start();
+      sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
     } catch (MidiUnavailableException e) {
       throw new RuntimeException(e);
     }
