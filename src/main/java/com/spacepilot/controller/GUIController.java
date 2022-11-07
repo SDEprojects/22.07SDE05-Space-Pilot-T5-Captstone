@@ -1,6 +1,8 @@
 package com.spacepilot.controller;
 
 
+import static com.spacepilot.Main.createNewGame;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.spacepilot.Main;
@@ -20,9 +22,11 @@ import com.spacepilot.view.View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Window;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -273,11 +277,19 @@ public class GUIController {
 
     }
 
-    public JFrame createLoseFrame () {
+  public static void main(String[] args) {
+    Game game = new Game();
+    GUIController controller = new GUIController(game);
+
+    controller.createLoseFrame();
+
+  }
+
+    public void createLoseFrame () {
       JFrame frame = new JFrame("Space Pilot: Homebound");
 
       frame.setBackground(Color.black);
-      frame.setSize(500, 500);
+      frame.setSize(700, 700);
       frame.setResizable(false);
       frame.setLocationRelativeTo(null);
       frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -292,7 +304,7 @@ public class GUIController {
       titlePanel.add(title);
 
       JPanel playGamePanel = new JPanel();
-      playGamePanel.setBounds(0, 400, 500, 50);
+      playGamePanel.setBounds(0, 400, 800, 100);
       playGamePanel.setOpaque(false);
       JButton playGameButton = new JButton("START GAME");
       playGameButton.setForeground(Color.red);
@@ -302,7 +314,7 @@ public class GUIController {
       playGamePanel.add(playGameButton);
       playGameButton.addActionListener(e -> {
         GamePlay gamePlay;
-        game = Main.createNewGame();
+        game = createNewGame();
         GUIController controller = new GUIController(game);
         Title newTitle = new Title();
 
@@ -354,7 +366,7 @@ public class GUIController {
 //    playGameButton.setBorderPainted(false);
       quitGamePanel.add(quitGameButton);
       quitGameButton.addActionListener(e -> {
-        System.exit(0);
+          System.exit(0);
       });
 
       JPanel losePanel = new JPanel();
@@ -387,11 +399,11 @@ public class GUIController {
       frame.add(quitGamePanel);
       frame.add(losePanel);
 
-      return frame;
+      frame.setVisible(true);
 
     }
 
-    public JFrame createWinFrame () {
+    public void createWinFrame () {
       JFrame frame = new JFrame("Space Pilot: Homebound");
 
       frame.setBackground(Color.black);
@@ -420,31 +432,31 @@ public class GUIController {
       playGamePanel.add(playGameButton);
       playGameButton.addActionListener(e -> {
         GamePlay gamePlay;
-        game = Main.createNewGame();
-        GUIController controller = new GUIController(game);
+        Game newGame = createNewGame();
+        GUIController newController = new GUIController(newGame);
         Title newTitle = new Title();
 
         try {
 
-          gamePlay = new GamePlay(controller, game);
+          gamePlay = new GamePlay(newController, newGame);
 
           gamePlay.setMoveListener(new Consumer<String>() {
                                      @Override
                                      public void accept(String location) {
                                        if (location.equals(
-                                           game.getSpacecraft().getCurrentPlanet().getName())) {
-                                         game.setDialogue(View.printSamePlanetAlert());
+                                           newGame.getSpacecraft().getCurrentPlanet().getName())) {
+                                         newGame.setDialogue(View.printSamePlanetAlert());
                                        } else {
-                                         game.setDialogue("You are now on " + location);
-                                         Planet newPlanet = controller.returnPlanet(
+                                         newGame.setDialogue("You are now on " + location);
+                                         Planet newPlanet = newController.returnPlanet(
                                              location.toUpperCase());
-                                         controller.getGame().getSpacecraft()
+                                         newController.getGame().getSpacecraft()
                                              .setCurrentPlanet(newPlanet);
-                                         game.setRemainingDays(game.getRemainingDays() - 1);
-                                         game.randomEvents();
+                                         newGame.setRemainingDays(newGame.getRemainingDays() - 1);
+                                         newGame.randomEvents();
 
                                          try {
-                                           controller.checkGameResult();
+                                           newController.checkGameResult();
 
                                          } catch (InterruptedException ex) {
                                            throw new RuntimeException(ex);
@@ -500,7 +512,7 @@ public class GUIController {
       frame.add(quitGamePanel);
       frame.add(winPanel);
 
-      return frame;
+      frame.setVisible(true);
 
     }
 
