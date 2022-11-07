@@ -277,14 +277,6 @@ public class GUIController {
 
     }
 
-  public static void main(String[] args) {
-    Game game = new Game();
-    GUIController controller = new GUIController(game);
-
-    controller.createLoseFrame();
-
-  }
-
     public void createLoseFrame () {
       JFrame frame = new JFrame("Space Pilot: Homebound");
 
