@@ -10,6 +10,7 @@ import com.spacepilot.model.Music;
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
+import com.spacepilot.view.GamePlay;
 import com.spacepilot.view.Title;
 import com.spacepilot.view.View;
 import java.awt.Color;
@@ -60,6 +61,8 @@ public class GUIController {
 
   private static JFrame frame = new JFrame("Space Pilot: Homebound");
   private static JPanel contentPanel = new JPanel();
+  ////// Added
+  private static JFrame titleFrame = Title.frame;
 
 
   public GUIController(Game game){
@@ -184,18 +187,18 @@ public class GUIController {
   public void repairShipConditions ( int engineerCount){
     if (engineerCount == 0) {
       game.setDialogue(View.printNoEngineerAlert());
-      return;
     } else if (game.getSpacecraft().getHealth() == 3) {
       game.setDialogue(View.printShipAtFullHealth());
-    } else if (repairCounter > 3) {
+    } else if (repairCounter >= 3) {
       game.setDialogue(View.printRepairLimit());
-    } else if (repairCounter < 3) {
+    } else {
       Engineer.repairSpacecraft(game.getSpacecraft());
       game.setDialogue(View.printRepair());
-
-      repairCounter++;
+      repairCounter+= 1;
     }
   }
+
+
 
   public void loadNewPassengers () {
     Collection<Person> arrayOfAstronautsOnCurrentPlanet = game.getSpacecraft().getCurrentPlanet()
@@ -326,6 +329,8 @@ public class GUIController {
     playGamePanel.setLayout(new GridLayout(1, 2));
 
     playGameButton.addActionListener(e -> {
+      frame.dispose();
+      titleFrame.dispose();
       Title title = new Title();
       title.playNewGame();
     });

@@ -43,7 +43,7 @@ public class GamePlay {
   Font planetInfoFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(20f);
   Border black = BorderFactory.createLineBorder(Color.black);
 
-  static JFrame frame;
+  public static JFrame frame;
   JPanel currentPlanetPanel, shipConditionPanel, remainingDaysPanel, remainingAstronautsPanel, passengersOnboardPanel, engineersOnboardPanel;
   JPanel leftPanel;
   static JPanel midPanel;
