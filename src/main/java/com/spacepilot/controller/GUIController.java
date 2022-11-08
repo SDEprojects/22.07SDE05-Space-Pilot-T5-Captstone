@@ -1,34 +1,24 @@
 package com.spacepilot.controller;
 
 
-import static com.spacepilot.Main.createNewGame;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.spacepilot.Main;
-
 import com.spacepilot.model.Engineer;
 import com.spacepilot.model.Game;
-
 import com.spacepilot.model.Music;
 import com.spacepilot.model.Person;
 import com.spacepilot.model.Planet;
 import com.spacepilot.model.Spacecraft;
-
-import com.spacepilot.view.GamePlay;
 import com.spacepilot.view.Title;
-
 import com.spacepilot.view.View;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Window;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -38,11 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import java.util.ResourceBundle;
-
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.ImageIcon;

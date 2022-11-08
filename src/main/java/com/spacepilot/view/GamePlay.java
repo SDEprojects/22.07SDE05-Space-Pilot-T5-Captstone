@@ -66,7 +66,6 @@ public class GamePlay {
     controller.play();
     frame = Title.frame;
 
-
     // Calls upon the creation of each panel for the main gameplay.
 
     createLeftPanel();
@@ -75,7 +74,6 @@ public class GamePlay {
     createTextPanel();
     createMidPanel();
     createBackgroundImagePanel();
-
 
     contentPanel = new JPanel();
     contentPanel.setLayout(null);
@@ -357,13 +355,15 @@ public class GamePlay {
     midPanel.setBounds(213, 30, 575, 650);
     midPanel.setBackground(Color.black);
     midPanel.setOpaque(false);
-    planetImages("earth");
+    planetImages("Earth");
 
   }
 
   public static void planetImages(String planet) {
     midPanel.removeAll();
-    URL planetImage = GamePlay.class.getClassLoader().getResource("GUI/" + planet + ".png");
+//    URL planetImage = GamePlay.class.getClassLoader().getResource("GUI/" + planet + ".png");
+    URL planetImage = ClassLoader.getSystemClassLoader().getResource("GUI/" + planet + ".png");
+    assert planetImage != null;
     ImageIcon planetImg = new ImageIcon(planetImage);
 
     planetImg.setImage(planetImg.getImage().getScaledInstance(575, 575, Image.SCALE_DEFAULT));
@@ -416,9 +416,9 @@ public class GamePlay {
     planetLabel.setText("" + planet);
     remainingAstronautsLabel.setText("" + remainingAstronauts);
     passengersOnboardLabel.setText("" + passengersOnboard);
-    if (Integer.parseInt(engineersOnboard) > 0){
+    if (Integer.parseInt(engineersOnboard) > 0) {
       engineersOnboardLabel.setText("Yes");
-    }else if(Integer.parseInt(engineersOnboard) <1 ){
+    } else if (Integer.parseInt(engineersOnboard) < 1) {
       engineersOnboardLabel.setText("No");
     }
     description.setText(dialogue);
