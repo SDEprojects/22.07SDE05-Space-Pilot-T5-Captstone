@@ -59,8 +59,8 @@ public class Title {
 
     // Creates the initial frame for everything
     frame = new JFrame("Space Pilot: Homebound");
-    ImageIcon icon = new ImageIcon(iconURL);
-    frame.setIconImage(icon.getImage());
+//    ImageIcon icon = new ImageIcon(iconURL);
+//    frame.setIconImage(icon.getImage());
 
     frame.setBackground(Color.black);
     frame.setSize(1000, 1000);
