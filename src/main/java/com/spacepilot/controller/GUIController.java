@@ -67,9 +67,11 @@ public class GUIController {
   Font lossFont = new Font(Font.MONOSPACED, Font.BOLD, 20);
   private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   URL skeletonImage = getClass().getClassLoader().getResource("GUI/Skeleton.png");
+
   URL happyAstronautImage = getClass().getClassLoader().getResource("GUI/Astronaut.png");
 
   private static JPanel skeletonPanel, astronautWinPanel;
+
   private static JFrame frame = new JFrame("Space Pilot: Homebound");
   private static JPanel contentPanel = new JPanel();
 
@@ -92,6 +94,7 @@ public class GUIController {
 //
 ////      Music.stopMusic(); // Close sequencer so that the program can terminate
 //    }
+
   }
 
   public void saveGame (Game game) throws IOException {
@@ -115,6 +118,7 @@ public class GUIController {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+
   }
 
   public void setUpGame () throws URISyntaxException, IOException {
@@ -348,6 +352,7 @@ public class GUIController {
     contentPanel.setBackground(Color.black);
     contentPanel.setOpaque(true);
 
+
     contentPanel.add(titlePanel);
     contentPanel.add(losePanel);
     contentPanel.add(playGamePanel);
@@ -366,6 +371,7 @@ public class GUIController {
     frame.setLocationRelativeTo(null);
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+
     skeletonPanel = new JPanel();
     skeletonPanel.setBackground(Color.black);
     skeletonPanel.setBounds(0, 0, 800, 800);
@@ -375,6 +381,7 @@ public class GUIController {
     skeletonPanel.add(new JLabel(img));
 
   }
+
 
   public void createWinFrame () {
     createFrameForWin();
@@ -469,4 +476,5 @@ public class GUIController {
   public Game getGame () {
     return game;
   }
+
 }
