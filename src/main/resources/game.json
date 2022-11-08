@@ -1,6 +1,8 @@
 {
   "isOver": true,
+
   "remainingDays": 12,
+
   "spacecraft": {
     "name": "Bermoona Triangle",
     "health": 3,

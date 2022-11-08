@@ -153,6 +153,12 @@ public class View {
 
   }
 
+  public static String winMessage() {
+    return "Congratulatulations, YOU WON!"
+        + "\n\nYou have saved all the Astronauts. "
+        + "\n\nEnjoy Retirement!" ;
+  }
+
   // tells the user when they make an invalid command
   public static void printInvalidCommandAlert() {
     System.out.println();
