@@ -374,11 +374,11 @@ public class GamePlay {
   // Creates the text panel for main game play
   public JPanel createTextPanel() {
     textPanel = new JPanel();
-    textPanel.setBounds(200, 650, 600, 310);
+    textPanel.setBounds(200, 700, 600, 310);
     textPanel.setBackground(Color.black);
 
     description = new JTextPane();
-    description.setBounds(200, 650, 600, 310);
+    description.setBounds(200, 700, 600, 310);
     description.setFont(planetInfoFont);
     description.setBackground(Color.black);
     description.setForeground(Color.white);
@@ -416,7 +416,11 @@ public class GamePlay {
     planetLabel.setText("" + planet);
     remainingAstronautsLabel.setText("" + remainingAstronauts);
     passengersOnboardLabel.setText("" + passengersOnboard);
-    engineersOnboardLabel.setText("" + engineersOnboard);
+    if (Integer.parseInt(engineersOnboard) > 0){
+      engineersOnboardLabel.setText("Yes");
+    }else if(Integer.parseInt(engineersOnboard) <1 ){
+      engineersOnboardLabel.setText("No");
+    }
     description.setText(dialogue);
   }
 
@@ -425,5 +429,3 @@ public class GamePlay {
   }
 
 }
-
-
