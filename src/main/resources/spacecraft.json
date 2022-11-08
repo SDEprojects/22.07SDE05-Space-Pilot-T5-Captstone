@@ -1,6 +1,6 @@
 {
   "name": "Bermoona Triangle",
-  "health": 2,
+  "health": 3,
   "currentPlanet": {},
   "passengers": [],
   "numOfEngineersOnBoard": 0,

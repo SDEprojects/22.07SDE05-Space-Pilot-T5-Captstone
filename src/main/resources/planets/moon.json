@@ -4,6 +4,7 @@
   "gravity": 2,
   "radius": 1000,
   "mass": 1,
+  "item": "",
   "names": [
     "Bob",
     "Michelle",

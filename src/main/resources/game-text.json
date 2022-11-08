@@ -71,6 +71,6 @@
     "Please get me back home to my family safely...",
     "*rocks back and forth*"
   ],
-  "userWon": "Congrats! YOU WON!",
-  "userLost": "You failed to rescue enough astronauts while they are alive :("
+  "userWon": "Congratulations! YOU WON! You have saved the Astronauts. Enjoy Retirement!",
+  "userLost": "You Failed!"
 }
