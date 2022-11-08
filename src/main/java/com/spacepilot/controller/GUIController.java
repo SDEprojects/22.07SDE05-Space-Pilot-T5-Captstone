@@ -424,6 +424,8 @@ public class GUIController {
     playGamePanel.setLayout(new GridLayout(1, 2));
 
     playGameButton.addActionListener(e -> {
+      frame.dispose();
+      titleFrame.dispose();
       Title title = new Title();
       title.playNewGame();
     });
