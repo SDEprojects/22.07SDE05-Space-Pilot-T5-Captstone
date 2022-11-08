@@ -320,7 +320,7 @@ public class GamePlay {
 
   private void repairFunctionality() {
     repairButton.addActionListener(e -> {
-      controller.repairShipConditions(Integer.parseInt(engineersOnboardLabel.getText()));
+      controller.repairShipConditions(game.getSpacecraft().getNumOfEngineersOnBoard());
       update(String.valueOf(game.getRemainingDays()),
           String.valueOf(game.getSpacecraft().getHealth()),
           String.valueOf(game.getSpacecraft().getCurrentPlanet().getName()),
