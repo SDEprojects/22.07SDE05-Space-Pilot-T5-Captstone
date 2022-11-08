@@ -365,26 +365,23 @@ public class GUIController {
 
   public void createFrameForLoss() {
 
-    public void checkGameResult () throws InterruptedException {
-      int numRescuedPassengers = returnPlanet("earth").getNumOfAstronautsOnPlanet();
-      int totalNumberOfPersonsCreatedInSolarSystem = game.getTotalNumberOfAstronauts();
+    frame.setBackground(Color.black);
+    frame.setSize(800, 800);
+    frame.setResizable(false);
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-      boolean userWon =
-          (float) numRescuedPassengers / totalNumberOfPersonsCreatedInSolarSystem >= (float) 4 / 4;
-      if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && userWon) {
-        game.setDialogue(View.printGameOverMessage(true));
-        Music.stopMusic();
-        createWinFrame();
-      } else if (game.getRemainingDays() < 1) {
-        game.setDialogue(View.ranOutOfTime());
-        Music.stopMusic();
-        createLoseFrame();
-      } else if (game.getSpacecraft().getHealth() < 1) {
-        game.setDialogue(View.shipDestroyed());
-        Music.stopMusic();
-        createLoseFrame();
-      }
-    }
+
+    skeletonPanel = new JPanel();
+    skeletonPanel.setBackground(Color.black);
+    skeletonPanel.setBounds(0, 0, 800, 800);
+    ImageIcon img = new ImageIcon(skeletonImage);
+    img.setImage(img.getImage().getScaledInstance(800, 800, Image.SCALE_DEFAULT));
+
+    skeletonPanel.add(new JLabel(img));
+
+  }
+
 
   public void createWinFrame () {
     createFrameForWin();
@@ -473,6 +470,7 @@ public class GUIController {
     img.setImage(img.getImage().getScaledInstance(800, 800, Image.SCALE_DEFAULT));
 
     astronautWinPanel.add(new JLabel(img));
+
   }
 
   public Game getGame () {
