@@ -423,7 +423,7 @@ public class GamePlay {
     }
     description.setText(dialogue);
   }
-
+// moveListener
   public void setMoveListener(Consumer<String> moveListener) {
     this.moveListener = moveListener;
   }
