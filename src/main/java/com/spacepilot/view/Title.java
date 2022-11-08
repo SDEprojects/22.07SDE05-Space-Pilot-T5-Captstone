@@ -42,7 +42,6 @@ public class Title {
   // Provide the images to the introduction screen.
   URL titleImage = getClass().getClassLoader().getResource("GUI/TitleScreen.png");
   URL spaceShip = getClass().getClassLoader().getResource("GUI/Rocket.png");
-  URL iconURL = getClass().getClassLoader().getResource("GUI/earth.png");
 
   private static final ResourceBundle bundle = ResourceBundle.getBundle("strings");
   Font titleFont = new Font("Roboto", Font.BOLD, 50);
@@ -59,8 +58,6 @@ public class Title {
 
     // Creates the initial frame for everything
     frame = new JFrame("Space Pilot: Homebound");
-//    ImageIcon icon = new ImageIcon(iconURL);
-//    frame.setIconImage(icon.getImage());
 
     frame.setBackground(Color.black);
     frame.setSize(1000, 1000);
@@ -86,7 +83,6 @@ public class Title {
     playGameButton.setForeground(Color.red);
     playGameButton.setBackground(Color.black);
     playGameButton.setFont(gameStartFont);
-//    playGameButton.setBorderPainted(false);
     playGamePanel.add(playGameButton);
 
     // Sets up the panel for the intro text
