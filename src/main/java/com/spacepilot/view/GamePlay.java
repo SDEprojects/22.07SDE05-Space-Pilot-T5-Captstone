@@ -65,6 +65,7 @@ public class GamePlay {
     this.controller = controller;
     controller.play();
     frame = Title.frame;
+    frame.setLocationRelativeTo(null);
 
     // Calls upon the creation of each panel for the main gameplay.
 
