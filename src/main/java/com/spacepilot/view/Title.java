@@ -145,6 +145,7 @@ public class Title {
     frame.setVisible(true);
   }
 
+  // method to play a new game
   public void playNewGame() {
 
     // Allows the users to hit the play button
@@ -194,7 +195,7 @@ public class Title {
 
   }
 
-
+// updates game play screen widgets
   public void updateGamePlayScreen() {
     String remainingDays = String.valueOf(game.getRemainingDays());
     String condition = String.valueOf(game.getSpacecraft().getHealth());

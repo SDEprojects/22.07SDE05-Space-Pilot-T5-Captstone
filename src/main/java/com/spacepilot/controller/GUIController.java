@@ -65,7 +65,7 @@ public class GUIController {
   private static JFrame titleFrame = Title.frame;
 
 
-  public GUIController(Game game){
+  public GUIController(Game game) {
     this.game = game;
   }
 
@@ -86,7 +86,7 @@ public class GUIController {
 
   }
 
-  public void saveGame (Game game) throws IOException {
+  public void saveGame(Game game) throws IOException {
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
     FileWriter writer = new FileWriter("saved-game.json");
@@ -95,7 +95,7 @@ public class GUIController {
     View.printSaveGameMessage();
   }
 
-  public void loadSavedGame () {
+  public void loadSavedGame() {
     try (Reader reader = Files.newBufferedReader(Paths.get("./saved-game.json"))) {
       Game savedGame = new Gson().fromJson(reader, Game.class);
       if (savedGame != null) { // if there is a saved game data
@@ -110,7 +110,7 @@ public class GUIController {
 
   }
 
-  public void setUpGame () throws URISyntaxException, IOException {
+  public void setUpGame() throws URISyntaxException, IOException {
     game.setPlanets(createPlanets());
 
     placeFuelRandomly(game);
@@ -128,7 +128,7 @@ public class GUIController {
     game.getSpacecraft().setCurrentPlanet(returnPlanet("earth"));
   }
 
-  public static List<Planet> createPlanets () throws URISyntaxException, IOException {
+  public static List<Planet> createPlanets() throws URISyntaxException, IOException {
     List<Planet> planets = new ArrayList<>();
     List<String> planetNames = new ArrayList<>();
     planetNames.add("/planets/mercury.json");
@@ -151,7 +151,7 @@ public class GUIController {
     return planets;
   }
 
-  public void placeFuelRandomly (Game game){
+  public void placeFuelRandomly(Game game) {
     Random rng = new Random();
 
     int planetRandomizer = rng.nextInt(game.getPlanets().size() - 1);
@@ -161,7 +161,7 @@ public class GUIController {
     randomPlanet.setItem("fuel");
   }
 
-  public Spacecraft createSpacecraft () {
+  public Spacecraft createSpacecraft() {
     // create a reader
     try (Reader reader = new InputStreamReader(
         Main.class.getResourceAsStream("/spacecraft.json"))) {
@@ -172,7 +172,7 @@ public class GUIController {
     }
   }
 
-  public Planet returnPlanet (String destination){
+  public Planet returnPlanet(String destination) {
     // capitalize the destination
     String planetName =
         destination.substring(0, 1).toUpperCase() + destination.substring(1).toLowerCase();
@@ -184,7 +184,7 @@ public class GUIController {
     return null;
   }
 
-  public void repairShipConditions ( int engineerCount){
+  public void repairShipConditions(int engineerCount) {
     if (engineerCount == 0) {
       game.setDialogue(View.printNoEngineerAlert());
     } else if (game.getSpacecraft().getHealth() == 3) {
@@ -194,13 +194,12 @@ public class GUIController {
     } else {
       Engineer.repairSpacecraft(game.getSpacecraft());
       game.setDialogue(View.printRepair());
-      repairCounter+= 1;
+      repairCounter += 1;
     }
   }
 
 
-
-  public void loadNewPassengers () {
+  public void loadNewPassengers() {
     Collection<Person> arrayOfAstronautsOnCurrentPlanet = game.getSpacecraft().getCurrentPlanet()
         .getArrayOfAstronautsOnPlanet();
 
@@ -224,7 +223,7 @@ public class GUIController {
 
   }
 
-  public void unloadPassengersOnEarth () {
+  public void unloadPassengersOnEarth() {
     Planet currentPlanet = game.getSpacecraft().getCurrentPlanet();
     Spacecraft spacecraft = game.getSpacecraft();
 
@@ -238,7 +237,7 @@ public class GUIController {
     }
   }
 
-  public void determineIfEngineerIsOnBoard () {
+  public void determineIfEngineerIsOnBoard() {
     if (game.getSpacecraft().getNumOfEngineersOnBoard() > 0) {
       game.setDialogue(View.printYouveGotAnEngineer());
     } else {
@@ -246,7 +245,7 @@ public class GUIController {
     }
   }
 
-  public void useFuel () {
+  public void useFuel() {
     if (game.getSpacecraft().getCurrentPlanet().getItem().equals("fuel")) {
       game.setRemainingDays(game.getRemainingDays() + 2);
       game.getSpacecraft().getCurrentPlanet().setItem("");
@@ -256,24 +255,27 @@ public class GUIController {
     }
   }
 
-  public void checkGameResult () throws InterruptedException {
+  public void checkGameResult() throws InterruptedException {
 
-    if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth") && game.calculateRemainingAstronautsViaTotalNumOfAstronauts(returnPlanet("earth")) == 0) {
+    if (game.getSpacecraft().getCurrentPlanet().getName().equals("Earth")
+        && game.calculateRemainingAstronautsViaTotalNumOfAstronauts(returnPlanet("earth")) == 0) {
       game.setDialogue(View.winMessage());
       Music.stopMusic();
       createWinFrame();
-    } if (game.getRemainingDays() < 1) {
+    }
+    if (game.getRemainingDays() < 1) {
       game.setDialogue(View.ranOutOfTime());
       Music.stopMusic();
       createLoseFrame();
-    } if (game.getSpacecraft().getHealth() < 1) {
+    }
+    if (game.getSpacecraft().getHealth() < 1) {
       game.setDialogue(View.shipDestroyed());
       Music.stopMusic();
       createLoseFrame();
     }
   }
 
-  public void createLoseFrame () {
+  public void createLoseFrame() {
 
     createFrameForLoss();
 
@@ -305,7 +307,8 @@ public class GUIController {
     doc.setParagraphAttributes(0, doc.getLength(), center, false);
     if (game.getRemainingDays() < 1) {
       loss.setText(View.ranOutOfTime());
-    } if (game.getSpacecraft().getHealth() < 1) {
+    }
+    if (game.getSpacecraft().getHealth() < 1) {
       loss.setText(View.shipDestroyed());
     }
 
@@ -343,7 +346,6 @@ public class GUIController {
     contentPanel.setBackground(Color.black);
     contentPanel.setOpaque(true);
 
-
     contentPanel.add(titlePanel);
     contentPanel.add(losePanel);
     contentPanel.add(playGamePanel);
@@ -362,7 +364,6 @@ public class GUIController {
     frame.setLocationRelativeTo(null);
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-
     skeletonPanel = new JPanel();
     skeletonPanel.setBackground(Color.black);
     skeletonPanel.setBounds(0, 0, 800, 800);
@@ -374,7 +375,7 @@ public class GUIController {
   }
 
 
-  public void createWinFrame () {
+  public void createWinFrame() {
     createFrameForWin();
 
     JPanel titlePanel = new JPanel();
@@ -466,7 +467,7 @@ public class GUIController {
 
   }
 
-  public Game getGame () {
+  public Game getGame() {
     return game;
   }
 

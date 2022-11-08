@@ -4,7 +4,6 @@ import com.spacepilot.model.Game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.net.URL;
 import java.util.function.Consumer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -204,6 +203,7 @@ public class TravelMenu {
     travelFrame.add(travelPanel);
     travelFrame.setVisible(true);
   }
+
   public void setMoveListener(Consumer<String> listener) {
     this.moveListener = listener;
   }
