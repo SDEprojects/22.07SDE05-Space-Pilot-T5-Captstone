@@ -14,7 +14,6 @@ import javax.swing.WindowConstants;
 public class TravelMenu {
 
   private Game game;
-  URL iconURL = getClass().getClassLoader().getResource("GUI/Rocket.png");
 
   Font planetFont = new Font("Roboto", Font.BOLD, 20);
 
@@ -33,8 +32,6 @@ public class TravelMenu {
     setMoveListener(moveListener);
 
     JFrame frame = GamePlay.frame;
-//    ImageIcon icon = new ImageIcon(iconURL);
-//    frame.setIconImage(icon.getImage());
 
     JPanel midPanel = GamePlay.midPanel;
     JPanel contentPanel = GamePlay.contentPanel;
@@ -60,7 +57,6 @@ public class TravelMenu {
 
     mercuryButton.addActionListener(e -> {
       moveListener.accept("mercury");
-//      displayPlanetIcon("mercury");
       travelFrame.setVisible(false);
       GamePlay.planetImages("mercury");
       contentPanel.remove(midPanel);
@@ -80,7 +76,6 @@ public class TravelMenu {
     travelPanel.add(venusButton);
     venusButton.addActionListener(e -> {
       moveListener.accept("venus");
-//      displayPlanetIcon("venus");
       travelFrame.setVisible(false);
       GamePlay.planetImages("Venus");
       contentPanel.remove(midPanel);
@@ -100,7 +95,6 @@ public class TravelMenu {
     travelPanel.add(earthButton);
     earthButton.addActionListener(e -> {
       moveListener.accept("earth");
-//      displayPlanetIcon("earth");
       travelFrame.setVisible(false);
       GamePlay.planetImages("Earth");
       contentPanel.remove(midPanel);
@@ -120,7 +114,6 @@ public class TravelMenu {
     travelPanel.add(moonButton);
     moonButton.addActionListener(e -> {
       moveListener.accept("moon");
-//      displayPlanetIcon("moon");
       travelFrame.setVisible(false);
       GamePlay.planetImages("Moon");
       contentPanel.remove(midPanel);
@@ -140,7 +133,6 @@ public class TravelMenu {
     travelPanel.add(marsButton);
     marsButton.addActionListener(e -> {
       moveListener.accept("mars");
-//      displayPlanetIcon("mars");
       travelFrame.setVisible(false);
       GamePlay.planetImages("Mars");
       contentPanel.remove(midPanel);
@@ -160,7 +152,6 @@ public class TravelMenu {
     travelPanel.add(jupiterButton);
     jupiterButton.addActionListener(e -> {
       moveListener.accept("jupiter");
-//      displayPlanetIcon("jupiter");
       travelFrame.setVisible(false);
       GamePlay.planetImages("Jupiter");
       contentPanel.remove(midPanel);
@@ -180,7 +171,6 @@ public class TravelMenu {
     travelPanel.add(saturnButton);
     saturnButton.addActionListener(e -> {
       moveListener.accept("saturn");
-//      displayPlanetIcon("saturn");
       travelFrame.setVisible(false);
       GamePlay.planetImages("Saturn");
       contentPanel.remove(midPanel);
@@ -200,7 +190,6 @@ public class TravelMenu {
     travelPanel.add(neptuneButton);
     neptuneButton.addActionListener(e -> {
       moveListener.accept("neptune");
-//      displayPlanetIcon("neptune");
       travelFrame.setVisible(false);
       GamePlay.planetImages("Neptune");
       contentPanel.remove(midPanel);
@@ -215,14 +204,6 @@ public class TravelMenu {
     travelFrame.add(travelPanel);
     travelFrame.setVisible(true);
   }
-
-  //  public static void displayPlanetIcon(String iconPlanet) {
-//
-//    URL planetImage = GamePlay.class.getClassLoader().getResource("GUI/" + iconPlanet + ".png");
-//    ImageIcon planetImg = new ImageIcon(planetImage);
-//    GamePlay.frame.setIconImage(planetImg.getImage());
-//
-//  }
   public void setMoveListener(Consumer<String> listener) {
     this.moveListener = listener;
   }
